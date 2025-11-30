@@ -102,8 +102,8 @@ const Footer = () => {
               <li className="flex items-start gap-2">
                 <span className="material-symbols-outlined text-primary text-xl">location_on</span>
                 <span className="text-[#9db9ab] text-sm">
-                  Đại học Công nghệ Thông tin<br />
-                  TP. Hồ Chí Minh
+                  Đại học Trà Vinh <br />
+                
                 </span>
               </li>
             </ul>
@@ -160,7 +160,7 @@ const Footer = () => {
           {/* Made with love */}
           <div className="mt-4 text-center">
             <p className="text-[#9db9ab] text-xs flex items-center justify-center gap-1">
-              Made with <span className="text-red-500 animate-pulse">❤️</span> by PHIHub Team
+              Made with <span className="text-red-500 animate-pulse">❤️</span> by KhoaPhanix
             </p>
           </div>
         </div>

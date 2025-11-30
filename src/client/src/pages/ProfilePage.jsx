@@ -789,7 +789,7 @@ const ProfilePage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </div>
   );
