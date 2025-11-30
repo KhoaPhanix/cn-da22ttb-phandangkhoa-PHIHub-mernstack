@@ -1,0 +1,59 @@
+version: '3.9'
+
+services:
+  # MongoDB Database
+  mongo:
+    image: mongo:7.0
+    container_name: phihub-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: phihub
+    networks:
+      - phihub-network
+
+  # Backend API
+  server:
+    build:
+      context: ../src/server
+      dockerfile: Dockerfile
+    container_name: phihub-server
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      MONGODB_URI: mongodb+srv://admin:Silnix13670@healthtracker.xmrtodc.mongodb.net/phihub?retryWrites=true&w=majority&appName=HealthTracker
+      JWT_SECRET: phihub_super_secret_key_2025_change_in_production
+      JWT_EXPIRE: 7d
+      CLIENT_URL: http://localhost:8080
+    depends_on:
+      - mongo
+    networks:
+      - phihub-network
+
+  # Frontend Client
+  client:
+    build:
+      context: ../src/client
+      dockerfile: Dockerfile
+    container_name: phihub-client
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - server
+    networks:
+      - phihub-network
+
+volumes:
+  mongo-data:
+    driver: local
+
+networks:
+  phihub-network:
+    driver: bridge

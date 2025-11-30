@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Trung tâm Thông minh Sức khỏe Cá nhân</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#13ec80",
+              "background-light": "#f6f8f7",
+              "background-dark": "#102219",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+<!-- TopNavBar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/10 dark:border-b-[#283930] px-4 sm:px-10 py-3">
+<div class="flex items-center gap-4 text-black dark:text-white">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z"></path>
+</svg>
+</div>
+<h2 class="text-black dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Health Intelligence Hub</h2>
+</div>
+<div class="flex flex-1 justify-end items-center gap-4 sm:gap-8">
+<div class="hidden md:flex items-center gap-9">
+<a class="text-gray-600 dark:text-white text-sm font-medium leading-normal" href="#">Dashboard</a>
+<a class="text-gray-600 dark:text-white text-sm font-medium leading-normal" href="#">Detailed Reports</a>
+<a class="text-gray-600 dark:text-white text-sm font-medium leading-normal" href="#">Settings</a>
+</div>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-gray-200 dark:bg-[#283930] text-black dark:text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+<span class="material-symbols-outlined text-black dark:text-white">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBYXkXJNwdn8hiJP2iL4pBdUBY8O0rg4XRQgQzHkLJtL_LjEnh5a7dFw8y6Fi5xITaXzy_CeQfEU1gMrGG1wxeYo3Wo9UNQBBMKi7mJ5Acwlg8Tcs1L3e2B6SH-MGgybpeEuTfiFUBLxf9eAIEPkJPTqDaG1FX8wxC9YCJ26QdQyNHOsBfAgBq99Hb9D6GUaiNJ4F2WrXaq7pa7wjHI4gadM7jDCEn9ZomWXQMohpFO5slkoeKgwQnuQT_1J5l3tzAqDW_wC7UO9X0R");'></div>
+</div>
+</header>
+<main class="flex flex-col gap-6 p-4 sm:p-6 md:p-8">
+<!-- PageHeading and Add Button -->
+<div class="flex flex-wrap justify-between items-start gap-4">
+<div class="flex min-w-72 flex-col gap-3">
+<p class="text-black dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Chào buổi sáng, An Nguyễn!</p>
+<p class="text-gray-600 dark:text-[#9db9ab] text-base font-normal leading-normal">Nhìn chung, sức khỏe của bạn đang ổn định. Hãy tiếp tục duy trì nhé!</p>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-background-dark gap-2 pl-3 text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined text-background-dark">add</span>
+<span class="truncate">Thêm chỉ số mới</span>
+</button>
+</div>
+<!-- Stats -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg p-6 border bg-white dark:bg-transparent border-gray-200 dark:border-[#3b5447]">
+<p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Cân nặng</p>
+<p class="text-black dark:text-white tracking-light text-2xl font-bold leading-tight">72.5 kg</p>
+<p class="text-red-500 dark:text-[#fa5538] text-base font-medium leading-normal">-0.5kg</p>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg p-6 border bg-white dark:bg-transparent border-gray-200 dark:border-[#3b5447]">
+<p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Giấc ngủ</p>
+<p class="text-black dark:text-white tracking-light text-2xl font-bold leading-tight">7 giờ 15 phút</p>
+<p class="text-green-500 dark:text-[#0bda46] text-base font-medium leading-normal">+15 phút</p>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg p-6 border bg-white dark:bg-transparent border-gray-200 dark:border-[#3b5447]">
+<p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Nhịp tim</p>
+<p class="text-black dark:text-white tracking-light text-2xl font-bold leading-tight">68 bpm</p>
+<p class="text-green-500 dark:text-[#0bda46] text-base font-medium leading-normal">Ổn định</p>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg p-6 border bg-white dark:bg-transparent border-gray-200 dark:border-[#3b5447]">
+<p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Số bước chân</p>
+<p class="text-black dark:text-white tracking-light text-2xl font-bold leading-tight">8,241</p>
+<p class="text-green-500 dark:text-[#0bda46] text-base font-medium leading-normal">+1,200</p>
+</div>
+</div>
+<!-- AI Recommendations -->
+<div class="flex items-start gap-4 rounded-xl p-6 bg-primary/20 dark:bg-[#1c3d2e]">
+<div class="text-primary mt-1">
+<span class="material-symbols-outlined text-3xl">lightbulb</span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-black dark:text-white text-lg font-bold">Khuyến nghị thông minh</h3>
+<p class="text-gray-700 dark:text-[#9db9ab] text-base font-normal">Chúng tôi nhận thấy bạn ngủ ít hơn 6 tiếng trong 3 ngày qua. Hãy thử thư giãn trước khi ngủ để cải thiện chất lượng giấc ngủ nhé!</p>
+</div>
+</div>
+<!-- Charts -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+<div class="flex min-w-72 flex-1 flex-col gap-2 rounded-lg border bg-white dark:bg-transparent border-gray-200 dark:border-[#3b5447] p-6">
+<p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Biến động Cân nặng (30 ngày qua)</p>
+<p class="text-black dark:text-white tracking-light text-[32px] font-bold leading-tight truncate">72.5 kg</p>
+<div class="flex gap-1">
+<p class="text-gray-600 dark:text-[#9db9ab] text-base font-normal leading-normal">Last 30 days</p>
+<p class="text-red-500 dark:text-[#fa5538] text-base font-medium leading-normal">-1.2kg</p>
+</div>
+<div class="flex min-h-[180px] flex-1 flex-col gap-8 py-4">
+<svg fill="none" height="148" preserveaspectratio="none" viewbox="-3 0 478 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H326.769H0V109Z" fill="url(#paint0_linear_1131_5935)"></path>
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="#13ec80" stroke-linecap="round" stroke-width="3"></path>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="paint0_linear_1131_5935" x1="236" x2="236" y1="1" y2="149">
+<stop stop-color="#13ec80" stop-opacity="0.3"></stop>
+<stop offset="1" stop-color="#13ec80" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="flex justify-around">
+<p class="text-gray-500 dark:text-[#9db9ab] text-[13px] font-bold leading-normal tracking-[0.015em]">W1</p>
+<p class="text-gray-500 dark:text-[#9db9ab] text-[13px] font-bold leading-normal tracking-[0.015em]">W2</p>
+<p class="text-gray-500 dark:text-[#9db9ab] text-[13px] font-bold leading-normal tracking-[0.015em]">W3</p>
+<p class="text-gray-500 dark:text-[#9db9ab] text-[13px] font-bold leading-normal tracking-[0.015em]">W4</p>
+</div>
+</div>
+</div>
+<div class="flex min-w-72 flex-1 flex-col gap-2 rounded-lg border bg-white dark:bg-transparent border-gray-200 dark:border-[#3b5447] p-6">
+<p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Thời gian ngủ trung bình (tuần qua)</p>
+<p class="text-black dark:text-white tracking-light text-[32px] font-bold leading-tight truncate">7 giờ 15 phút</p>
+<div class="flex gap-1">
+<p class="text-gray-600 dark:text-[#9db9ab] text-base font-normal leading-normal">Last 7 days</p>
+<p class="text-red-500 dark:text-[#fa5538] text-base font-medium leading-normal">-15 phút</p>
+</div>
+<div class="grid min-h-[220px] grid-flow-col gap-6 grid-rows-[1fr_auto] items-end justify-items-center px-3 pt-4">
+<div class="w-full bg-primary/20 dark:bg-[#283930] rounded-t-sm" style="height: 80%;"></div>
+<p class="text-gray-500 dark:text-[#9db9ab] text-[13px] font-bold leading-normal tracking-[0.015em]">T2</p>
+<div class="w-full bg-primary/20 dark:bg-[#283930] rounded-t-sm" style="height: 70%;"></div>
+<p class="text-gray-500 dark:text-[#9db9ab] text-[13px] font-bold leading-normal tracking-[0.015em]">T3</p>
+<div class="w-full bg-primary/20 dark:bg-[#283930] rounded-t-sm" style="height: 50%;"></div>
+<p class="text-gray-500 dark:text-[#9db9ab] text-[13px] font-bold leading-normal tracking-[0.015em]">T4</p>
+<div class="w-full bg-primary/20 dark:bg-[#283930] rounded-t-sm" style="height: 60%;"></div>
+<p class="text-gray-500 dark:text-[#9db9ab] text-[13px] font-bold leading-normal tracking-[0.015em]">T5</p>
+<div class="w-full bg-primary dark:bg-primary rounded-t-sm" style="height: 90%;"></div>
+<p class="text-gray-500 dark:text-[#9db9ab] text-[13px] font-bold leading-normal tracking-[0.015em]">T6</p>
+<div class="w-full bg-primary/20 dark:bg-[#283930] rounded-t-sm" style="height: 40%;"></div>
+<p class="text-gray-500 dark:text-[#9db9ab] text-[13px] font-bold leading-normal tracking-[0.015em]">T7</p>
+<div class="w-full bg-primary/20 dark:bg-[#283930] rounded-t-sm" style="height: 75%;"></div>
+<p class="text-gray-500 dark:text-[#9db9ab] text-[13px] font-bold leading-normal tracking-[0.015em]">CN</p>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</div>
+</div>
+</body></html>

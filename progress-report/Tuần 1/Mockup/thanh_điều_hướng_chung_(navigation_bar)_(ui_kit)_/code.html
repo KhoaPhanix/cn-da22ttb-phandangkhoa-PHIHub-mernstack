@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Trung tâm Thông minh Sức khỏe Cá nhân</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#13ec80",
+              "background-light": "#f6f8f7",
+              "background-dark": "#102219",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="sticky top-0 z-50 w-full border-b border-white/10 bg-background-dark/80 backdrop-blur-sm">
+<div class="container mx-auto px-4">
+<div class="flex h-16 items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-3 text-white">
+<svg class="text-primary size-7" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<h1 class="text-lg font-bold leading-tight tracking-[-0.015em]">Trung tâm Thông minh Sức khỏe Cá nhân</h1>
+</div>
+</div>
+<nav class="hidden items-center gap-2 md:flex">
+<a class="flex items-center gap-2 rounded-lg bg-primary/20 px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary/30" href="#">
+<span class="material-symbols-outlined text-base">dashboard</span>
+                        Bảng điều khiển
+                    </a>
+<a class="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white" href="#">
+<span class="material-symbols-outlined text-base">edit_note</span>
+                        Nhập liệu
+                    </a>
+<a class="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white" href="#">
+<span class="material-symbols-outlined text-base">history</span>
+                        Lịch sử
+                    </a>
+<a class="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white" href="#">
+<span class="material-symbols-outlined text-base">school</span>
+                        Góc Kiến thức
+                    </a>
+<a class="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white" href="#">
+<span class="material-symbols-outlined text-base">person</span>
+                        Hồ sơ
+                    </a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-white/10 text-white/70 transition-colors hover:bg-white/20 hover:text-white">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<div class="group relative">
+<button class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBJumOWYkvnOj5RCOKHuuLAXeBIVDeiaQAs_ZQuWAMf9hEUHhyc7ZjswEeQ7Zrj-VU5Pzvi-VlXjf_r93vSREcoQKIwljmFOJHSAxRvyTkFaTm7upNgXPMe1XeO8GniqTrbWm-aFOadZ4_vnNuoJ1_nxjrGv_56pd_iezBDn2_WcfxISgny7ZCxm2uIVGIoCJz4FujfFy7cajD7J26RQ0iFT6WtEy1EDFFV1QNlodB9XvfS0rSvq8cwspIh60FQdJfgiZYPwLZcjQNQ");'></div>
+<div class="hidden text-right md:block">
+<p class="text-sm font-semibold text-white">An Nguyễn</p>
+<p class="text-xs text-white/60">Chào mừng trở lại</p>
+</div>
+<span class="material-symbols-outlined hidden text-white/70 transition-transform group-hover:rotate-180 md:block">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</header>
+</div>
+</div>
+</body></html>

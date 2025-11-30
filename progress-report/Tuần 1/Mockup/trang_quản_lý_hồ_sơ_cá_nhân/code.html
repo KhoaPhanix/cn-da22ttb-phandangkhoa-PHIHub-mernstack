@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hồ sơ cá nhân - Trung tâm Thông minh Sức khỏe Cá nhân</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#13ec80",
+              "background-light": "#f6f8f7",
+              "background-dark": "#102219",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/10 px-4 md:px-10 py-3 bg-background-light dark:bg-background-dark/80 backdrop-blur-sm sticky top-0 z-10">
+<div class="flex items-center gap-4 text-black dark:text-white">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Health Intelligence Hub</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-end gap-8">
+<div class="flex items-center gap-9 text-gray-800 dark:text-gray-300">
+<a class="text-sm font-medium leading-normal hover:text-primary" href="#">Dashboard</a>
+<a class="text-sm font-medium leading-normal text-primary" href="#">Hồ sơ</a>
+<a class="text-sm font-medium leading-normal hover:text-primary" href="#">Lịch hẹn</a>
+<a class="text-sm font-medium leading-normal hover:text-primary" href="#">Tin nhắn</a>
+</div>
+<button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-white/10 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/20 dark:hover:bg-white/10 text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar of Tran Van An" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAayImzqmbouJsMfgZJscW15sSiG-uQ0ACaErWGC0nKmMs8sWaqdJEWYgBlKgFXnxopNqrw9SO-EQ1VyZ6gMrmLyZz9XiTX3rQ1uX-RZ89rfGJra4Hgq-S6IiYhZqW5tF01XqTB672B2c7N72TVZC5ZMjUtg6SPsmqugVsPjwifbVAOysPGmr6LzqLvSl3t6C3kQG9-v0GlKUh_N5bAX6RTjBAIKA8vX_x77u1yllTxRQ192lGyZ46dWEtsWtDDGlySpY2Jvt6qUzSq");'></div>
+</div>
+<button class="md:hidden flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-white/10 dark:bg-white/5 text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+</header>
+<main class="px-4 md:px-10 py-8 flex flex-1 justify-center">
+<div class="layout-content-container flex flex-col w-full max-w-5xl flex-1">
+<div class="flex flex-wrap justify-between gap-3 p-4">
+<p class="text-black dark:text-white text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">Hồ sơ cá nhân</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 p-4">
+<!-- Left Column: Avatar -->
+<div class="lg:col-span-1">
+<div class="flex w-full flex-col gap-4 items-center p-6 bg-white/5 dark:bg-white/[.02] rounded-xl border border-black/10 dark:border-white/10">
+<div class="relative group">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 ring-4 ring-white/10" data-alt="Current profile picture of Tran Van An" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA9HLVIIP1ShX6202A2FHJqVqg8Tjjr7Cflwl17g8tIjeFiWtP7uKxRPRCLUyZLop1Xuh6RH-nHin62vMmebeu-0frIYworfhJZuXx3eyNpD1GxOtGb14gqayY47tMfCuYBek8TntxhCPU-yCCE4usH06AsJAqx5v_sA_rjDe6whA-9tIn7Qdah4Mh5ccyPYiF_-ZIYZ08B_6yvAi-zUwVJczgWIGpeSH-Ev9DY2a4Qsf0L5gicBpnaSomhum_q20CcpzBAx3_HYC-B");'></div>
+<div class="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center text-center">
+<p class="text-black dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Trần Văn An</p>
+<p class="text-gray-600 dark:text-gray-400 text-sm font-normal leading-normal">tranvanan@email.com</p>
+</div>
+<button class="flex w-full max-w-xs cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary/20 dark:bg-primary/20 text-primary text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/30 transition-colors">
+<span class="truncate">Thay đổi ảnh</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Form -->
+<div class="lg:col-span-2">
+<div class="flex flex-col w-full bg-white/5 dark:bg-white/[.02] rounded-xl border border-black/10 dark:border-white/10 p-6">
+<form class="flex flex-col gap-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col flex-1">
+<p class="text-black dark:text-white text-sm font-medium leading-normal pb-2">Họ và tên</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 border border-black/20 dark:border-white/20 bg-transparent dark:bg-white/5 h-12 placeholder:text-gray-500 dark:placeholder:text-gray-500 px-4 text-base font-normal leading-normal" value="Trần Văn An"/>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-black dark:text-white text-sm font-medium leading-normal pb-2">Ngày sinh</p>
+<div class="relative flex w-full flex-1 items-stretch">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 border border-black/20 dark:border-white/20 bg-transparent dark:bg-white/5 h-12 placeholder:text-gray-500 dark:placeholder:text-gray-500 pl-4 pr-10 text-base font-normal leading-normal" placeholder="DD/MM/YYYY" value="15/08/1990"/>
+<div class="absolute right-0 top-0 h-full text-gray-600 dark:text-gray-400 flex items-center justify-center pr-3 pointer-events-none">
+<span class="material-symbols-outlined text-xl">calendar_today</span>
+</div>
+</div>
+</label>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col flex-1">
+<p class="text-black dark:text-white text-sm font-medium leading-normal pb-2">Số điện thoại</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 border border-black/20 dark:border-white/20 bg-transparent dark:bg-white/5 h-12 placeholder:text-gray-500 dark:placeholder:text-gray-500 px-4 text-base font-normal leading-normal" value="0987654321"/>
+</label>
+<div class="flex flex-col flex-1">
+<p class="text-black dark:text-white text-sm font-medium leading-normal pb-2">Giới tính</p>
+<div class="relative w-full">
+<select class="form-select appearance-none w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 border border-black/20 dark:border-white/20 bg-transparent dark:bg-white/5 h-12 placeholder:text-gray-500 dark:placeholder:text-gray-500 px-4 text-base font-normal leading-normal">
+<option>Nam</option>
+<option>Nữ</option>
+<option>Khác</option>
+</select>
+<div class="absolute right-0 top-0 h-full text-gray-600 dark:text-gray-400 flex items-center justify-center pr-3 pointer-events-none">
+<span class="material-symbols-outlined text-xl">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<label class="flex flex-col flex-1">
+<p class="text-black dark:text-white text-sm font-medium leading-normal pb-2">Email</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-500 dark:text-gray-400 focus:outline-none focus:ring-0 border border-black/20 dark:border-white/20 bg-gray-100 dark:bg-white/5 cursor-not-allowed h-12 placeholder:text-gray-500 dark:placeholder:text-gray-500 px-4 text-base font-normal leading-normal" readonly="" value="tranvanan@email.com"/>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-black dark:text-white text-sm font-medium leading-normal pb-2">Địa chỉ</p>
+<textarea class="form-textarea flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 border border-black/20 dark:border-white/20 bg-transparent dark:bg-white/5 min-h-24 placeholder:text-gray-500 dark:placeholder:text-gray-500 p-4 text-base font-normal leading-normal" placeholder="Nhập địa chỉ của bạn..."></textarea>
+</label>
+<div class="border-t border-black/10 dark:border-white/10 pt-6 mt-2">
+<a class="text-sm font-medium text-primary hover:underline" href="#">Thay đổi mật khẩu</a>
+</div>
+<div class="flex items-center justify-end gap-4 mt-4">
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-6 bg-transparent text-gray-800 dark:text-gray-300 text-sm font-bold leading-normal tracking-[0.015em] hover:bg-black/5 dark:hover:bg-white/5 transition-colors" type="button">
+<span class="truncate">Hủy</span>
+</button>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-6 bg-primary text-black text-sm font-bold leading-normal tracking-[0.015em] hover:bg-opacity-90 transition-opacity" type="submit">
+<span class="truncate">Lưu thay đổi</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

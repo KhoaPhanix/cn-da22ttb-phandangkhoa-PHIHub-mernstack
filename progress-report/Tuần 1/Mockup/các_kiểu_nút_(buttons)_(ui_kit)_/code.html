@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Button Component Style Guide</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#13ec80",
+            "background-light": "#f6f8f7",
+            "background-dark": "#102219",
+          },
+          fontFamily: {
+            "display": ["Manrope", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+    }
+  </style>
+</head>
+<body class="font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-4 sm:px-10 md:px-20 lg:px-40 flex flex-1 justify-center py-10 sm:py-20">
+<div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between gap-3 p-4">
+<div class="flex min-w-72 flex-col gap-3">
+<p class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Hướng dẫn Kiểu Nút</p>
+<p class="text-gray-600 dark:text-[#9db9ab] text-base font-normal leading-normal">
+                Hướng dẫn toàn diện về các kiểu và trạng thái của nút được sử dụng trên toàn bộ trang web Trung tâm Thông minh Sức khỏe Cá nhân.
+              </p>
+</div>
+</div>
+<!-- Section 1: Primary Buttons -->
+<div class="mt-12">
+<h2 class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Nút Chính (Primary)</h2>
+<p class="text-gray-700 dark:text-white text-base font-normal leading-normal pb-3 pt-1 px-4">
+              Sử dụng cho các hành động quan trọng nhất, mang tính quyết định (CTA) trên trang, chẳng hạn như 'Đặt Lịch Hẹn', 'Đăng Ký', hoặc 'Lưu Thay Đổi'.
+            </p>
+<div class="flex justify-stretch border border-gray-200/80 dark:border-gray-800/80 rounded-xl mt-4">
+<div class="flex flex-1 gap-4 flex-wrap px-4 py-6 justify-center sm:justify-start">
+<!-- Default State -->
+<div class="flex flex-col items-center gap-2">
+<button class="flex min-w-[140px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 bg-primary text-[#102219] text-base font-bold leading-normal tracking-[0.015em] transition-all duration-200 hover:bg-green-400 active:scale-95">
+<span class="truncate">Mặc định</span>
+</button>
+<span class="text-xs text-gray-500 dark:text-gray-400">Default</span>
+</div>
+<!-- Hover State -->
+<div class="flex flex-col items-center gap-2">
+<button class="flex min-w-[140px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 bg-green-400 text-[#102219] text-base font-bold leading-normal tracking-[0.015em] transition-all duration-200">
+<span class="truncate">Di chuột qua</span>
+</button>
+<span class="text-xs text-gray-500 dark:text-gray-400">Hover</span>
+</div>
+<!-- Active State -->
+<div class="flex flex-col items-center gap-2">
+<button class="flex min-w-[140px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 bg-primary text-[#102219] text-base font-bold leading-normal tracking-[0.015em] scale-95 ring-2 ring-primary ring-offset-2 ring-offset-background-light dark:ring-offset-background-dark">
+<span class="truncate">Nhấn</span>
+</button>
+<span class="text-xs text-gray-500 dark:text-gray-400">Active</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 2: Secondary Buttons -->
+<div class="mt-12">
+<h2 class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Nút Phụ (Secondary)</h2>
+<p class="text-gray-700 dark:text-white text-base font-normal leading-normal pb-3 pt-1 px-4">
+              Sử dụng cho các hành động ít quan trọng hơn hoặc là lựa chọn thay thế, ví dụ: 'Hủy', 'Xem Chi Tiết'.
+            </p>
+<div class="flex justify-stretch border border-gray-200/80 dark:border-gray-800/80 rounded-xl mt-4">
+<div class="flex flex-1 gap-4 flex-wrap px-4 py-6 justify-center sm:justify-start">
+<!-- Default State -->
+<div class="flex flex-col items-center gap-2">
+<button class="flex min-w-[140px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 bg-transparent text-primary text-base font-bold leading-normal tracking-[0.015em] ring-2 ring-inset ring-primary transition-all duration-200 hover:bg-primary/20 active:bg-primary/30">
+<span class="truncate">Mặc định</span>
+</button>
+<span class="text-xs text-gray-500 dark:text-gray-400">Default</span>
+</div>
+<!-- Hover State -->
+<div class="flex flex-col items-center gap-2">
+<button class="flex min-w-[140px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 bg-primary/20 text-primary text-base font-bold leading-normal tracking-[0.015em] ring-2 ring-inset ring-primary transition-all duration-200">
+<span class="truncate">Di chuột qua</span>
+</button>
+<span class="text-xs text-gray-500 dark:text-gray-400">Hover</span>
+</div>
+<!-- Active State -->
+<div class="flex flex-col items-center gap-2">
+<button class="flex min-w-[140px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 bg-primary/30 text-primary text-base font-bold leading-normal tracking-[0.015em] ring-2 ring-inset ring-primary transition-all duration-200 scale-95">
+<span class="truncate">Nhấn</span>
+</button>
+<span class="text-xs text-gray-500 dark:text-gray-400">Active</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Text Buttons -->
+<div class="mt-12">
+<h2 class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Nút Văn Bản / Liên kết</h2>
+<p class="text-gray-700 dark:text-white text-base font-normal leading-normal pb-3 pt-1 px-4">
+              Sử dụng cho các hành động phụ, không cần thu hút nhiều sự chú ý, ví dụ: 'Quên mật khẩu?', 'Chỉnh sửa thông tin'.
+            </p>
+<div class="flex justify-stretch border border-gray-200/80 dark:border-gray-800/80 rounded-xl mt-4">
+<div class="flex flex-1 gap-6 flex-wrap px-4 py-6 justify-center sm:justify-start items-center">
+<!-- Default State -->
+<div class="flex flex-col items-center gap-2">
+<button class="cursor-pointer text-primary text-base font-bold leading-normal transition-all duration-200 hover:underline active:opacity-70">
+<span class="truncate">Mặc định</span>
+</button>
+<span class="text-xs text-gray-500 dark:text-gray-400">Default</span>
+</div>
+<!-- Hover State -->
+<div class="flex flex-col items-center gap-2">
+<button class="cursor-pointer text-primary text-base font-bold leading-normal underline">
+<span class="truncate">Di chuột qua</span>
+</button>
+<span class="text-xs text-gray-500 dark:text-gray-400">Hover</span>
+</div>
+<!-- Active State -->
+<div class="flex flex-col items-center gap-2">
+<button class="cursor-pointer text-primary text-base font-bold leading-normal underline opacity-70">
+<span class="truncate">Nhấn</span>
+</button>
+<span class="text-xs text-gray-500 dark:text-gray-400">Active</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 4: Disabled State -->
+<div class="mt-12">
+<h2 class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Trạng thái Vô hiệu hóa</h2>
+<p class="text-gray-700 dark:text-white text-base font-normal leading-normal pb-3 pt-1 px-4">
+              Áp dụng cho bất kỳ nút nào khi hành động chưa sẵn sàng để thực hiện (ví dụ: nút 'Lưu' khi chưa có thay đổi).
+            </p>
+<div class="flex justify-stretch border border-gray-200/80 dark:border-gray-800/80 rounded-xl mt-4">
+<div class="flex flex-1 gap-4 flex-wrap px-4 py-6 justify-center sm:justify-start">
+<!-- Primary Disabled -->
+<button class="flex min-w-[140px] max-w-[480px] cursor-not-allowed items-center justify-center overflow-hidden rounded-lg h-11 px-5 bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-500 text-base font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Nút Chính</span>
+</button>
+<!-- Secondary Disabled -->
+<button class="flex min-w-[140px] max-w-[480px] cursor-not-allowed items-center justify-center overflow-hidden rounded-lg h-11 px-5 bg-transparent text-gray-400 dark:text-gray-600 text-base font-bold leading-normal tracking-[0.015em] ring-2 ring-inset ring-gray-300 dark:ring-gray-700">
+<span class="truncate">Nút Phụ</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

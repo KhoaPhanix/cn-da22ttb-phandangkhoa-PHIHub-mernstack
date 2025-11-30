@@ -1,0 +1,14 @@
+{
+  "name": "phihub-sample-data-importer",
+  "version": "1.0.0",
+  "description": "Import sample data for PHIHub application",
+  "main": "import.js",
+  "scripts": {
+    "import": "node import.js",
+    "clean": "node import.js --clean"
+  },
+  "dependencies": {
+    "mongodb": "^6.3.0",
+    "bcryptjs": "^2.4.3"
+  }
+}

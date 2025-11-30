@@ -1,0 +1,551 @@
+﻿Báo cáo Kỹ thuật Toàn diện: Website Tư vấn và Theo dõi Sức khỏe (MERN Stack)
+
+
+
+
+Phần 1: Giới thiệu và Kiến trúc Tổng thể
+
+
+
+
+1.1. Mục tiêu và Phạm vi Dự án
+
+
+Tài liệu này cung cấp một bản phân tích kỹ thuật và thiết kế chi tiết cho hệ thống "Website Tư vấn và Theo dõi Sức khỏe Cá nhân". Mục tiêu của dự án là xây dựng một "Trung tâm Thông minh Sức khỏe Cá nhân" (Personal Health Intelligence Hub).1 Đây là một nền tảng tích hợp, cho phép người dùng chủ động quản lý sức khỏe thông qua việc theo dõi chỉ số, trực quan hóa dữ liệu và nhận khuyến nghị tự động.1
+Phạm vi của dự án, được định nghĩa là Phiên bản Sản phẩm Khả thi Tối thiểu (MVP), bao gồm năm (05) chức năng cốt lõi sau 1:
+1. Quản lý Người dùng: Đăng ký, đăng nhập và quản lý hồ sơ cá nhân an toàn.1
+2. Ghi nhận Dữ liệu: Cho phép người dùng nhập thủ công các chỉ số hàng ngày (ví dụ: cân nặng, thời gian ngủ, calo, hoạt động thể chất).1
+3. Bảng điều khiển (Dashboard): Trực quan hóa dữ liệu lịch sử qua các biểu đồ tương tác.1
+4. Hệ thống Khuyến nghị: Cung cấp các tư vấn tự động, dựa trên luật (rule-based) từ dữ liệu của người dùng.1
+5. Góc Kiến thức: Một thư viện các bài viết sức khỏe được chọn lọc.1
+Các chức năng ngoài phạm vi MVP bao gồm tích hợp thiết bị đeo (wearables) thời gian thực, đặt lịch hẹn y tế và chẩn đoán y khoa.1
+
+
+1.2. Kiến trúc Công nghệ (MERN Stack)
+
+
+Để đáp ứng các yêu cầu về hiệu năng, bảo mật và khả năng mở rộng, hệ thống được xây dựng trên nền tảng MERN Stack, một bộ công nghệ full-stack JavaScript hiện đại.1
+Kiến trúc tổng thể được thiết kế theo mô hình Client-Server tách biệt 1:
+* Frontend (Client): Một Ứng dụng Trang đơn (Single Page Application - SPA) sử dụng React.js (Vite) để xây dựng giao diện người dùng linh hoạt và có hiệu suất cao.1 Thư viện Recharts được tích hợp để trực quan hóa dữ liệu.1
+* Backend (Server): Một API RESTful sử dụng Node.js và framework Express.js, cung cấp kiến trúc bất đồng bộ, phù hợp cho các tác vụ I/O.1
+* Database (DB): MongoDB được chọn làm cơ sở dữ liệu NoSQL, cung cấp lược đồ linh hoạt và hỗ trợ mạnh mẽ cho dữ liệu sức khỏe.1
+* Xác thực và Triển khai: JSON Web Tokens (JWT) được sử dụng cho cơ chế xác thực không trạng thái (stateless).1 Toàn bộ hệ thống được đóng gói và triển khai bằng Docker và Docker Compose để đảm bảo tính nhất quán môi trường.1
+
+
+Phần 2: Kiến trúc Cơ sở dữ liệu (MongoDB)
+
+
+
+
+2.1. Phân tích và Lựa chọn MongoDB
+
+
+Việc lựa chọn MongoDB làm cơ sở dữ liệu nền tảng dựa trên hai luận điểm kỹ thuật chính 1:
+1. Lược đồ Linh hoạt (Flexible Schema): Dữ liệu sức khỏe của người dùng vốn đa dạng và có thể thay đổi (ví dụ: một số người dùng theo dõi huyết áp, số khác thì không). Lược đồ linh hoạt của MongoDB cho phép lưu trữ các cấu trúc tài liệu khác nhau mà không cần định nghĩa trước cấu trúc bảng cứng nhắc.
+2. Hỗ trợ Dữ liệu Chuỗi Thời gian (Time Series Collections): Đây là lợi thế quyết định.1 Các chỉ số sức khỏe như cân nặng, nhịp tim, giấc ngủ về bản chất là dữ liệu chuỗi thời gian (một giá trị tại một thời điểm). MongoDB cung cấp các collection chuyên biệt cho Time Series (từ v5.0), giúp tối ưu hóa vượt trội về hiệu suất truy vấn và dung lượng lưu trữ so vơi các collection thông thường.1
+
+
+2.2. Thiết kế Collection: users
+
+
+Collection này lưu trữ thông tin định danh và hồ sơ cá nhân của người dùng. Dữ liệu mẫu từ tệp users.json 1 cho thấy cấu trúc này.
+* Bảng 2.1: Lược đồ Collection users
+Trường
+	Kiểu dữ liệu
+	Mô tả
+	Ví dụ (từ users.json)
+	_id
+	ObjectId
+	Khóa chính duy nhất.
+	{"$oid": "68f59418..."}
+	name
+	String
+	Tên đầy đủ của người dùng.
+	"Nguyễn Hải"
+	email
+	String
+	Email đăng nhập (duy nhất, có index).
+	"user001@example.com"
+	password
+	String
+	Mật khẩu đã được mã hóa (băm).
+	(Chuỗi băm)
+	dob
+	ISODate
+	Ngày sinh.
+	{"$date": "1992-07-06...Z"}
+	gender
+	String
+	Giới tính ("male", "female", "other").
+	"male"
+	createdAt
+	ISODate
+	Dấu thời gian khi tài khoản được tạo.
+	{"$date": "2025-10-20...Z"}
+	updatedAt
+	ISODate
+	Dấu thời gian cập nhật lần cuối.
+	{"$date": "2025-10-20...Z"}
+	fitbitId
+	String
+	(Tùy chọn) ID liên kết Fitbit.
+	"1503960366"
+	
+
+2.3. Thiết kế Collection: articles
+
+
+Collection này lưu trữ nội dung cho "Góc Kiến thức", bao gồm các bài viết, lời khuyên y tế.1 Dữ liệu mẫu được cung cấp trong articles.json.1
+* Bảng 2.2: Lược đồ Collection articles
+
+
+Trường
+	Kiểu dữ liệu
+	Mô tả
+	Ví dụ (từ articles.json)
+	_id
+	ObjectId
+	Khóa chính duy nhất.
+	{"$oid": "68f5948b..."}
+	title
+	String
+	Tiêu đề bài viết.
+	"Bài viết mẫu 1:..."
+	content
+	String
+	Nội dung bài viết (HTML/Markdown).
+	<p>Đoạn nội dung mẫu 1...</p>
+	category
+	String
+	Danh mục (ví dụ: "Dinh dưỡng", "Tinh thần").
+	"Dinh dưỡng"
+	source
+	String
+	URL nguồn tham khảo của bài viết.
+	"https://example.com/article/1"
+	publishedAt
+	ISODate
+	Ngày xuất bản bài viết.
+	{"$date": "2016-04-09...Z"}
+	
+
+2.4. Thiết kế Collection: health_metrics (Time Series)
+
+
+Đây là collection quan trọng nhất, được thiết kế dưới dạng Time Series Collection của MongoDB để tối ưu hóa việc lưu trữ và truy vấn các chỉ số sức khỏe.1 Cấu trúc này được xác nhận bởi dữ liệu mẫu trong health_metrics.json.1
+Collection này không lưu trữ mỗi bản ghi là một tài liệu JSON riêng lẻ theo kiểu truyền thống; thay vào đó, nó được tối ưu hóa vật lý để lưu trữ dữ liệu theo trình tự thời gian.
+* Bảng 2.3: Lược đồ Collection health_metrics (Time Series)
+Trường (Cấu hình)
+	Mô tả
+	Ví dụ (từ health_metrics.json)
+	timeField
+	(Cấu hình) Trường chỉ định dấu thời gian.
+	timestamp (Ví dụ: {"$date": "2016-04-06...Z"})
+	metaField
+	(Cấu hình) Siêu dữ liệu để nhóm các chuỗi thời gian. Trong thiết kế này, metaField sẽ là một đối tượng chứa userId và metricType.
+	userId: {"$oid": "68f59418..."}metricType: "heart_rate"
+	value
+	(Trường dữ liệu) Giá trị của phép đo.
+	56.0 (cho nhịp tim) hoặc 1365 (cho số bước)
+	metadata
+	(Trường dữ liệu, tùy chọn) Thông tin bổ sung.
+	{"source": "Fitbit", "metric_origin": "heartrate"}
+	Thiết kế này cho phép hệ thống thực hiện các truy vấn cực kỳ nhanh chóng, ví dụ: "Lấy tất cả chỉ số 'cân nặng' cho 'người dùng A' trong '30 ngày qua'".
+
+
+2.5. Chiến lược Nạp Dữ liệu Ban đầu (Data Import)
+
+
+Để khởi tạo hệ thống với dữ liệu mẫu, các tệp JSON (users.json, health_metrics.json, articles.json) được cung cấp. Tài liệu README_import.md 1 chỉ định rõ ràng các lệnh mongoimport cần thiết để nạp dữ liệu này vào cơ sở dữ liệu MongoDB (tên là health_app).
+Cờ --jsonArray là bắt buộc vì mỗi tệp JSON chứa một mảng các tài liệu.1
+
+
+Bash
+
+
+
+
+# Import cho 'users'
+mongoimport --db health_app --collection users --file users.json --jsonArray
+
+# Import cho 'health_metrics'
+mongoimport --db health_app --collection health_metrics --file health_metrics.json --jsonArray
+
+# Import cho 'articles'
+mongoimport --db health_app --collection articles --file articles.json --jsonArray
+
+Tài liệu README cũng lưu ý rằng các định dạng $oid và $date trong các tệp JSON là hoàn toàn tương thích với mongoimport, đảm bảo tính toàn vẹn của kiểu dữ liệu khi nạp.1
+
+
+Phần 3: Tài liệu Backend (API và Dịch vụ Node.js/Express)
+
+
+Phần này tài liệu hóa logic nghiệp vụ phía máy chủ, bao gồm các endpoints API, và cơ chế bảo mật.1
+
+
+3.1. Cấu trúc Dịch vụ và Tổ chức Middleware
+
+
+Backend sử dụng Node.js và Express 1 tuân thủ một cấu trúc module hóa rõ ràng, thường theo mô hình Model-View-Controller (MVC) hoặc biến thể của nó (ví dụ: Model-Service-Controller) để tách biệt các mối quan tâm.
+* Cấu trúc thư mục (Dự kiến):
+/server
+ /config       # (Cấu hình DB, biến môi trường)
+ /controllers  # (Xử lý request/response)
+ /middleware   # (Ví dụ: authMiddleware, errorMiddleware)
+ /models       # (Mongoose schemas cho 'users', 'articles', 'health_metrics')
+ /routes       # (Định nghĩa API endpoints)
+ /services     # (Logic nghiệp vụ, ví dụ: ruleEngineService)
+ server.js     # (Điểm khởi chạy máy chủ Express)
+
+Luồng hoạt động MERN tiêu chuẩn 1 bao gồm: Request từ React -> Express Routing -> Middleware (ví dụ: xác thực) -> Controller -> Service (logic nghiệp vụ) -> Model (tương tác MongoDB).
+
+
+3.2. Module Xác thực: Thiết kế Luồng và Triển khai JWT
+
+
+Hệ thống áp dụng JWT (JSON Web Token) cho xác thực không trạng thái.1 Tài liệu kế hoạch 1 cung cấp một luồng lý thuyết chi tiết cho việc này:
+   1. Đăng nhập: Người dùng gửi yêu cầu $POST /api/auth/login$ với email và mật khẩu.
+   2. Xác minh: Máy chủ kiểm tra thông tin đăng nhập so với collection users (Bảng 2.1).
+   3. Tạo Token: Nếu hợp lệ, máy chủ tạo một JWT. Payload của token chứa thông tin định danh người dùng (ví dụ: {"userId": "68f59418..."}).
+   4. Gửi Token: Thay vì gửi token trong JSON body (dễ bị tấn công XSS), máy chủ sẽ gửi JWT về client và lưu trữ trong một HttpOnly Cookie. Đây là phương pháp bảo mật được khuyến nghị 1, vì cookie này không thể bị truy cập bởi JavaScript phía client.
+   5. Gửi yêu cầu: Với mọi yêu cầu tiếp theo đến các tài nguyên được bảo vệ (ví dụ: $GET /api/users/me$), trình duyệt sẽ tự động đính kèm HttpOnly cookie.
+   6. Xác thực (Middleware): Một middleware (ví dụ: authMiddleware) trên máy chủ sẽ chặn các yêu cầu này, đọc JWT từ cookie, xác minh chữ ký của nó.
+   7. Ủy quyền: Nếu token hợp lệ, middleware sẽ giải mã payload (lấy userId) và gắn thông tin người dùng vào đối tượng request (ví dụ: req.user), cho phép request tiếp tục đi vào controller.
+
+
+3.3. Module API: Quản lý Người dùng và Hồ sơ Sức khỏe
+
+
+Module này thực hiện chức năng "Quản lý thông tin người dùng và hồ sơ sức khỏe cá nhân".1 Các endpoints chính được định nghĩa trong Bảng 3.1.
+   * $POST /api/auth/register$: Tạo người dùng mới.
+   * $POST /api/auth/login$: Xác thực và set HttpOnly cookie (như mô tả ở 3.2).
+   * $POST /api/auth/logout$: Xóa HttpOnly cookie phía client.
+   * $GET /api/users/me$: (Đã bảo vệ) Lấy thông tin hồ sơ của người dùng hiện tại (dựa trên req.user từ middleware).
+   * $PUT /api/users/me$: (Đã bảo vệ) Cập nhật hồ sơ (tên, ngày sinh, v.v.).
+
+
+3.4. Module API: Ghi nhận và Truy xuất Dữ liệu Sức khỏe
+
+
+Module này tương tác trực tiếp với Time Series Collection (health_metrics).1
+   * $POST /api/metrics$: (Đã bảo vệ) Ghi một chỉ số sức khỏe mới.
+   * Logic: API nhận body (ví dụ: {"metricType": "weight", "value": 80.5, "timestamp": "..."}). Server sẽ lấy userId từ req.user (đã được middleware JWT thêm vào). Sau đó, nó tạo một bản ghi mới trong health_metrics với timeField là timestamp và metaField là {"userId": req.user.userId, "metricType": req.body.metricType}.
+   * $GET /api/metrics$: (Đã bảo vệ) Lấy lịch sử dữ liệu sức khỏe cho người dùng hiện tại, dùng để vẽ biểu đồ.
+   * Logic: API sử dụng các query params (ví dụ: $?metricType=weight&startDate=...&endDate=...$). Truy vấn MongoDB sẽ lọc dựa trên metaField.userId (bằng req.user.userId), metaField.metricType và timestamp nằm trong khoảng thời gian.
+
+
+3.5. Module Logic Nghiệp vụ: Hệ thống Tư vấn Sức khỏe Dựa trên Luật
+
+
+Đây là một tính năng tạo khác biệt, thực hiện chức năng "tư vấn sức khỏe tự động (rule-based)".1
+Thiết kế này không chỉ là các câu lệnh if/else cứng nhắc trong mã nguồn. Thay vào đó, nó được thiết kế như một Hệ thống Chuyên gia (Expert System) thu nhỏ 1:
+   1. Cơ sở Tri thức (Knowledge Base): Là một tập hợp các quy tắc (rules) được định nghĩa bên ngoài (ví dụ: trong tệp JSON), dựa trên các tiêu chuẩn y tế (WHO, CDC).1 Ví dụ: một quy tắc kiểm tra giấc ngủ 1: $IF$ (giấc ngủ trung bình 7 ngày < 7 giờ) $THEN$ (Tạo khuyến nghị "Giấc ngủ của bạn dưới mức khuyến nghị...").
+   2. Bộ nhớ làm việc (Working Memory): Là dữ liệu sức khỏe thực tế của người dùng, được truy xuất từ $GET /api/metrics$.
+   3. Máy suy luận (Inference Engine): Là một thư viện (ví dụ: json-rules-engine 1) có nhiệm vụ chạy các quy tắc (Knowledge Base) trên dữ liệu (Working Memory) để tạo ra danh sách các khuyến nghị phù hợp.
+   * $GET /api/users/me/recommendations$: (Đã bảo vệ) Kích hoạt máy suy luận này để trả về danh sách các khuyến nghị được cá nhân hóa.
+
+
+3.6. Module API: Quản lý Trung tâm Kiến thức
+
+
+Module này phục vụ tính năng "Thư viện bài viết và kiến thức y tế" 1 bằng cách cung cấp các endpoints CRUD cho collection articles.
+   * $GET /api/articles$: Lấy danh sách tất cả bài viết.
+   * $GET /api/articles/:id$: Lấy chi tiết một bài viết cụ thể.
+
+
+Bảng 3.1: Đặc tả Bảng Endpoints API RESTful
+
+
+Bảng này đóng vai trò là "hợp đồng" (contract) kỹ thuật, định nghĩa mọi tương tác giữa Frontend và Backend.
+Module
+	Method
+	Path
+	Bảo vệ (JWT)
+	Mô tả
+	Request Body (Mẫu)
+	Success Response (Mẫu)
+	Auth
+	POST
+	/api/auth/register
+	Không
+	Đăng ký người dùng mới.
+	{ "name", "email", "password" }
+	{ "userId", "name" }
+	Auth
+	POST
+	/api/auth/login
+	Không
+	Đăng nhập, set HttpOnly cookie.
+	{ "email", "password" }
+	{ "userId", "name" }
+	Users
+	GET
+	/api/users/me
+	Có
+	Lấy hồ sơ người dùng hiện tại.
+	(Không)
+	{ "userId", "name", "email", "dob",... }
+	Users
+	PUT
+	/api/users/me
+	Có
+	Cập nhật hồ sơ.
+	{ "name", "dob", "gender" }
+	(Hồ sơ đã cập nhật)
+	Metrics
+	GET
+	/api/metrics
+	Có
+	Lấy lịch sử chỉ số (ví dụ: cho biểu đồ).
+	(Query:?metricType=weight)
+	[ { "timestamp", "value" },... ]
+	Metrics
+	POST
+	/api/metrics
+	Có
+	Ghi một chỉ số mới.
+	{ "metricType", "value", "timestamp" }
+	{ "status": "success", "data":... }
+	Rules
+	GET
+	/api/users/me/recommendations
+	Có
+	Lấy các khuyến nghị sức khỏe.
+	(Không)
+	[ { "type", "message" },... ]
+	Articles
+	GET
+	/api/articles
+	Không
+	Lấy danh sách bài viết.
+	(Không)
+	[ { "_id", "title", "category" },... ]
+	Articles
+	GET
+	/api/articles/:id
+	Không
+	Lấy chi tiết 1 bài viết.
+	(Không)
+	{ "_id", "title", "content",... }
+	
+
+Phần 4: Tài liệu Frontend (Kiến trúc React.js/Vite)
+
+
+Phần này mô tả giao diện người dùng, cấu trúc component, và cách thức tương tác với Backend API.
+
+
+4.1. Cấu trúc Ứng dụng Trang đơn (SPA) và Quản lý Trạng thái
+
+
+Frontend được xây dựng bằng React.js (với Vite).1 Việc lựa chọn React dựa trên "kiến trúc dựa trên thành phần" (component-based) 1, cho phép tái sử dụng code và quản lý giao diện phức tạp một cách hiệu quả.
+   * Cấu trúc thư mục (Dự kiến):
+/client
+ /src
+   /components    # (Component tái sử dụng: <MetricChart>, <LoadingSpinner>)
+   /pages         # (Trang chính: <DashboardPage>, <LoginPage>, <MetricsPage>)
+   /services      # (Logic gọi API: authService.js, metricService.js)
+   /context       # (Quản lý trạng thái: AuthContext.js)
+   /hooks         # (Custom hooks: useAuth, useMetrics)
+   App.jsx
+   main.jsx       # (Điểm khởi chạy của Vite)
+
+   * Quản lý Trạng thái: Với phạm vi dự án này, React Context API (ví dụ: $AuthContext$) sẽ được sử dụng để quản lý trạng thái xác thực người dùng trên toàn ứng dụng.
+
+
+4.2. Phân tích Luồng Xác thực (Trang Đăng nhập, Đăng ký)
+
+
+Phần này mô tả trải nghiệm người dùng khi tương tác với module xác thực.1
+      * Thành phần: $<LoginPage>$, $<RegisterPage>$.
+      * Logic (Đăng nhập):
+      1. $<LoginPage>$ hiển thị một form.
+      2. Khi người dùng submit, component gọi hàm $login$ từ $authService.js$.
+      3. $authService.js$ thực hiện gọi $POST /api/auth/login$ (Bảng 3.1).
+      4. Backend xử lý, và nếu thành công, sẽ set HttpOnly cookie trong phản hồi.
+      5. $authService.js$ nhận phản hồi thành công (ví dụ: chứa thông tin người dùng), sau đó cập nhật $AuthContext$.
+      6. Ứng dụng điều hướng người dùng đến trang $<DashboardPage>$.
+      * Bảo vệ Route: Một component $AuthGuard$ sẽ bọc các trang cần bảo vệ (như Dashboard). Component này kiểm tra $AuthContext$; nếu người dùng chưa đăng nhập, nó sẽ tự động chuyển hướng họ về trang $/login$.
+
+
+4.3. Phân tích Trang: Bảng điều khiển (Dashboard) và Trực quan hóa Dữ liệu
+
+
+Đây là trang cốt lõi của ứng dụng, thực hiện chức năng "Hiển thị biểu đồ và thống kê" 1 và "Bảng điều khiển trực quan hóa dữ liệu".1
+      * Thành phần: $<DashboardPage>$.
+      * Logic:
+      1. Khi $<DashboardPage>$ được tải (mount), nó sẽ kích hoạt các hàm gọi API.
+      2. Nó gọi $GET /api/metrics$ (Bảng 3.1) nhiều lần để lấy dữ liệu cho các biểu đồ khác nhau (ví dụ: $?metricType=weight$, $?metricType=sleep$).
+      3. Nó cũng gọi $GET /api/users/me/recommendations$ (Bảng 3.1) để lấy danh sách các khuyến nghị sức khỏe tự động.
+      4. Dữ liệu trả về từ các API này được lưu vào state của component.
+      5. Dữ liệu này sau đó được truyền xuống các component con như $<MetricChart>$ (để vẽ biểu đồ) và $<RecommendationsList>$ (để hiển thị lời khuyên).
+
+
+4.3.1. Kỹ thuật Tích hợp Thư viện Recharts
+
+
+Hệ thống "Tích hợp Recharts để trực quan hóa dữ liệu sức khỏe".1
+Lý do lựa chọn Recharts 1 là vì nó được xây dựng riêng cho React, "tích hợp liền mạch" và cung cấp các "thành phần biểu đồ có thể tùy chỉnh" dưới dạng component React (ví dụ: $<LineChart>$, $<XAxis>$). Điều này vượt trội so với D3.js (quá phức tạp và can thiệp DOM trực tiếp) và Chart.js (không hoàn toàn tuân thủ triết lý component-based).
+      * Ví dụ (Component $<WeightChart.jsx>$):
+JavaScript
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+
+// Giả sử 'data' là mảng [{ timestamp: "...", value: 80.5 },...]
+// được lấy từ state của <DashboardPage>
+const WeightChart = ({ data }) => (
+ <ResponsiveContainer width="100%" height={300}>
+   <LineChart data={data}>
+     <XAxis dataKey="timestamp" /> 
+     <YAxis label={{ value: 'Cân nặng (kg)', angle: -90, position: 'insideLeft' }} />
+     <Tooltip />
+     <Line type="monotone" dataKey="value" stroke="#8884d8" name="Cân nặng" />
+   </LineChart>
+ </ResponsiveContainer>
+);
+
+
+
+4.4. Phân tích Trang: Nhập liệu và Quản lý Hồ sơ
+
+
+Các trang này hỗ trợ việc "Nhập và lưu trữ các chỉ số sức khỏe" và "Quản lý hồ sơ".1
+         * Thành phần: $<MetricsEntryPage>$, $<ProfilePage>$.
+         * Logic:
+         * $<MetricsEntryPage>$: Chứa các form đơn giản (chọn ngày, loại chỉ số, giá trị). Khi submit, gọi $POST /api/metrics$ (Bảng 3.1).
+         * $<ProfilePage>$: Tải dữ liệu hồ sơ từ $GET /api/users/me$, hiển thị trong form. Khi submit, gọi $PUT /api/users/me$ (Bảng 3.1) để cập nhật.
+
+
+Bảng 4.1: Sơ đồ Thành phần (Component) React chính
+
+
+Bảng này phác thảo kiến trúc component của Frontend, tuân thủ "kiến trúc dựa trên thành phần".1
+Loại
+	Tên Component
+	Mục đích
+	Trang sử dụng
+	Dữ liệu (State/Props)
+	Page
+	$<DashboardPage>$
+	Trang chính hiển thị tổng quan sức khỏe.
+	/ (Route chính)
+	metricsData, recommendations
+	Page
+	$<LoginPage>$
+	Form đăng nhập.
+	/login
+	email, password
+	Page
+	$<RegisterPage>$
+	Form đăng ký.
+	/register
+	name, email, password
+	Page
+	$<MetricsEntryPage>$
+	Form nhập chỉ số sức khỏe hàng ngày.
+	/metrics/new
+	metricType, value, timestamp
+	Page
+	$<ProfilePage>$
+	Form cập nhật hồ sơ người dùng.
+	/profile
+	userData (từ AuthContext)
+	Component
+	$<MetricChart>$
+	Component tái sử dụng để vẽ 1 biểu đồ.
+	$<DashboardPage>$
+	props.data, props.dataKey
+	Component
+	$<AuthGuard>$
+	Wrapper bảo vệ route.
+	(Bọc các Page)
+	auth.isAuthenticated
+	Component
+	$<RecommendationsList>$
+	Hiển thị danh sách khuyến nghị.
+	$<DashboardPage>$
+	props.recommendations
+	
+
+Phần 5: Quy trình Đóng gói và Triển khai (Docker)
+
+
+Phần cuối cùng này mô tả các cấu hình kỹ thuật để đóng gói và chạy toàn bộ ứng dụng MERN Stack một cách nhất quán, đảm bảo "dễ triển khai và quản lý môi trường".1
+
+
+5.1. Phân tích Cấu hình Dockerfile (cho FE và BE)
+
+
+Để đạt được hiệu năng tối ưu theo yêu cầu của dự án 1, các image Docker cho Frontend và Backend phải được tối ưu hóa cho môi trường production.
+Đối với Frontend (React/Vite), một build đa giai đoạn (multi-stage build) là bắt buộc.
+         * Giai đoạn 1 sử dụng một image $node$ đầy đủ để cài đặt dependencies và build ứng dụng (chạy $npm run build$), tạo ra các tệp tĩnh (JS, CSS, HTML).
+         * Giai đoạn 2 sử dụng một image $nginx$ (rất nhẹ) và chỉ sao chép các tệp tĩnh đã build từ Giai đoạn 1.
+         * Cách tiếp cận này tạo ra một image production cho FE cực kỳ nhỏ gọn và hiệu suất cao, thay vì chạy môi trường $dev$ trong container.
+         * Cấu hình client/Dockerfile (FE - Multi-stage):
+Dockerfile
+# Giai đoạn 1: Build ứng dụng React
+FROM node:18-alpine AS build
+WORKDIR /app
+COPY package.json.
+RUN npm install
+COPY..
+RUN npm run build
+
+# Giai đoạn 2: Phục vụ bằng Nginx
+FROM nginx:1.23-alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+# (Cần thêm config Nginx để xử lý SPA routing)
+
+         * Cấu hình server/Dockerfile (BE):
+Dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package.json.
+RUN npm install --only=production
+COPY..
+EXPOSE 5000
+CMD ["node", "server.js"]
+
+
+
+5.2. Phân tích Dịch vụ docker-compose.yml
+
+
+Tệp docker-compose.yml được sử dụng để định nghĩa và điều phối tất cả các dịch vụ (container) của ứng dụng MERN Stack.1
+            * Cấu hình docker-compose.yml (Mẫu):
+YAML
+version: '3.8'
+
+services:
+ # Dịch vụ Frontend (Nginx)
+ client:
+   build:./client
+   ports:
+     - "80:80" # Cổng 80 của máy chủ -> cổng 80 của Nginx
+
+ # Dịch vụ Backend (Node.js)
+ server:
+   build:./server
+   ports:
+     - "5000:5000" # Cổng 5000 của máy chủ -> cổng 5000 của Node.js
+   environment:
+     DB_URI: "mongodb://mongo:27017/health_app"
+     JWT_SECRET: "YOUR_SECRET_KEY"
+   depends_on:
+     - mongo # Đảm bảo 'mongo' khởi động trước 'server'
+
+ # Dịch vụ Database (MongoDB)
+ mongo:
+   image: mongo:latest
+   ports:
+     - "27017:27017"
+   volumes:
+     - mongo-data:/data/db # Lưu trữ dữ liệu bền bỉ
+
+volumes:
+ mongo-data:
+
+Hai chi tiết trong tệp docker-compose.yml này là tối quan trọng để hệ thống hoạt động ổn định và sẵn sàng cho production:
+               1. depends_on: [mongo]: Chỉ thị này là bắt buộc. Nó đảm bảo rằng container mongo được khởi động trước container server. Nếu không có chỉ thị này, server (Node.js) có thể khởi động, cố gắng kết nối đến URI $mongodb://mongo:27017/health_app$, và bị sập (crash) vì dịch vụ $mongo$ chưa sẵn sàng.
+               2. volumes: [mongo-data:/data/db]: Chỉ thị này tạo ra một volume bền bỉ (persistent volume). Nó ánh xạ thư mục /data/db bên trong container mongo (nơi MongoDB lưu trữ dữ liệu) ra một volume do Docker quản lý trên máy chủ. Điều này đảm bảo rằng ngay cả khi container mongo bị xóa và tạo lại, toàn bộ dữ liệu người dùng (trong users, health_metrics, articles) vẫn được bảo toàn.
+Nguồn trích dẫn
+               1. Kế Hoạch Xây Dựng Website Sức Khỏe.pdf

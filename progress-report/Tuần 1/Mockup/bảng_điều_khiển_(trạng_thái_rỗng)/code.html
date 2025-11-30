@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bảng điều khiển - Trung tâm Thông minh Sức khỏe</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#13ec80",
+              "background-light": "#f6f8f7",
+              "background-dark": "#102219",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/10 dark:border-b-[#283930] px-4 sm:px-8 md:px-10 lg:px-20 xl:px-40 py-3 sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+<div class="flex items-center gap-4 text-black dark:text-white">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Trung tâm Sức khỏe</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-end items-center gap-8">
+<div class="flex items-center gap-9">
+<a class="text-black dark:text-white text-sm font-medium leading-normal" href="#">Bảng điều khiển</a>
+<a class="text-gray-600 dark:text-gray-400 text-sm font-medium leading-normal hover:text-black dark:hover:text-white" href="#">Nhật ký</a>
+<a class="text-gray-600 dark:text-gray-400 text-sm font-medium leading-normal hover:text-black dark:hover:text-white" href="#">Lịch hẹn</a>
+<a class="text-gray-600 dark:text-gray-400 text-sm font-medium leading-normal hover:text-black dark:hover:text-white" href="#">Hồ sơ</a>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBM4RujT3eBaHucElvWDvRQsF85sfh36nkhbFA41Vua4WJtFw-i55vfrmVMV9oN_Gx59M6SW3EI7tVvf0Hy_J4YEmxo-AJB_mVj8O71DspKedd4v6AgBh0SudZAElTUdoAA-cD_VqeuG_VJUrJgCe2cDs-ZB1ILCUBxTbf27yxkJJZeqPNN2j4WSWx-BsT5BXcV7jJo5zN3BHNN0-eoUKoZzMx9RC72qPq_zjmmqZt6DtJNtiB4-Qlz4R1CPFLZdHeBgyNaeREYBNh0");'></div>
+</div>
+<button class="md:hidden text-black dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<main class="px-4 sm:px-8 md:px-10 lg:px-20 xl:px-40 flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col max-w-[960px] flex-1 w-full gap-8">
+<div class="flex flex-wrap justify-between gap-4 p-4">
+<div class="flex flex-col gap-3">
+<p class="text-black dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Chào mừng bạn đến với Trung tâm Thông minh Sức khỏe!</p>
+<p class="text-gray-600 dark:text-[#9db9ab] text-base font-normal leading-normal max-w-2xl">
+                                Đây là nơi tổng quan về sức khỏe của bạn. Hãy bắt đầu bằng cách thêm dữ liệu để chúng tôi có thể cung cấp cho bạn những thông tin chi tiết hữu ích và cá nhân hóa.
+                            </p>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-4 bg-white/5 dark:bg-[#111814] rounded-xl border border-white/10 dark:border-[#283930]">
+<div class="flex gap-6 justify-between items-center">
+<p class="text-black dark:text-white text-base font-medium leading-normal">Tiến độ hoàn thành hồ sơ</p>
+<p class="text-black dark:text-white text-sm font-normal leading-normal">25%</p>
+</div>
+<div class="rounded-full bg-gray-200 dark:bg-[#3b5447]">
+<div class="h-2 rounded-full bg-primary" style="width: 25%;"></div>
+</div>
+</div>
+<div class="flex flex-col gap-5">
+<h2 class="text-black dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pt-5">Bắt đầu hành trình của bạn</h2>
+<div class="flex flex-col sm:flex-row flex-1 gap-3 flex-wrap px-4 py-3 justify-start">
+<button class="flex-1 flex min-w-[200px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-5 bg-primary text-[#111814] text-base font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined">person</span>
+<span class="truncate">Hoàn thành Hồ sơ</span>
+</button>
+<button class="flex-1 flex min-w-[200px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-5 bg-gray-200 dark:bg-[#283930] text-black dark:text-white text-base font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined">add_chart</span>
+<span class="truncate">Ghi nhận Chỉ số Sức khỏe</span>
+</button>
+<button class="flex-1 flex min-w-[200px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-5 bg-gray-200 dark:bg-[#283930] text-black dark:text-white text-base font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined">watch</span>
+<span class="truncate">Kết nối với Thiết bị</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+<div class="flex flex-col items-center justify-center gap-4 p-8 bg-white/5 dark:bg-[#111814] rounded-xl border border-dashed border-gray-400 dark:border-[#3b5447] text-center">
+<span class="material-symbols-outlined text-4xl text-gray-500 dark:text-[#9db9ab]">monitoring</span>
+<h3 class="text-black dark:text-white font-bold">Xu hướng Cân nặng</h3>
+<p class="text-gray-600 dark:text-[#9db9ab] text-sm">Chưa có dữ liệu. Hãy thêm chỉ số đầu tiên để bắt đầu theo dõi.</p>
+<button class="mt-2 text-primary text-sm font-bold">Thêm dữ liệu</button>
+</div>
+<div class="flex flex-col items-center justify-center gap-4 p-8 bg-white/5 dark:bg-[#111814] rounded-xl border border-dashed border-gray-400 dark:border-[#3b5447] text-center">
+<span class="material-symbols-outlined text-4xl text-gray-500 dark:text-[#9db9ab]">bedtime</span>
+<h3 class="text-black dark:text-white font-bold">Chất lượng Giấc ngủ</h3>
+<p class="text-gray-600 dark:text-[#9db9ab] text-sm">Chưa có dữ liệu. Hãy thêm chỉ số đầu tiên để bắt đầu theo dõi.</p>
+<button class="mt-2 text-primary text-sm font-bold">Thêm dữ liệu</button>
+</div>
+<div class="flex flex-col items-center justify-center gap-4 p-8 bg-white/5 dark:bg-[#111814] rounded-xl border border-dashed border-gray-400 dark:border-[#3b5447] text-center">
+<span class="material-symbols-outlined text-4xl text-gray-500 dark:text-[#9db9ab]">directions_run</span>
+<h3 class="text-black dark:text-white font-bold">Hoạt động Hàng ngày</h3>
+<p class="text-gray-600 dark:text-[#9db9ab] text-sm">Chưa có dữ liệu. Hãy thêm chỉ số đầu tiên để bắt đầu theo dõi.</p>
+<button class="mt-2 text-primary text-sm font-bold">Thêm dữ liệu</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

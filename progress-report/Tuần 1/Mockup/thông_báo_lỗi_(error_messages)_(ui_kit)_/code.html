@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thiết kế Thông báo lỗi - Trung tâm Thông minh Sức khỏe Cá nhân</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#13ec80",
+            "background-light": "#f6f8f7",
+            "background-dark": "#102219",
+            "error-dark": "#D32F2F",
+            "error-light-bg": "#FFEBEE",
+          },
+          fontFamily: {
+            "display": ["Manrope", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .font-display {
+      font-family: 'Manrope', sans-serif;
+    }
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-[#1c2721] dark:text-white">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 flex flex-1 justify-center py-10">
+<div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+<h1 class="text-3xl font-bold mb-2 text-center text-gray-900 dark:text-white">Thiết Kế Thông Báo Lỗi</h1>
+<p class="text-center text-gray-600 dark:text-gray-400 mb-12">Các mẫu thông báo lỗi cho "Trung tâm Thông minh Sức khỏe Cá nhân".</p>
+<!-- Section 1: Form with various error types -->
+<div class="bg-background-light dark:bg-background-dark border border-gray-200 dark:border-[#3b5447] rounded-xl p-6 sm:p-8 w-full max-w-2xl mx-auto">
+<h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Biểu mẫu Đăng ký</h2>
+<!-- Form-level Summary Error -->
+<div class="p-4 @container mb-6">
+<div class="flex flex-1 flex-col items-start justify-between gap-4 rounded-lg border border-error-dark bg-error-light-bg dark:bg-[#2c1313] p-5 @[480px]:flex-row @[480px]:items-center">
+<div class="flex flex-col gap-1">
+<p class="text-error-dark dark:text-[#f8b2b2] text-base font-bold leading-tight">Có lỗi xảy ra, vui lòng kiểm tra lại</p>
+<ul class="list-disc list-inside text-error-dark/80 dark:text-[#eeb7b7] text-base font-normal leading-normal">
+<li>Email không hợp lệ.</li>
+<li>Mật khẩu phải có ít nhất 8 ký tự.</li>
+<li>Vui lòng nhập ngày sinh.</li>
+</ul>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-error-dark text-white text-sm font-medium leading-normal">
+<span class="truncate">Thử lại</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-6">
+<!-- Inline Error Example 1: Invalid Email -->
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-gray-900 dark:text-white text-base font-medium leading-normal pb-2">Email</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border-error-dark bg-background-light dark:bg-[#1c2721] focus:border-primary h-14 placeholder:text-[#9db9ab] p-[15px] text-base font-normal leading-normal ring-1 ring-inset ring-error-dark" placeholder="example@email.com" value="test@"/>
+<div class="flex items-center gap-1.5 pt-1.5">
+<span class="material-symbols-outlined text-error-dark" style="font-size: 16px;">error</span>
+<p class="text-error-dark text-sm font-normal leading-normal">Vui lòng nhập email hợp lệ</p>
+</div>
+</label>
+<!-- Inline Error Example 2: Short Password -->
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-gray-900 dark:text-white text-base font-medium leading-normal pb-2">Mật khẩu</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border-error-dark bg-background-light dark:bg-[#1c2721] focus:border-primary h-14 placeholder:text-[#9db9ab] p-[15px] text-base font-normal leading-normal ring-1 ring-inset ring-error-dark" placeholder="Nhập mật khẩu của bạn" type="password" value="1234"/>
+<div class="flex items-center gap-1.5 pt-1.5">
+<span class="material-symbols-outlined text-error-dark" style="font-size: 16px;">error</span>
+<p class="text-error-dark text-sm font-normal leading-normal">Mật khẩu phải có ít nhất 8 ký tự</p>
+</div>
+</label>
+<!-- Correct Field Example -->
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-gray-900 dark:text-white text-base font-medium leading-normal pb-2">Họ và Tên</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border-gray-300 dark:border-[#3b5447] bg-background-light dark:bg-[#1c2721] focus:border-primary h-14 placeholder:text-[#9db9ab] p-[15px] text-base font-normal leading-normal" placeholder="Nhập họ và tên" value="Nguyễn Văn A"/>
+</label>
+</div>
+</div>
+<!-- Section 2: Toast Notification -->
+<div class="w-full max-w-2xl mx-auto mt-12">
+<h2 class="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">Thông báo lỗi Pop-up/Toast</h2>
+<div class="relative flex items-center justify-center p-8 border border-dashed border-gray-300 dark:border-[#3b5447] rounded-xl">
+<!-- Toast Notification Component -->
+<div class="flex items-start gap-4 p-4 rounded-xl shadow-lg bg-error-light-bg dark:bg-[#2c1313] w-full max-w-sm border border-error-dark/20">
+<div class="flex-shrink-0">
+<span class="material-symbols-outlined text-error-dark dark:text-[#f8b2b2] p-2 bg-error-dark/10 rounded-full" style="font-size: 24px;">error</span>
+</div>
+<div class="flex-1">
+<p class="font-bold text-error-dark dark:text-[#f8b2b2]">Không thể lưu dữ liệu</p>
+<p class="text-sm text-error-dark/80 dark:text-[#eeb7b7]">Đã có lỗi xảy ra phía máy chủ. Vui lòng thử lại sau.</p>
+</div>
+<button class="p-1 -m-1 text-error-dark/60 dark:text-[#eeb7b7]/60 hover:text-error-dark dark:hover:text-[#eeb7b7]">
+<span class="material-symbols-outlined" style="font-size: 20px;">close</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

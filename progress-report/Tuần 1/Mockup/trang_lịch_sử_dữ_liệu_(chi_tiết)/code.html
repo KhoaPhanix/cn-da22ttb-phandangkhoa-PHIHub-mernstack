@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lịch sử Dữ liệu Sức khỏe</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#13ec80",
+              "background-light": "#f6f8f7",
+              "background-dark": "#102219",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-4 sm:px-8 md:px-12 lg:px-20 xl:px-40 flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+<!-- TopNavBar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/10 px-4 md:px-10 py-3">
+<div class="flex items-center gap-4 text-white">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Sức khỏe Cá nhân</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-end gap-8">
+<div class="flex items-center gap-9">
+<a class="text-white/80 hover:text-white text-sm font-medium leading-normal" href="#">Trang chủ</a>
+<a class="text-white/80 hover:text-white text-sm font-medium leading-normal" href="#">Bảng điều khiển</a>
+<a class="text-primary text-sm font-medium leading-normal" href="#">Lịch sử Dữ liệu</a>
+<a class="text-white/80 hover:text-white text-sm font-medium leading-normal" href="#">Cài đặt</a>
+</div>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-white/5 hover:bg-white/10 text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+<span class="material-symbols-outlined text-white" style="font-size: 20px;">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA5ft_EbqEh_bWSwJk3p96Vm7MFWMUS4grKzobb5AlHUB1b2V5r4xmdYaj_R_xFcD4FOdu98Ya_trGXMTEC5jm-0mnS680t_70Tk_HjjgjDlBve-HdxCwndyo77-c9npuOfoaKfcEotf0c2_7xGp0xZ35BCVBaeAkS7cs4PYiRkwuUWoGbC2AdeK03PsoRzJW4m0fPeg7j9faiEtDEGWDyS62nnGaVmI22MN9HNoXdtTeWveEV4KH-_yjNIb3UIjOw26hyXhsVkbYdU");'></div>
+</div>
+<button class="md:hidden flex items-center justify-center p-2 text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<!-- PageHeading -->
+<div class="flex flex-wrap justify-between gap-3 p-4 mt-8">
+<div class="flex min-w-72 flex-col gap-3">
+<p class="text-white text-4xl font-black leading-tight tracking-[-0.033em]">Lịch sử Dữ liệu Sức khỏe</p>
+<p class="text-white/60 text-base font-normal leading-normal">Xem lại và phân tích dữ liệu sức khỏe của bạn theo thời gian.</p>
+</div>
+</div>
+<!-- Filter & Tool Bar -->
+<div class="flex flex-col md:flex-row justify-between gap-4 px-4 py-3 mt-4 border-y border-white/10">
+<div class="flex flex-wrap gap-3 items-center">
+<!-- Date Range Picker -->
+<div class="relative">
+<button class="flex items-center gap-2 h-10 px-4 rounded-lg bg-white/5 text-white text-sm font-medium hover:bg-white/10">
+<span class="material-symbols-outlined text-base">calendar_month</span>
+<span>Tháng này: 1-31/10</span>
+<span class="material-symbols-outlined text-base">arrow_drop_down</span>
+</button>
+</div>
+<!-- Data Type Filter -->
+<div class="relative">
+<select class="appearance-none h-10 pl-4 pr-10 rounded-lg bg-white/5 text-white text-sm font-medium hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-primary/50">
+<option>Tất cả dữ liệu</option>
+<option>Nhịp tim</option>
+<option>Số bước chân</option>
+<option>Giấc ngủ</option>
+<option>Calo</option>
+</select>
+<span class="material-symbols-outlined text-base pointer-events-none absolute right-3 top-1/2 -translate-y-1/2">arrow_drop_down</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<!-- SegmentedButtons (View Toggle) -->
+<div class="flex h-10 flex-1 items-center justify-center rounded-lg bg-white/5 p-1 max-w-xs">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-3 has-[:checked]:bg-white/10 has-[:checked]:shadow-[0_0_4px_rgba(0,0,0,0.1)] has-[:checked]:text-white text-white/60 text-sm font-medium leading-normal gap-2">
+<span class="material-symbols-outlined text-base">bar_chart</span>
+<span class="truncate">Biểu đồ</span>
+<input checked="" class="invisible w-0" name="view-toggle" type="radio" value="Biểu đồ"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-3 has-[:checked]:bg-white/10 has-[:checked]:shadow-[0_0_4px_rgba(0,0,0,0.1)] has-[:checked]:text-white text-white/60 text-sm font-medium leading-normal gap-2">
+<span class="material-symbols-outlined text-base">table_rows</span>
+<span class="truncate">Bảng</span>
+<input class="invisible w-0" name="view-toggle" type="radio" value="Bảng"/>
+</label>
+</div>
+<!-- Export Button -->
+<button class="flex items-center justify-center h-10 w-10 rounded-lg bg-white/5 text-white hover:bg-white/10">
+<span class="material-symbols-outlined text-white" style="font-size: 20px;">download</span>
+</button>
+</div>
+</div>
+<!-- Charts -->
+<div class="flex flex-wrap gap-4 px-4 py-6">
+<div class="flex min-w-72 flex-1 flex-col gap-2 rounded-xl border border-white/10 bg-white/5 p-6">
+<p class="text-white text-base font-medium leading-normal">Nhịp tim trung bình</p>
+<p class="text-white tracking-light text-[32px] font-bold leading-tight truncate">72 bpm</p>
+<div class="flex gap-1">
+<p class="text-white/60 text-sm font-normal leading-normal">Tháng 10</p>
+<p class="text-primary text-sm font-medium leading-normal">+5%</p>
+</div>
+<div class="flex min-h-[180px] flex-1 flex-col gap-8 py-4">
+<svg fill="none" height="148" preserveaspectratio="none" viewbox="-3 0 478 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H326.769H0V109Z" fill="url(#paint0_linear_1131_5935)"></path>
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="#13ec80" stroke-linecap="round" stroke-width="3"></path>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="paint0_linear_1131_5935" x1="236" x2="236" y1="1" y2="149">
+<stop stop-color="#13ec80" stop-opacity="0.3"></stop>
+<stop offset="1" stop-color="#13ec80" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="flex justify-around">
+<p class="text-white/60 text-[13px] font-bold leading-normal tracking-[0.015em]">Tuần 1</p>
+<p class="text-white/60 text-[13px] font-bold leading-normal tracking-[0.015em]">Tuần 2</p>
+<p class="text-white/60 text-[13px] font-bold leading-normal tracking-[0.015em]">Tuần 3</p>
+<p class="text-white/60 text-[13px] font-bold leading-normal tracking-[0.015em]">Tuần 4</p>
+</div>
+</div>
+</div>
+<div class="flex min-w-72 flex-1 flex-col gap-2 rounded-xl border border-white/10 bg-white/5 p-6">
+<p class="text-white text-base font-medium leading-normal">Số bước chân hàng ngày</p>
+<p class="text-white tracking-light text-[32px] font-bold leading-tight truncate">8,120</p>
+<div class="flex gap-1">
+<p class="text-white/60 text-sm font-normal leading-normal">Tháng 10</p>
+<p class="text-[#fa5538] text-sm font-medium leading-normal">-2%</p>
+</div>
+<div class="grid min-h-[180px] grid-flow-col gap-6 grid-rows-[1fr_auto] items-end justify-items-center px-3 pt-12 pb-4">
+<div class="bg-primary/30 w-full rounded-t" style="height: 90%;"></div>
+<p class="text-white/60 text-[13px] font-bold leading-normal tracking-[0.015em]">T2</p>
+<div class="bg-primary/30 w-full rounded-t" style="height: 70%;"></div>
+<p class="text-white/60 text-[13px] font-bold leading-normal tracking-[0.015em]">T3</p>
+<div class="bg-primary/30 w-full rounded-t" style="height: 60%;"></div>
+<p class="text-white/60 text-[13px] font-bold leading-normal tracking-[0.015em]">T4</p>
+<div class="bg-primary w-full rounded-t" style="height: 80%;"></div>
+<p class="text-white/60 text-[13px] font-bold leading-normal tracking-[0.015em]">T5</p>
+<div class="bg-primary/30 w-full rounded-t" style="height: 60%;"></div>
+<p class="text-white/60 text-[13px] font-bold leading-normal tracking-[0.015em]">T6</p>
+<div class="bg-primary/30 w-full rounded-t" style="height: 80%;"></div>
+<p class="text-white/60 text-[13px] font-bold leading-normal tracking-[0.015em]">T7</p>
+<div class="bg-primary/30 w-full rounded-t" style="height: 30%;"></div>
+<p class="text-white/60 text-[13px] font-bold leading-normal tracking-[0.015em]">CN</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

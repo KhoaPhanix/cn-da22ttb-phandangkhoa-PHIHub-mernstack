@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chi tiết Bài viết - Trung tâm Thông minh Sức khỏe Cá nhân</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec80",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102219",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-white/10 dark:border-b-[#283930] px-4 sm:px-8 md:px-20 lg:px-40 py-3 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+<div class="flex items-center gap-4 text-gray-800 dark:text-white">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z"></path>
+</svg>
+</div>
+<h2 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Health Intelligence Hub</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-end items-center gap-8">
+<div class="flex items-center gap-9">
+<a class="text-gray-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Trang chủ</a>
+<a class="text-primary dark:text-primary text-sm font-bold leading-normal" href="#">Góc Kiến thức</a>
+<a class="text-gray-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Tư vấn</a>
+<a class="text-gray-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Về chúng tôi</a>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-background-dark text-sm font-bold leading-normal tracking-[0.015em] hover:bg-opacity-90 transition-opacity">
+<span class="truncate">Đăng nhập</span>
+</button>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary/20 dark:bg-[#283930] text-gray-800 dark:text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/30 dark:hover:bg-opacity-90 transition-colors">
+<span class="truncate">Đăng ký</span>
+</button>
+</div>
+</div>
+<div class="md:hidden">
+<button class="text-gray-800 dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="px-4 sm:px-8 md:px-20 lg:px-40 flex flex-1 justify-center py-5 md:py-10">
+<div class="layout-content-container flex flex-col w-full max-w-4xl flex-1">
+<!-- Back Button and Breadcrumbs -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+<!-- BackButton -->
+<button class="flex w-fit min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-2 bg-transparent text-gray-500 dark:text-gray-400 gap-2 text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-gray-500 dark:text-gray-400">arrow_back</span>
+<span class="truncate">Quay lại Góc Kiến thức</span>
+</button>
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap items-center gap-2">
+<a class="text-gray-500 dark:text-[#9db9ab] text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Trang chủ</a>
+<span class="text-gray-400 dark:text-[#9db9ab]">/</span>
+<a class="text-gray-500 dark:text-[#9db9ab] text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Góc Kiến thức</a>
+<span class="text-gray-400 dark:text-[#9db9ab]">/</span>
+<span class="text-gray-800 dark:text-white text-sm font-medium leading-normal line-clamp-1">5 Thói Quen Để Cải Thiện...</span>
+</div>
+</div>
+<article>
+<!-- HeadlineText -->
+<h1 class="text-gray-900 dark:text-white tracking-tight text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight text-left pb-3 pt-6">5 Thói Quen Đơn Giản Để Cải Thiện Giấc Ngủ</h1>
+<!-- MetaText -->
+<p class="text-gray-500 dark:text-[#9db9ab] text-sm font-normal leading-normal pb-6 pt-1">Tác giả: <a class="font-medium hover:text-primary transition-colors" href="#">Bác sĩ Nguyễn Văn A</a> | Ngày đăng: 25/10/2023</p>
+<!-- Hero Image -->
+<div class="w-full aspect-video bg-gray-200 dark:bg-gray-800 rounded-xl overflow-hidden mb-8">
+<img class="w-full h-full object-cover" data-alt="A person sleeping peacefully in a comfortable bed with soft lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeHTJkfmbFLkdzfooIkEh1Jn28t-BTBKQAhwr-8Xr_1y-V64m0rAOGj49m-HSJzb1esNcoaJopPWM0ISCDSGG3TZ3Tmx6-qv68wLYSOfXzjsNhXsMeoRdQOjD8_zD4TgbG8sVQ1EIoJOSHaA6Cps4aW4cB_0QruEqCbKcjDRvdB1J2Z-aayzo6Cs8trMSqHswkq79fP6vGLKocbK8xNW5kwrlMM6b_2HJ-IRMNLwRcWjG1We5niuZht46hg2QjWcBrOOwJWgQDLrs3"/>
+</div>
+<!-- Article Body -->
+<div class="prose prose-lg lg:prose-xl max-w-none text-gray-700 dark:text-gray-300 prose-headings:text-gray-900 dark:prose-headings:text-white prose-h2:font-bold prose-h2:text-2xl lg:prose-h2:text-3xl prose-h3:font-semibold prose-h3:text-xl lg:prose-h3:text-2xl prose-a:text-primary dark:prose-a:text-primary hover:prose-a:underline prose-strong:text-gray-800 dark:prose-strong:text-white">
+<p>Giấc ngủ đóng vai trò cực kỳ quan trọng đối với sức khỏe thể chất và tinh thần. Tuy nhiên, trong cuộc sống hiện đại, nhiều người lại gặp khó khăn trong việc có được một giấc ngủ ngon. May mắn thay, chỉ cần thay đổi một vài thói quen nhỏ, bạn có thể cải thiện đáng kể chất lượng giấc ngủ của mình.</p>
+<h2>1. Thiết lập lịch trình ngủ đều đặn</h2>
+<p>Cố gắng đi ngủ và thức dậy vào cùng một thời điểm mỗi ngày, kể cả cuối tuần. Điều này giúp điều hòa đồng hồ sinh học của cơ thể, giúp bạn dễ đi vào giấc ngủ và thức dậy một cách tự nhiên hơn.</p>
+<h2>2. Tạo không gian ngủ lý tưởng</h2>
+<p>Phòng ngủ của bạn nên là một không gian yên tĩnh, tối và mát mẻ. Hạn chế ánh sáng xanh từ các thiết bị điện tử như điện thoại, máy tính bảng ít nhất một giờ trước khi ngủ. Bạn có thể đầu tư vào rèm cản sáng hoặc mặt nạ ngủ nếu cần thiết.</p>
+<div class="w-full aspect-[16/10] bg-gray-200 dark:bg-gray-800 rounded-lg overflow-hidden my-6">
+<img class="w-full h-full object-cover" data-alt="A tranquil and dark bedroom with moonlight streaming through a window." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeps-OQSRONDzjn9FaiBTrmSR9ouA_w4fqVjj4BNBU9EyMctfA1_WwzLK8LmLahQOnJdMqfjwF-fUEhXnv94a8WR-hFp4MA9Ocjg7FGD6MF-WCPeHflvLVYFmMIJUmSPXfINA6YGMn99_LY-bMWNLm9wTJYKuQyKSu2aR1EFMsojS9MHk-M3HhGPF9Bej-SJWaJpYMMI54LQto9LI85Nbyh-5upfQgcFUyrxxkltP0CbVvnfWNrRXkgBcLGwkuo73ZmTUSxKrYk9WT"/>
+</div>
+<h2>3. Chú ý đến chế độ ăn uống</h2>
+<p>Tránh ăn no, uống rượu bia hoặc caffeine gần giờ đi ngủ. Một bữa ăn nhẹ hoặc một cốc sữa ấm có thể giúp bạn dễ ngủ hơn. Dưới đây là một số loại thực phẩm tốt cho giấc ngủ:</p>
+<ul>
+<li>Chuối (giàu magie và kali)</li>
+<li>Trà hoa cúc (có tác dụng an thần nhẹ)</li>
+<li>Hạnh nhân (nguồn cung cấp magie tuyệt vời)</li>
+<li>Cá béo (chứa vitamin D và omega-3)</li>
+</ul>
+<h2>4. Vận động thể chất thường xuyên</h2>
+<p>Tập thể dục đều đặn có thể giúp bạn ngủ sâu hơn. Tuy nhiên, tránh tập luyện quá sức ngay trước khi đi ngủ vì nó có thể gây tác dụng ngược, khiến bạn khó ngủ hơn.</p>
+<h2>5. Thư giãn trước khi ngủ</h2>
+<p>Tạo một thói quen thư giãn trước khi ngủ để báo hiệu cho cơ thể biết đã đến giờ nghỉ ngơi. Bạn có thể đọc sách, nghe nhạc nhẹ, tắm nước ấm hoặc thực hành các bài tập thiền định, hít thở sâu.</p>
+<p>Bằng cách áp dụng 5 thói quen đơn giản này, bạn sẽ dần dần xây dựng được một chu trình ngủ lành mạnh, giúp nâng cao sức khỏe và chất lượng cuộc sống mỗi ngày. Chúc bạn có những giấc ngủ ngon!</p>
+</div>
+</article>
+<!-- Social Share -->
+<div class="mt-12 pt-8 border-t border-gray-200 dark:border-white/10">
+<div class="flex items-center gap-4">
+<p class="text-sm font-semibold text-gray-700 dark:text-gray-300">Chia sẻ bài viết:</p>
+<div class="flex gap-2">
+<a aria-label="Share on Facebook" class="flex items-center justify-center size-9 rounded-full bg-primary/20 dark:bg-primary/10 text-primary dark:text-primary hover:bg-primary/30 dark:hover:bg-primary/20 transition-colors" href="#">
+<svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"></path></svg>
+</a>
+<a aria-label="Share on Twitter" class="flex items-center justify-center size-9 rounded-full bg-primary/20 dark:bg-primary/10 text-primary dark:text-primary hover:bg-primary/30 dark:hover:bg-primary/20 transition-colors" href="#">
+<svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M23.643 4.937c-.835.37-1.732.62-2.675.733a4.67 4.67 0 0 0 2.048-2.578 9.3 9.3 0 0 1-2.958 1.13 4.66 4.66 0 0 0-7.938 4.25 13.229 13.229 0 0 1-9.602-4.868c-.333.57-.523 1.234-.523 1.937 0 1.616.823 3.043 2.072 3.878a4.63 4.63 0 0 1-2.11-.583v.06a4.66 4.66 0 0 0 3.738 4.566c-.693.188-1.426.216-2.168.084a4.66 4.66 0 0 0 4.352 3.234 9.348 9.348 0 0 1-5.786 1.995c-.376 0-.747-.022-1.112-.065a13.175 13.175 0 0 0 7.14 2.093c8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602a9.45 9.45 0 0 0 2.323-2.41z"></path></svg>
+</a>
+<a aria-label="Copy link" class="flex items-center justify-center size-9 rounded-full bg-primary/20 dark:bg-primary/10 text-primary dark:text-primary hover:bg-primary/30 dark:hover:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">link</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

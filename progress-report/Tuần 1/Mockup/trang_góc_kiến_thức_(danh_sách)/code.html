@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thư viện Kiến thức - Trung tâm Thông minh Sức khỏe Cá nhân</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec80",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102219",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden group/design-root">
+<div class="layout-container flex h-full grow flex-col">
+<div class="flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col w-full max-w-6xl px-4">
+<!-- TopNavBar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/10 dark:border-white/10 px-6 py-4 rounded-xl bg-white/5 dark:bg-white/5 backdrop-blur-sm">
+<div class="flex items-center gap-4 text-white">
+<div class="text-primary size-7">
+<span class="material-symbols-outlined !text-3xl">health_and_safety</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Trung tâm Thông minh Sức khỏe Cá nhân</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-center items-center gap-9">
+<a class="text-gray-300 dark:text-gray-300 hover:text-white text-sm font-medium leading-normal" href="#">Trang chủ</a>
+<a class="text-white text-sm font-medium leading-normal" href="#">Bài viết</a>
+<a class="text-gray-300 dark:text-gray-300 hover:text-white text-sm font-medium leading-normal" href="#">Tư vấn</a>
+<a class="text-gray-300 dark:text-gray-300 hover:text-white text-sm font-medium leading-normal" href="#">Hồ sơ cá nhân</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 w-10 bg-white/10 dark:bg-white/10 text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0">
+<span class="material-symbols-outlined text-white">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDAV3f1S9aXbMPDYJoQTfuS8LxOFlI8y5Ot-ipst4vF6b3mD7Fw9qDKysTYZWX5FXu5Y8HfYh-hYJLPQKhSFjcCaHRGKJ--G42ly4Q8MCpHqRv-SDCbMkzj_gR27bKS3gt4C0iWsb35ctyJcN_UBCpQ1vc_ulzZ2XNyg9azOs38FK9v84NLrkx0KznDmj-9_UF_5NzM2AiD3v1O-u0nzPGdopmW740Y-VcYGuvtmQ2HJiT592iRXmoVd9CrZYykqBIjrxWATZpzE4Kg");'></div>
+</div>
+</header>
+<main class="flex flex-col gap-8 mt-10 px-2 sm:px-4">
+<!-- PageHeading -->
+<div class="flex flex-wrap justify-between gap-3 p-4">
+<p class="text-white text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">Thư viện Kiến thức</p>
+</div>
+<!-- SearchBar -->
+<div class="px-4 py-3">
+<label class="flex flex-col min-w-40 h-14 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-xl h-full">
+<div class="text-gray-400 dark:text-gray-400 flex border-none bg-white/10 dark:bg-white/10 items-center justify-center pl-4 rounded-l-xl border-r-0">
+<span class="material-symbols-outlined !text-2xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border-none bg-white/10 dark:bg-white/10 h-full placeholder:text-gray-400 dark:placeholder:text-gray-400 px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Tìm kiếm bài viết, triệu chứng..." value=""/>
+</div>
+</label>
+</div>
+<!-- Chips -->
+<div class="flex gap-3 p-3 overflow-x-auto">
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary text-background-dark pl-4 pr-4">
+<p class="text-sm font-bold leading-normal">Tất cả</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white/10 dark:bg-white/10 hover:bg-white/20 dark:hover:bg-white/20 pl-4 pr-4">
+<p class="text-white text-sm font-medium leading-normal">Dinh dưỡng</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white/10 dark:bg-white/10 hover:bg-white/20 dark:hover:bg-white/20 pl-4 pr-4">
+<p class="text-white text-sm font-medium leading-normal">Tập luyện</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white/10 dark:bg-white/10 hover:bg-white/20 dark:hover:bg-white/20 pl-4 pr-4">
+<p class="text-white text-sm font-medium leading-normal">Sức khỏe tinh thần</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white/10 dark:bg-white/10 hover:bg-white/20 dark:hover:bg-white/20 pl-4 pr-4">
+<p class="text-white text-sm font-medium leading-normal">Bệnh thường gặp</p>
+</button>
+</div>
+<!-- ImageGrid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+<div class="flex flex-col gap-4 pb-3 rounded-xl bg-white/5 dark:bg-white/5 overflow-hidden group hover:bg-white/10 dark:hover:bg-white/10 transition-colors duration-300 cursor-pointer">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="A glass of water with lemon slices" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCdEupJXuh5qgMmzqOt9zsW_xC7ydtsnjvmM3WJLhXJIq0_MfkCsGGsb3jKPpmpeq96rXHfGSCKJnFwI1ACcoB4mLvurZdrHoeu761xfJPKE8Qc3OLZT9fNoibWfc5o37NQYax1OiOb8BJ5J-wXAr07-BCuz-mfGP3L9EQh6_BgfWlTXWNUIhMq8pVRBn9cNZWxlVcwct_AgNtHsrzCEaUi4t7ThGH46SrSbPLAup9zjTmdACj5praZpA3tKOpyT7c2DI581T-GDb9N");'></div>
+<div class="px-4 flex flex-col gap-2">
+<p class="text-white text-base font-bold leading-normal">10 Lợi ích không ngờ của việc uống đủ nước mỗi ngày</p>
+<p class="text-gray-300 dark:text-gray-300 text-sm font-normal leading-normal">Khám phá cách uống đủ nước có thể cải thiện năng lượng, làn da và sức khỏe tổng thể của bạn một cách đáng kể.</p>
+<p class="text-primary/80 text-sm font-medium leading-normal">#DinhDưỡng</p>
+</div>
+</div>
+<div class="flex flex-col gap-4 pb-3 rounded-xl bg-white/5 dark:bg-white/5 overflow-hidden group hover:bg-white/10 dark:hover:bg-white/10 transition-colors duration-300 cursor-pointer">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="A person meditating outdoors" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAKLpnSSk_SWiD7ROaAjcFfHzYVLvpLu_T2ug1T32ncCo2nFwahA21tPtaNQCNinRxzTjFqYkYNOTvdglGEMTAifGDfOuQMTPXQk1vh3Bb5z8-0x_JtYdgPaSLZkZpDwJWay3vczReCDH0W6xBE51vkHdEQbNaBTB7CCBtHUmFNpWb6IecLWhlotXczjT4TFxjsKcwIEvnIDEiF9qEobZZICxFIAPui6_FXGFyYL2mmlZFRaQJsLl-odsnrv9NIJiRPeiDeg1H3ICgu");'></div>
+<div class="px-4 flex flex-col gap-2">
+<p class="text-white text-base font-bold leading-normal">Hướng dẫn thiền cho người mới bắt đầu để giảm căng thẳng</p>
+<p class="text-gray-300 dark:text-gray-300 text-sm font-normal leading-normal">Tìm hiểu các bước đơn giản để bắt đầu thực hành thiền, giúp bạn tìm thấy sự bình yên và tập trung trong cuộc sống.</p>
+<p class="text-primary/80 text-sm font-medium leading-normal">#SứcKhỏeTinhThần</p>
+</div>
+</div>
+<div class="flex flex-col gap-4 pb-3 rounded-xl bg-white/5 dark:bg-white/5 overflow-hidden group hover:bg-white/10 dark:hover:bg-white/10 transition-colors duration-300 cursor-pointer">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="A colorful salad bowl" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuACPgvnMENP3GO68uxuJzPtmVujPu5zB4X_GCAbaTRXid1JPq9AOadjJPq4CiiUmg5T4Plp0qorUlxT9X4MfhqpcKZvBb7ZNZuqg_cIq_evCLijj2TwSZDFkApVlzFUyUN_0ve8SQq2Ym2e7T68eKTQDxdIOlM8KzGVA6nhPQ9bTUBXNi49EabLIXHMxGC6FWcBCmV8dgTSwNXa6f5SWcS_fJ2ymAa0h6PPpXs8E-14qTCdXIzNmmgevwS9_GVjkyASzO27ul8YrP4f");'></div>
+<div class="px-4 flex flex-col gap-2">
+<p class="text-white text-base font-bold leading-normal">Chế độ ăn DASH: Giải pháp cho người cao huyết áp</p>
+<p class="text-gray-300 dark:text-gray-300 text-sm font-normal leading-normal">Một cái nhìn sâu hơn về chế độ ăn được thiết kế để giúp kiểm soát và hạ huyết áp một cách tự nhiên và hiệu quả.</p>
+<p class="text-primary/80 text-sm font-medium leading-normal">#DinhDưỡng</p>
+</div>
+</div>
+<div class="flex flex-col gap-4 pb-3 rounded-xl bg-white/5 dark:bg-white/5 overflow-hidden group hover:bg-white/10 dark:hover:bg-white/10 transition-colors duration-300 cursor-pointer">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="A person doing yoga at home" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuABSZarsWYM0GclYAK0Gh75mBcHDh3RGLnF7DibnwhpHPvMO5mrIyOlDYTsZDCJqgwSzxnpjG4nLQIySofNnpe0GrCcAYHaUB8VMEYdwksVvuuEjU8iSuo5JFO7IfSFALPvX6AjeSBKZv7YwVyUD6eygr2Il3OdeUbmpDadHadLLk_OWfMAQUc9UhHELYFTlTKheKEMX3s_aJyDIJWBZlHP4r6cdMqoFCuEy2nvyFULqLL9KyjV7hHcDrmvBAnJ8k3Mt3kqaAqsLWSK");'></div>
+<div class="px-4 flex flex-col gap-2">
+<p class="text-white text-base font-bold leading-normal">5 bài tập thể dục tại nhà không cần dụng cụ</p>
+<p class="text-gray-300 dark:text-gray-300 text-sm font-normal leading-normal">Duy trì vóc dáng và tăng cường sức khỏe ngay tại nhà với những bài tập đơn giản mà bạn có thể thực hiện mọi lúc.</p>
+<p class="text-primary/80 text-sm font-medium leading-normal">#TậpLuyện</p>
+</div>
+</div>
+<div class="flex flex-col gap-4 pb-3 rounded-xl bg-white/5 dark:bg-white/5 overflow-hidden group hover:bg-white/10 dark:hover:bg-white/10 transition-colors duration-300 cursor-pointer">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="Blood glucose monitoring kit" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC0v3F8u56evT2OHpxrYVUr5LhA812t1b0yRKn4mjuzbBhL74lsPa7jJBBAikzk2CMOWh9QRUYb8h9eNrQF7vKnIuXcMzY2PFHvp6fXiDngHBofBKGs8f95LBJJZFlV7V-eXT-vD-V-tBtKOKHZ_NhXGhNlMyERGIhsjqItmhyBgUmYtX8YblTRlvzaHZm_a9r5bxqfWXz9kNbzZdy4j9b5rqEl0Fzs-tYzOqeauPdISzvLG61tBNoOAIGJZETalKkADCLKPo6--dHw");'></div>
+<div class="px-4 flex flex-col gap-2">
+<p class="text-white text-base font-bold leading-normal">Cách nhận biết sớm các dấu hiệu của bệnh tiểu đường loại 2</p>
+<p class="text-gray-300 dark:text-gray-300 text-sm font-normal leading-normal">Trang bị kiến thức để phát hiện những triệu chứng ban đầu, giúp phòng ngừa và kiểm soát bệnh tiểu đường tốt hơn.</p>
+<p class="text-primary/80 text-sm font-medium leading-normal">#BệnhThườngGặp</p>
+</div>
+</div>
+<div class="flex flex-col gap-4 pb-3 rounded-xl bg-white/5 dark:bg-white/5 overflow-hidden group hover:bg-white/10 dark:hover:bg-white/10 transition-colors duration-300 cursor-pointer">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="A person sleeping peacefully" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCXCHVTxy1tueLGflaSWhkgJgMjo0BtaS5Pnk4QbzfcW5Kpnr1ID4i4m18bTdQaIdFPD8RW0PV6wRmKBAi3m-acAPXLSpPqHnV5LaSVtDZ_nULFPKIvyfkofQix-4MGWkTzRZXicObLZGsNDElRZfkC6qcLNdZiiNH8HJtMXsdgnFDdEnzYCh3y_H9fLgH9hjXxKUEgPgzSrXyfqtLzaFkWedV_S7LxOSynaaiIDM6CBxdGicobdlTnTXTElwyVf9yfATJ7iYhI-OjN");'></div>
+<div class="px-4 flex flex-col gap-2">
+<p class="text-white text-base font-bold leading-normal">Tầm quan trọng của giấc ngủ đối với sức khỏe tinh thần</p>
+<p class="text-gray-300 dark:text-gray-300 text-sm font-normal leading-normal">Giấc ngủ không chỉ là nghỉ ngơi. Bài viết này sẽ giải thích mối liên hệ mật thiết giữa giấc ngủ và trạng thái cảm xúc của bạn.</p>
+<p class="text-primary/80 text-sm font-medium leading-normal">#SứcKhỏeTinhThần</p>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex justify-center items-center gap-2 p-4 mt-8">
+<button class="flex items-center justify-center size-10 rounded-lg bg-white/10 dark:bg-white/10 text-white hover:bg-white/20 dark:hover:bg-white/20">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-lg bg-primary text-background-dark font-bold">1</button>
+<button class="flex items-center justify-center size-10 rounded-lg bg-white/10 dark:bg-white/10 text-white hover:bg-white/20 dark:hover:bg-white/20 font-bold">2</button>
+<button class="flex items-center justify-center size-10 rounded-lg bg-white/10 dark:bg-white/10 text-white hover:bg-white/20 dark:hover:bg-white/20 font-bold">3</button>
+<span class="text-white">...</span>
+<button class="flex items-center justify-center size-10 rounded-lg bg-white/10 dark:bg-white/10 text-white hover:bg-white/20 dark:hover:bg-white/20 font-bold">10</button>
+<button class="flex items-center justify-center size-10 rounded-lg bg-white/10 dark:bg-white/10 text-white hover:bg-white/20 dark:hover:bg-white/20">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</main>
+</div>
+</div>
+</div>
+</div>
+</body></html>

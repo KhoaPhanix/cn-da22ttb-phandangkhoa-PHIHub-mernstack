@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cập nhật chỉ số hôm nay</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec80",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102219",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 300,
+                'GRAD' 0,
+                'opsz' 24;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col items-center justify-center p-4 sm:p-6" style='font-family: Manrope, "Noto Sans", sans-serif;'>
+<div class="relative w-full max-w-2xl rounded-xl border border-white/10 bg-[#111814] p-6 sm:p-8 shadow-2xl shadow-primary/10">
+<button class="absolute top-4 right-4 text-[#9db9ab] hover:text-white transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<div class="mb-6">
+<h1 class="text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight text-center">Cập nhật chỉ số hôm nay</h1>
+</div>
+<form class="flex flex-col gap-5">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+<label class="flex flex-col flex-1">
+<p class="text-white text-base font-medium leading-normal pb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-primary" data-icon="scale">scale</span>
+                            Cân nặng của bạn
+                        </p>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#3b5447] bg-[#1c2721] focus:border-primary h-14 placeholder:text-[#9db9ab] p-[15px] pr-12 text-base font-normal leading-normal" placeholder="Ví dụ: 65.5" step="0.1" type="number" value=""/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50">kg</span>
+</div>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-white text-base font-medium leading-normal pb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-primary" data-icon="bedtime">bedtime</span>
+                            Thời gian ngủ
+                        </p>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#3b5447] bg-[#1c2721] focus:border-primary h-14 placeholder:text-[#9db9ab] p-[15px] text-base font-normal leading-normal" placeholder="Ví dụ: 8 giờ 30 phút" value=""/>
+</div>
+</label>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+<label class="flex flex-col flex-1">
+<p class="text-white text-base font-medium leading-normal pb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-primary" data-icon="local_fire_department">local_fire_department</span>
+                            Lượng Calo tiêu thụ
+                        </p>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#3b5447] bg-[#1c2721] focus:border-primary h-14 placeholder:text-[#9db9ab] p-[15px] pr-16 text-base font-normal leading-normal" placeholder="Ví dụ: 1800" type="number" value=""/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50">calo</span>
+</div>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-white text-base font-medium leading-normal pb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-primary" data-icon="fitness_center">fitness_center</span>
+                            Số phút tập thể dục
+                        </p>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#3b5447] bg-[#1c2721] focus:border-primary h-14 placeholder:text-[#9db9ab] p-[15px] pr-16 text-base font-normal leading-normal" placeholder="Ví dụ: 30" type="number" value=""/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50">phút</span>
+</div>
+</label>
+</div>
+<div class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 pt-6">
+<button class="w-full sm:w-auto h-12 px-6 flex items-center justify-center rounded-lg text-white font-semibold text-base transition-colors bg-transparent hover:bg-white/10" type="button">Hủy bỏ</button>
+<button class="w-full sm:w-auto h-12 px-6 flex items-center justify-center rounded-lg text-black bg-primary font-semibold text-base transition-opacity hover:opacity-90" type="submit">Lưu thay đổi</button>
+</div>
+</form>
+</div>
+</div>
+</body></html>
