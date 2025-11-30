@@ -119,13 +119,15 @@ npm install
 ```env
 NODE_ENV=development
 PORT=5000
-MONGODB_URI=mongodb+srv://admin:Silnix13670@healthtracker.xmrtodc.mongodb.net/phihub?retryWrites=true&w=majority&appName=HealthTracker
-JWT_SECRET=phihub_secret_key_2025_health_tracker_secure
+MONGODB_URI=<your-mongodb-atlas-uri>
+JWT_SECRET=<your-secret-key-here>
 JWT_EXPIRE=7d
 CLIENT_URL=http://localhost:5173
 ```
 
-> ⚠️ **Lưu ý**: Đổi `JWT_SECRET` thành chuỗi bí mật của bạn trong production
+> ⚠️ **Lưu ý**: 
+> - Thay `<your-mongodb-atlas-uri>` bằng MongoDB connection string của bạn
+> - Đổi `<your-secret-key-here>` thành chuỗi bí mật ngẫu nhiên (min 32 ký tự)
 
 ### BƯỚC 3: Cài đặt Frontend
 
@@ -172,8 +174,8 @@ Mở trình duyệt và truy cập:
 ```env
 NODE_ENV=production
 PORT=5000
-MONGODB_URI=mongodb+srv://admin:Silnix13670@healthtracker.xmrtodc.mongodb.net/phihub?retryWrites=true&w=majority&appName=HealthTracker
-JWT_SECRET=your_production_secret_key_here
+MONGODB_URI=<your-mongodb-atlas-uri>
+JWT_SECRET=<your-production-secret-key>
 JWT_EXPIRE=7d
 CLIENT_URL=http://localhost:8080
 ```
@@ -240,11 +242,7 @@ docker stats
 
 ### Sử dụng MongoDB Atlas (Khuyến nghị)
 
-Dự án đã được cấu hình sẵn với MongoDB Atlas:
-
-```
-mongodb+srv://admin:Silnix13670@healthtracker.xmrtodc.mongodb.net/phihub
-```
+Dự án được cấu hình để sử dụng MongoDB Atlas (cấu hình trong file `.env`):
 
 **Ưu điểm:**
 - ✅ Không cần cài đặt MongoDB local
@@ -293,7 +291,7 @@ File dữ liệu mẫu nằm trong `setup/sample-data/`:
 
 ```bash
 # Nếu sử dụng MongoDB Atlas
-mongoimport --uri "mongodb+srv://admin:Silnix13670@healthtracker.xmrtodc.mongodb.net/phihub" \
+mongoimport --uri "<your-mongodb-atlas-uri>" \
   --collection articles \
   --file setup/sample-data/articles.json
 
@@ -338,7 +336,7 @@ Lặp lại cho nhiều ngày để có dữ liệu biểu đồ đầy đủ.
 1. Kiểm tra kết nối Internet
 2. Verify MongoDB URI trong file `.env`
 3. Kiểm tra IP whitelist trên MongoDB Atlas (0.0.0.0/0 cho phép tất cả)
-4. Thử kết nối bằng MongoDB Compass: `mongodb+srv://admin:Silnix13670@healthtracker.xmrtodc.mongodb.net/`
+4. Thử kết nối bằng MongoDB Compass với URI từ file `.env`
 
 ### Lỗi: "Port 5000 already in use"
 

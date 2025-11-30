@@ -1,5 +1,6 @@
 const { MongoClient } = require('mongodb');
-const uri = 'mongodb+srv://admin:Silnix13670@healthtracker.xmrtodc.mongodb.net/phihub?retryWrites=true&w=majority&appName=HealthTracker';
+require('dotenv').config({ path: '../../src/server/.env' });
+const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/phihub';
 
 const client = new MongoClient(uri);
 

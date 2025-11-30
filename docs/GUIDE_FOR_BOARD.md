@@ -209,7 +209,7 @@ node import.js
 
 ### Database:
 - **MongoDB Atlas** (Cloud - đã cấu hình sẵn)
-- Connection string: mongodb+srv://admin:...@healthtracker.xmrtodc.mongodb.net/phihub
+- Connection string được cấu hình trong file `.env` (bảo mật)
 
 ---
 

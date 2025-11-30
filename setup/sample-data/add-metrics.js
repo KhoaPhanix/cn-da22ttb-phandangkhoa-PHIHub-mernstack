@@ -1,7 +1,8 @@
 const { MongoClient } = require('mongodb');
+require('dotenv').config({ path: '../../src/server/.env' });
 
 // Cấu hình MongoDB
-const MONGODB_URI = 'mongodb+srv://admin:Silnix13670@healthtracker.xmrtodc.mongodb.net/phihub?retryWrites=true&w=majority&appName=HealthTracker';
+const MONGODB_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/phihub';
 const DB_NAME = 'phihub';
 
 async function addMetricsToExistingUsers() {

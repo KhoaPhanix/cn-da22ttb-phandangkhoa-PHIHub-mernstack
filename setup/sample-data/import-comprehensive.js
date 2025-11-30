@@ -2,9 +2,10 @@ const { MongoClient, ObjectId } = require('mongodb');
 const bcrypt = require('bcryptjs');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config({ path: '../../src/server/.env' });
 
 // Cấu hình MongoDB
-const MONGODB_URI = 'mongodb+srv://admin:Silnix13670@healthtracker.xmrtodc.mongodb.net/phihub?retryWrites=true&w=majority&appName=HealthTracker';
+const MONGODB_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/phihub';
 const DB_NAME = 'phihub';
 
 // Kiểm tra clean flag

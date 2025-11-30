@@ -1,7 +1,8 @@
 const fs = require('fs');
 const { MongoClient } = require('mongodb');
+require('dotenv').config({ path: '../../src/server/.env' });
 
-const uri = 'mongodb+srv://admin:Silnix13670@healthtracker.xmrtodc.mongodb.net/phihub?retryWrites=true&w=majority&appName=HealthTracker';
+const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/phihub';
 
 async function analyze() {
   // Đọc CSV

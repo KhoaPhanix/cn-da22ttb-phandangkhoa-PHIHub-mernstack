@@ -20,7 +20,8 @@ npm install
 Sửa file `import.js`, thay đổi `MONGODB_URI`:
 
 ```javascript
-const MONGODB_URI = 'mongodb+srv://admin:Silnix13670@healthtracker.xmrtodc.mongodb.net/phihub';
+const MONGODB_URI = 'mongodb+srv://<username>:<password>@<cluster>.mongodb.net/phihub';
+// Thay <username>, <password>, <cluster> bằng thông tin MongoDB Atlas của bạn
 ```
 
 ### 3. Chạy script
@@ -60,12 +61,15 @@ node import.js --clean
 ## Kiểm tra sau import
 
 ```bash
+# Đặt MONGO_URI từ file .env hoặc thay trực tiếp
+export MONGO_URI="<your-mongodb-uri>"
+
 # Đếm số bài viết
-mongosh "mongodb+srv://admin:Silnix13670@healthtracker.xmrtodc.mongodb.net/phihub" --eval "db.articles.countDocuments()"
+mongosh "$MONGO_URI" --eval "db.articles.countDocuments()"
 
 # Đếm số users
-mongosh "mongodb+srv://admin:Silnix13670@healthtracker.xmrtodc.mongodb.net/phihub" --eval "db.users.countDocuments()"
+mongosh "$MONGO_URI" --eval "db.users.countDocuments()"
 
 # Đếm số metrics
-mongosh "mongodb+srv://admin:Silnix13670@healthtracker.xmrtodc.mongodb.net/phihub" --eval "db.health_metrics.countDocuments()"
+mongosh "$MONGO_URI" --eval "db.health_metrics.countDocuments()"
 ```
