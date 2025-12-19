@@ -30,6 +30,14 @@ const MoodJournalPage = () => {
     productivity: 5,
   });
 
+  const moodOptions = [
+    { key: 'excellent', emoji: '😄', label: 'Tuyệt vời', color: 'bg-green-500', score: 10 },
+    { key: 'good', emoji: '🙂', label: 'Tốt', color: 'bg-blue-500', score: 8 },
+    { key: 'okay', emoji: '😐', label: 'Bình thường', color: 'bg-yellow-500', score: 5 },
+    { key: 'bad', emoji: '😟', label: 'Tệ', color: 'bg-orange-500', score: 3 },
+    { key: 'terrible', emoji: '😢', label: 'Rất tệ', color: 'bg-red-500', score: 1 },
+  ];
+
   const moodEmojis = {
     excellent: '😄',
     good: '🙂',
@@ -38,14 +46,36 @@ const MoodJournalPage = () => {
     terrible: '😢',
   };
 
+  const moodLabels = {
+    excellent: 'Tuyệt vời',
+    good: 'Tốt',
+    okay: 'Bình thường',
+    bad: 'Tệ',
+    terrible: 'Rất tệ',
+  };
+
   const emotionsList = [
-    'happy', 'sad', 'angry', 'anxious', 'excited', 
-    'tired', 'motivated', 'grateful', 'frustrated', 'peaceful'
+    { key: 'happy', label: 'Vui vẻ', icon: '😊', color: 'bg-yellow-500' },
+    { key: 'sad', label: 'Buồn', icon: '😢', color: 'bg-blue-500' },
+    { key: 'angry', label: 'Tức giận', icon: '😠', color: 'bg-red-500' },
+    { key: 'anxious', label: 'Lo lắng', icon: '😰', color: 'bg-purple-500' },
+    { key: 'excited', label: 'Phấn khích', icon: '🤩', color: 'bg-pink-500' },
+    { key: 'tired', label: 'Mệt mỏi', icon: '😴', color: 'bg-gray-500' },
+    { key: 'motivated', label: 'Động lực', icon: '💪', color: 'bg-green-500' },
+    { key: 'grateful', label: 'Biết ơn', icon: '🙏', color: 'bg-teal-500' },
+    { key: 'frustrated', label: 'Thất vọng', icon: '😤', color: 'bg-orange-500' },
+    { key: 'peaceful', label: 'Bình yên', icon: '😌', color: 'bg-cyan-500' },
   ];
 
   const activitiesList = [
-    'work', 'exercise', 'social', 'family', 
-    'hobby', 'meditation', 'relaxation', 'other'
+    { key: 'work', label: 'Làm việc', icon: '💼', color: 'bg-blue-500' },
+    { key: 'exercise', label: 'Tập luyện', icon: '🏃', color: 'bg-green-500' },
+    { key: 'social', label: 'Giao lưu', icon: '👥', color: 'bg-purple-500' },
+    { key: 'family', label: 'Gia đình', icon: '👨‍👩‍👧', color: 'bg-pink-500' },
+    { key: 'hobby', label: 'Sở thích', icon: '🎨', color: 'bg-yellow-500' },
+    { key: 'meditation', label: 'Thiền định', icon: '🧘', color: 'bg-indigo-500' },
+    { key: 'relaxation', label: 'Thư giãn', icon: '😌', color: 'bg-teal-500' },
+    { key: 'other', label: 'Khác', icon: '📝', color: 'bg-gray-500' },
   ];
 
   useEffect(() => {
@@ -54,6 +84,7 @@ const MoodJournalPage = () => {
 
   const fetchData = async () => {
     try {
+      console.log('🔄 [Mood] Fetching data...');
       setLoading(true);
       setError(null);
       const [logsRes, statsRes] = await Promise.all([
@@ -61,18 +92,23 @@ const MoodJournalPage = () => {
         getMoodStats({ days: 30 }),
       ]);
       
-      // Extract data correctly from service response
-      const logsData = Array.isArray(logsRes.data) ? logsRes.data : [];
-      const statsData = statsRes.data || null;
+      console.log('📦 [Mood] Logs Full Response:', logsRes);
+      console.log('📦 [Mood] Logs Response.data:', logsRes.data);
+      console.log('📦 [Mood] Stats Response:', statsRes);
       
-      console.log('📊 Mood Logs Response:', logsRes);
-      console.log('📊 Logs Data:', logsData);
-      console.log('📊 Stats Data:', statsData);
+      // Extract data correctly from service response
+      const logsData = Array.isArray(logsRes.data?.data) ? logsRes.data.data : (Array.isArray(logsRes.data) ? logsRes.data : []);
+      const statsData = statsRes.data?.data || statsRes.data || null;
+      
+      console.log('📊 [Mood] Logs Data (final):', logsData);
+      console.log('📊 [Mood] Logs count:', logsData.length);
+      console.log('📊 [Mood] Stats Data (final):', statsData);
       
       setLogs(logsData);
       setStats(statsData);
     } catch (error) {
-      console.error('❌ Error fetching mood data:', error);
+      console.error('❌ [Mood] Error fetching data:', error);
+      console.error('❌ [Mood] Error response:', error.response);
       setError(error.response?.data?.message || 'Không thể tải dữ liệu tâm trạng. Vui lòng đăng nhập lại.');
       setLogs([]);
       setStats(null);
@@ -88,12 +124,17 @@ const MoodJournalPage = () => {
         ...formData,
         gratitude: formData.gratitude.filter(g => g.trim() !== ''),
       };
-      await createMoodLog(moodData);
+      console.log('📤 Sending mood data:', moodData);
+      const response = await createMoodLog(moodData);
+      console.log('✅ Mood response:', response);
+      alert('Lưu nhật ký tâm trạng thành công!');
       setShowModal(false);
       resetForm();
       fetchData();
     } catch (error) {
-      console.error('Error saving mood log:', error);
+      console.error('❌ Error saving mood log:', error);
+      console.error('Error details:', error.response?.data);
+      alert(`Lỗi: ${error.response?.data?.message || error.message || 'Không thể lưu nhật ký'}`);
     }
   };
 
@@ -123,7 +164,7 @@ const MoodJournalPage = () => {
 
   const chartData = Array.isArray(logs) && logs.length > 0
     ? logs.map(log => ({
-        date: format(new Date(log.date), 'dd/MM'),
+        date: format(new Date(log.date), 'dd/MM/yyyy'),
         mood: log.moodScore,
         energy: log.energyScore,
         stress: log.stressScore,
@@ -255,11 +296,11 @@ const MoodJournalPage = () => {
                   className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg p-6"
                 >
                   <div className="flex justify-between items-start mb-4">
-                    <div className="flex items-center gap-3">
-                      <span className="text-5xl">{moodEmojis[log.mood]}</span>
+                    <div className="flex items-center gap-4">
+                      <div className="text-6xl">{moodEmojis[log.mood]}</div>
                       <div>
-                        <h4 className="text-black dark:text-white text-lg font-bold capitalize">
-                          {log.mood}
+                        <h4 className="text-black dark:text-white text-xl font-bold">
+                          {moodLabels[log.mood] || log.mood}
                         </h4>
                         <p className="text-gray-600 dark:text-[#9db9ab] text-sm">
                           {format(new Date(log.date), 'dd/MM/yyyy HH:mm')}
@@ -267,9 +308,10 @@ const MoodJournalPage = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-black dark:text-white font-bold text-2xl">
-                        {log.moodScore}/10
-                      </p>
+                      <div className="text-black dark:text-white font-bold text-3xl">
+                        {log.moodScore}
+                      </div>
+                      <div className="text-gray-500 dark:text-gray-400 text-xs">/ 10</div>
                     </div>
                   </div>
 
@@ -293,32 +335,38 @@ const MoodJournalPage = () => {
                   {(log.emotions?.length > 0 || log.activities?.length > 0) && (
                     <div className="mb-4">
                       {log.emotions?.length > 0 && (
-                        <div className="mb-2">
-                          <p className="text-gray-600 dark:text-[#9db9ab] text-xs mb-2">Cảm xúc:</p>
+                        <div className="mb-3">
+                          <p className="text-gray-600 dark:text-[#9db9ab] text-sm font-medium mb-2">🎭 Cảm xúc:</p>
                           <div className="flex flex-wrap gap-2">
-                            {log.emotions.map((emotion, idx) => (
-                              <span
-                                key={idx}
-                                className="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-xs"
-                              >
-                                {emotion}
-                              </span>
-                            ))}
+                            {log.emotions.map((emotion, idx) => {
+                              const emotionObj = emotionsList.find(e => e.key === emotion);
+                              return (
+                                <span
+                                  key={idx}
+                                  className="px-3 py-1.5 bg-purple-500/20 text-purple-300 dark:text-purple-400 rounded-lg text-sm font-medium flex items-center gap-1"
+                                >
+                                  {emotionObj?.icon} {emotionObj?.label || emotion}
+                                </span>
+                              );
+                            })}
                           </div>
                         </div>
                       )}
                       {log.activities?.length > 0 && (
                         <div>
-                          <p className="text-gray-600 dark:text-[#9db9ab] text-xs mb-2">Hoạt động:</p>
+                          <p className="text-gray-600 dark:text-[#9db9ab] text-sm font-medium mb-2">📋 Hoạt động:</p>
                           <div className="flex flex-wrap gap-2">
-                            {log.activities.map((activity, idx) => (
-                              <span
-                                key={idx}
-                                className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-xs"
-                              >
-                                {activity}
-                              </span>
-                            ))}
+                            {log.activities.map((activity, idx) => {
+                              const activityObj = activitiesList.find(a => a.key === activity);
+                              return (
+                                <span
+                                  key={idx}
+                                  className="px-3 py-1.5 bg-blue-500/20 text-blue-300 dark:text-blue-400 rounded-lg text-sm font-medium flex items-center gap-1"
+                                >
+                                  {activityObj?.icon} {activityObj?.label || activity}
+                                </span>
+                              );
+                            })}
                           </div>
                         </div>
                       )}
@@ -372,107 +420,135 @@ const MoodJournalPage = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Mood Selector */}
               <div>
-                <label className="text-white text-sm font-medium mb-3 block">
-                  Tâm trạng hôm nay *
+                <label className="text-white text-base font-semibold mb-4 block flex items-center gap-2">
+                  <span className="text-2xl">😊</span>
+                  Tâm trạng hôm nay của bạn thế nào? *
                 </label>
-                <div className="grid grid-cols-5 gap-2">
-                  {Object.entries(moodEmojis).map(([key, emoji]) => (
+                <div className="grid grid-cols-5 gap-3">
+                  {moodOptions.map((mood) => (
                     <button
-                      key={key}
+                      key={mood.key}
                       type="button"
                       onClick={() => setFormData({ 
                         ...formData, 
-                        mood: key,
-                        moodScore: key === 'excellent' ? 10 : key === 'good' ? 8 : key === 'okay' ? 5 : key === 'bad' ? 3 : 1
+                        mood: mood.key,
+                        moodScore: mood.score
                       })}
-                      className={`p-4 rounded-lg border-2 transition-all ${
-                        formData.mood === key
-                          ? 'border-primary bg-primary/20'
+                      className={`p-4 rounded-xl border-2 transition-all transform hover:scale-105 ${
+                        formData.mood === mood.key
+                          ? 'border-primary bg-primary/20 shadow-lg'
                           : 'border-[#3b5447] bg-[#1c2721] hover:border-primary/50'
                       }`}
                     >
-                      <div className="text-4xl mb-2">{emoji}</div>
-                      <div className="text-white text-xs capitalize">{key}</div>
+                      <div className="text-5xl mb-2">{mood.emoji}</div>
+                      <div className="text-white text-sm font-medium">{mood.label}</div>
+                      <div className="text-gray-400 text-xs mt-1">{mood.score}/10</div>
                     </button>
                   ))}
                 </div>
               </div>
 
               {/* Sliders */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-white text-sm font-medium mb-2 block">
-                    Năng lượng: {formData.energyScore}/10
-                  </label>
-                  <input
-                    type="range"
-                    min="1"
-                    max="10"
-                    value={formData.energyScore}
-                    onChange={(e) => setFormData({ ...formData, energyScore: parseInt(e.target.value) })}
-                    className="w-full"
-                  />
-                </div>
-                <div>
-                  <label className="text-white text-sm font-medium mb-2 block">
-                    Stress: {formData.stressScore}/10
-                  </label>
-                  <input
-                    type="range"
-                    min="1"
-                    max="10"
-                    value={formData.stressScore}
-                    onChange={(e) => setFormData({ ...formData, stressScore: parseInt(e.target.value) })}
-                    className="w-full"
-                  />
-                </div>
-                <div>
-                  <label className="text-white text-sm font-medium mb-2 block">
-                    Lo âu: {formData.anxiety}/10
-                  </label>
-                  <input
-                    type="range"
-                    min="0"
-                    max="10"
-                    value={formData.anxiety}
-                    onChange={(e) => setFormData({ ...formData, anxiety: parseInt(e.target.value) })}
-                    className="w-full"
-                  />
-                </div>
-                <div>
-                  <label className="text-white text-sm font-medium mb-2 block">
-                    Chất lượng ngủ: {formData.sleepQuality}/10
-                  </label>
-                  <input
-                    type="range"
-                    min="1"
-                    max="10"
-                    value={formData.sleepQuality}
-                    onChange={(e) => setFormData({ ...formData, sleepQuality: parseInt(e.target.value) })}
-                    className="w-full"
-                  />
+              <div className="bg-[#1c2721] border border-[#3b5447] rounded-xl p-5">
+                <h3 className="text-white text-base font-semibold mb-4 flex items-center gap-2">
+                  <span className="text-2xl">📊</span>
+                  Đánh giá chi tiết
+                </h3>
+                <div className="space-y-5">
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="text-white text-sm font-medium flex items-center gap-2">
+                        <span className="text-lg">⚡</span>
+                        Năng lượng
+                      </label>
+                      <span className="text-primary font-bold text-lg">{formData.energyScore}/10</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="1"
+                      max="10"
+                      value={formData.energyScore}
+                      onChange={(e) => setFormData({ ...formData, energyScore: parseInt(e.target.value) })}
+                      className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="text-white text-sm font-medium flex items-center gap-2">
+                        <span className="text-lg">😰</span>
+                        Mức độ Stress
+                      </label>
+                      <span className="text-orange-400 font-bold text-lg">{formData.stressScore}/10</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="1"
+                      max="10"
+                      value={formData.stressScore}
+                      onChange={(e) => setFormData({ ...formData, stressScore: parseInt(e.target.value) })}
+                      className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-orange-500"
+                    />
+                  </div>
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="text-white text-sm font-medium flex items-center gap-2">
+                        <span className="text-lg">😟</span>
+                        Lo lắng / Âu lo
+                      </label>
+                      <span className="text-red-400 font-bold text-lg">{formData.anxiety}/10</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="0"
+                      max="10"
+                      value={formData.anxiety}
+                      onChange={(e) => setFormData({ ...formData, anxiety: parseInt(e.target.value) })}
+                      className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-red-500"
+                    />
+                  </div>
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="text-white text-sm font-medium flex items-center gap-2">
+                        <span className="text-lg">😴</span>
+                        Chất lượng giấc ngủ
+                      </label>
+                      <span className="text-purple-400 font-bold text-lg">{formData.sleepQuality}/10</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="1"
+                      max="10"
+                      value={formData.sleepQuality}
+                      onChange={(e) => setFormData({ ...formData, sleepQuality: parseInt(e.target.value) })}
+                      className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                    />
+                  </div>
                 </div>
               </div>
 
               {/* Emotions */}
               <div>
-                <label className="text-white text-sm font-medium mb-3 block">Cảm xúc</label>
-                <div className="flex flex-wrap gap-2">
+                <label className="text-white text-base font-semibold mb-4 block flex items-center gap-2">
+                  <span className="text-2xl">🎭</span>
+                  Bạn đang cảm thấy thế nào?
+                </label>
+                <div className="flex flex-wrap gap-3">
                   {emotionsList.map((emotion) => (
                     <button
-                      key={emotion}
+                      key={emotion.key}
                       type="button"
                       onClick={() => setFormData({
                         ...formData,
-                        emotions: toggleArrayItem(formData.emotions, emotion),
+                        emotions: toggleArrayItem(formData.emotions, emotion.key),
                       })}
-                      className={`px-3 py-2 rounded-lg text-sm transition-colors ${
-                        formData.emotions.includes(emotion)
-                          ? 'bg-purple-500 text-white'
-                          : 'bg-[#1c2721] text-white border border-[#3b5447] hover:border-purple-500'
+                      className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
+                        formData.emotions.includes(emotion.key)
+                          ? `${emotion.color} text-white shadow-md transform scale-105`
+                          : 'bg-[#1c2721] text-white border border-[#3b5447] hover:border-white/30'
                       }`}
                     >
-                      {emotion}
+                      <span className="text-lg">{emotion.icon}</span>
+                      {emotion.label}
                     </button>
                   ))}
                 </div>
@@ -480,23 +556,27 @@ const MoodJournalPage = () => {
 
               {/* Activities */}
               <div>
-                <label className="text-white text-sm font-medium mb-3 block">Hoạt động</label>
-                <div className="flex flex-wrap gap-2">
+                <label className="text-white text-base font-semibold mb-4 block flex items-center gap-2">
+                  <span className="text-2xl">📋</span>
+                  Bạn đã làm gì hôm nay?
+                </label>
+                <div className="flex flex-wrap gap-3">
                   {activitiesList.map((activity) => (
                     <button
-                      key={activity}
+                      key={activity.key}
                       type="button"
                       onClick={() => setFormData({
                         ...formData,
-                        activities: toggleArrayItem(formData.activities, activity),
+                        activities: toggleArrayItem(formData.activities, activity.key),
                       })}
-                      className={`px-3 py-2 rounded-lg text-sm transition-colors ${
-                        formData.activities.includes(activity)
-                          ? 'bg-blue-500 text-white'
-                          : 'bg-[#1c2721] text-white border border-[#3b5447] hover:border-blue-500'
+                      className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
+                        formData.activities.includes(activity.key)
+                          ? `${activity.color} text-white shadow-md transform scale-105`
+                          : 'bg-[#1c2721] text-white border border-[#3b5447] hover:border-white/30'
                       }`}
                     >
-                      {activity}
+                      <span className="text-lg">{activity.icon}</span>
+                      {activity.label}
                     </button>
                   ))}
                 </div>
@@ -504,35 +584,43 @@ const MoodJournalPage = () => {
 
               {/* Journal */}
               <div>
-                <label className="text-white text-sm font-medium mb-2 block">Nhật ký</label>
+                <label className="text-white text-base font-semibold mb-3 block flex items-center gap-2">
+                  <span className="text-2xl">📝</span>
+                  Hôm nay của bạn thế nào?
+                </label>
                 <textarea
                   value={formData.journal}
                   onChange={(e) => setFormData({ ...formData, journal: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg bg-[#1c2721] border border-[#3b5447] text-white focus:outline-none focus:ring-2 focus:ring-primary"
-                  rows="5"
-                  placeholder="Viết về ngày hôm nay của bạn..."
+                  className="w-full px-4 py-3 rounded-lg bg-[#1c2721] border border-[#3b5447] text-white focus:outline-none focus:ring-2 focus:ring-primary placeholder-gray-500"
+                  rows="6"
+                  placeholder="Viết về những suy nghĩ, cảm xúc, hoặc sự kiện đáng nhớ trong ngày hôm nay..."
                 />
               </div>
 
               {/* Gratitude */}
-              <div>
-                <label className="text-white text-sm font-medium mb-2 block">
-                  3 điều biết ơn hôm nay
+              <div className="bg-[#1c2721] border border-[#3b5447] rounded-xl p-5">
+                <label className="text-white text-base font-semibold mb-4 block flex items-center gap-2">
+                  <span className="text-2xl">🙏</span>
+                  Ba điều bạn biết ơn hôm nay
                 </label>
-                {formData.gratitude.map((item, idx) => (
-                  <input
-                    key={idx}
-                    type="text"
-                    value={item}
-                    onChange={(e) => {
-                      const newGratitude = [...formData.gratitude];
-                      newGratitude[idx] = e.target.value;
-                      setFormData({ ...formData, gratitude: newGratitude });
-                    }}
-                    className="w-full px-4 py-3 mb-2 rounded-lg bg-[#1c2721] border border-[#3b5447] text-white focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder={`Điều ${idx + 1}...`}
-                  />
-                ))}
+                <div className="space-y-3">
+                  {formData.gratitude.map((item, idx) => (
+                    <div key={idx} className="flex items-center gap-3">
+                      <span className="text-primary font-bold text-lg">{idx + 1}.</span>
+                      <input
+                        type="text"
+                        value={item}
+                        onChange={(e) => {
+                          const newGratitude = [...formData.gratitude];
+                          newGratitude[idx] = e.target.value;
+                          setFormData({ ...formData, gratitude: newGratitude });
+                        }}
+                        className="flex-1 px-4 py-2.5 rounded-lg bg-[#111814] border border-[#3b5447] text-white focus:outline-none focus:ring-2 focus:ring-primary placeholder-gray-500"
+                        placeholder={`Điều thứ ${idx + 1} bạn biết ơn...`}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div className="flex gap-3 pt-4">

@@ -1,8 +1,8 @@
-# Tổng Kết Các Tính Năng Đã Bổ Sung
+# Tổng kết các tính năng đã bổ sung
 
-## ✅ Hoàn Thành (Backend)
+## ✅ Hoàn thành (Backend)
 
-### 1. Models (Database Schema)
+### 1. Models (Database schema)
 - ✅ **Goal.js** - Quản lý mục tiêu sức khỏe
   - Đặt mục tiêu (giảm cân, BMI, huyết áp, v.v.)
   - Theo dõi tiến độ tự động
@@ -28,7 +28,7 @@
   - Phân loại theo mức độ nghiêm trọng
   - Theo dõi trạng thái đã đọc/đã giải quyết
 
-- ✅ **User.js (Cập nhật)** - Thông tin y tế chi tiết
+- ✅ **User.js (cập nhật)** - Thông tin y tế chi tiết
   - Bệnh lý nền (chronic conditions)
   - Dị ứng (allergies)
   - Thuốc đang sử dụng (medications)
@@ -36,28 +36,28 @@
   - Thông tin bác sĩ
   - Mục tiêu và preferences cá nhân
 
-### 2. Controllers (Business Logic)
+### 2. Controllers (Business logic)
 - ✅ **goalController.js** - CRUD operations cho Goals
 - ✅ **nutritionController.js** - CRUD + Statistics cho Nutrition
 - ✅ **moodController.js** - CRUD + Trends Analysis cho Mood
 - ✅ **reminderController.js** - CRUD + Scheduling cho Reminders
 - ✅ **alertController.js** - CRUD + Auto Health Checks cho Alerts
 
-### 3. Routes (API Endpoints)
+### 3. Routes (API endpoints)
 - ✅ `/api/goals` - Goals management
 - ✅ `/api/nutrition` - Nutrition tracking
 - ✅ `/api/mood` - Mood journal
 - ✅ `/api/reminders` - Reminders system
 - ✅ `/api/alerts` - Alerts & notifications
 
-### 4. Services (Frontend API Clients)
+### 4. Services (Frontend API clients)
 - ✅ **goalService.js** - Goals API client
 - ✅ **nutritionService.js** - Nutrition API client
 - ✅ **moodService.js** - Mood API client
 - ✅ **reminderService.js** - Reminders API client
 - ✅ **alertService.js** - Alerts API client
 
-## ✅ Hoàn Thành (Frontend)
+## ✅ Hoàn thành (Frontend)
 
 ### 1. Pages
 - ✅ **GoalsPage.jsx** - Trang quản lý mục tiêu
@@ -122,13 +122,13 @@
   - Link "Xem tất cả" → GoalsPage
   - Responsive grid layout
   
-- ✅ Đã thêm "Cảnh Báo Sức Khỏe"
+- ✅ Đã thêm "Cảnh báo sức khỏe"
   - AlertBanner component tích hợp
   - Hiển thị unread alerts
   - Severity indicators
   - Quick actions
   
-- ⏳ Section "Nhắc Nhở Hôm Nay" (Có thể thêm)
+- ⏳ Section "Nhắc nhở hôm nay" (Có thể thêm)
   - Backend đã sẵn sàng
   - ReminderCard component đã có
   - Chỉ cần fetch và hiển thị
@@ -138,13 +138,13 @@
   - Name, DOB, Gender, Phone, Address
   - Avatar upload
   
-- ✅ Tab "Thông Tin Y Tế"
+- ✅ Tab "Thông tin y tế"
   - Bệnh lý nền (add/edit/delete với severity)
   - Dị ứng (add/edit/delete với reactions)
   - Thuốc đang dùng (add/edit/delete với dosage)
   - Full CRUD operations
   
-- ✅ Tab "Liên Hệ Khẩn Cấp"
+- ✅ Tab "Liên hệ khẩn cấp"
   - Emergency contact info (name, relationship, phone)
   - Doctor info (name, specialty, phone, hospital)
   
@@ -164,39 +164,39 @@
   - Protected routes với JWT authentication
   - Navigate fallbacks
 
-## 📊 Các Tính Năng Nổi Bật
+## 📊 Các tính năng nổi bật
 
-### 1. ✅ Tư Vấn Thông Minh (Đã có cơ bản, cần mở rộng)
+### 1. ✅ Tư vấn thông minh (Đã có cơ bản, cần mở rộng)
 - ✅ Recommendations system
 - ✅ Auto health checks
 - ⏳ AI-powered insights
 - ⏳ Personalized tips dựa trên goals
 
-### 2. ✅ Đặt và Theo Dõi Mục Tiêu
+### 2. ✅ Đặt và theo dõi mục tiêu
 - ✅ Multiple goal types
 - ✅ Auto progress tracking
 - ✅ Milestones
 - ⏳ Goal achievements & badges
 
-### 3. ✅ Theo Dõi Dinh Dưỡng
+### 3. ✅ Theo dõi dinh dưỡng
 - ✅ Meal logging
 - ✅ Calories & macros tracking
 - ⏳ Food database integration
 - ⏳ Recipe suggestions
 
-### 4. ✅ Nhật Ký Tâm Trạng & Sức Khỏe Tinh Thần
+### 4. ✅ Nhật ký tâm trạng & sức khỏe tinh thần
 - ✅ Daily mood logging
 - ✅ Mood trends analysis
 - ✅ Journal entries
 - ⏳ Mood patterns & triggers
 
-### 5. ✅ Nhắc Nhở Thông Minh
+### 5. ✅ Nhắc nhở thông minh
 - ✅ Medication reminders
 - ✅ Water reminders
 - ✅ Exercise reminders
 - ⏳ Smart scheduling based on user behavior
 
-### 6. ✅ Cảnh Báo Sức Khỏe
+### 6. ✅ Cảnh báo sức khỏe
 - ✅ Auto health alerts
 - ✅ Severity-based notifications
 - ⏳ Push notifications

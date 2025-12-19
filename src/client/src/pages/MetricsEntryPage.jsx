@@ -139,7 +139,7 @@ const MetricsEntryPage = () => {
         promises.push(createMetric({
           metricType: 'water',
           value: parseFloat(formData.water),
-          unit: 'lít',
+          unit: 'ml',
           timestamp,
         }));
       }
@@ -406,7 +406,7 @@ const MetricsEntryPage = () => {
                     className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#3b5447] bg-[#1c2721] focus:border-primary h-14 placeholder:text-[#9db9ab] p-[15px] pr-12 text-base font-normal leading-normal"
                     placeholder="Ví dụ: 2000"
                   />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50">lít</span>
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50">ml</span>
                 </div>
               </label>
             </div>

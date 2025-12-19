@@ -71,12 +71,17 @@ exports.getMoodLog = async (req, res) => {
 // @access  Private
 exports.createMoodLog = async (req, res) => {
   try {
+    console.log('😊 [Mood] Received create mood log request');
+    console.log('😊 [Mood] User ID:', req.user._id);
+    console.log('😊 [Mood] Request body:', JSON.stringify(req.body, null, 2));
+    
     const logData = {
       ...req.body,
       userId: req.user._id,
     };
     
     const log = await MoodLog.create(logData);
+    console.log('✅ [Mood] Created successfully:', log._id);
     
     res.status(201).json({
       success: true,
@@ -84,6 +89,8 @@ exports.createMoodLog = async (req, res) => {
       data: log,
     });
   } catch (error) {
+    console.error('❌ [Mood] Error creating log:', error.message);
+    console.error('❌ [Mood] Error details:', error);
     res.status(400).json({
       success: false,
       message: 'Lỗi khi tạo nhật ký tâm trạng',

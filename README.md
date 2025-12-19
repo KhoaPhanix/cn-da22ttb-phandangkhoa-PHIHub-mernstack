@@ -1,6 +1,6 @@
 # PHIHub - Personal Health Intelligence Hub 🏥
 
-> Trung tâm Thông minh Sức khỏe Cá nhân - Website tư vấn và theo dõi sức khỏe được xây dựng với MERN Stack
+> Trung tâm thông minh sức khỏe cá nhân - Website tư vấn và theo dõi sức khỏe được xây dựng với MERN Stack
 
 [![MERN Stack](https://img.shields.io/badge/Stack-MERN-green)](https://github.com)
 [![MongoDB](https://img.shields.io/badge/Database-MongoDB-47A248?logo=mongodb)](https://mongodb.com)
@@ -19,7 +19,7 @@
 - **Điện thoại:** 0867570650
 
 **Giảng viên hướng dẫn:**
-- **Họ tên:** TH.Sỹ  
+- **Họ tên:** ThS.Nguyễn Hoàng Duy Thiện  
 
 **Trường:** Đại học Trà Vinh
 **Khoa:** Công nghệ thông tin
@@ -159,7 +159,7 @@ Các phần mềm, công cụ hỗ trợ (nếu có)
   - **Thông tin y tế**: Quản lý bệnh lý nền, dị ứng, thuốc đang dùng
   - **Liên hệ khẩn cấp**: Người liên hệ khẩn cấp và thông tin bác sĩ
 
-### 📊 Dashboard & Trực quan hóa
+### 📊 Dashboard & trực quan hóa
 - Biểu đồ đường (LineChart): Theo dõi biến động cân nặng 30 ngày
 - Biểu đồ cột (BarChart): Phân tích giấc ngủ 7 ngày gần nhất
 - Thống kê tổng hợp: Trung bình, Min, Max
@@ -167,7 +167,7 @@ Các phần mềm, công cụ hỗ trợ (nếu có)
 - **Hiển thị mục tiêu** đang hoạt động (top 3) với progress bars
 - Sử dụng **Recharts** library
 
-### 🎯 Đặt và Theo Dõi Mục Tiêu
+### 🎯 Đặt và theo dõi mục tiêu
 - Đặt mục tiêu cho các chỉ số sức khỏe (cân nặng, BMI, huyết áp, giấc ngủ, v.v.)
 - Tự động tính toán tiến độ và cập nhật progress
 - Hiển thị trực quan với progress bars
@@ -175,7 +175,7 @@ Các phần mềm, công cụ hỗ trợ (nếu có)
 - Thống kê tổng quan về mục tiêu
 - Quản lý milestones
 
-### 🍎 Theo Dõi Dinh Dưỡng
+### 🍎 Theo dõi dinh dưỡng
 - Ghi nhật ký bữa ăn chi tiết (Sáng, Trưa, Tối, Snack)
 - Theo dõi nhiều món ăn trong một bữa
 - Tự động tính toán tổng calories và macros (protein, carbs, fats)
@@ -183,7 +183,7 @@ Các phần mềm, công cụ hỗ trợ (nếu có)
 - Thống kê dinh dưỡng theo tuần
 - Date picker để xem lịch sử
 
-### 😊 Nhật Ký Tâm Trạng
+### 😊 Nhật ký tâm trạng
 - Ghi nhật ký tâm trạng hàng ngày với emoji selector
 - Theo dõi energy, stress, anxiety levels (sliders 1-10)
 - Emotion và activity tags (multi-select)
@@ -192,14 +192,14 @@ Các phần mềm, công cụ hỗ trợ (nếu có)
 - Biểu đồ Line Chart hiển thị xu hướng tâm trạng 30 ngày
 - Thống kê trung bình mood, energy, stress, anxiety
 
-### ⏰ Hệ Thống Nhắc Nhở Thông Minh
+### ⏰ Hệ thống nhắc nhở thông minh
 - Nhắc nhở uống thuốc, uống nước, tập luyện
 - Lập lịch linh hoạt: daily, weekly, monthly, custom
 - Toggle on/off nhanh chóng
 - Tự động tính thời gian nhắc tiếp theo
 - ReminderCard component với icons
 
-### 🚨 Cảnh Báo Sức Khỏe Tự Động
+### 🚨 Cảnh báo sức khỏe tự động
 - Phân tích chỉ số và cảnh báo bất thường
 - Severity levels: low, medium, high, critical
 - Color-coded alerts (blue/yellow/orange/red)
@@ -213,7 +213,7 @@ Các phần mềm, công cụ hỗ trợ (nếu có)
 - Lưu trữ với timestamp
 - Date picker để chọn ngày
 
-### 📈 Lịch Sử & Phân Tích
+### 📈 Lịch sử & phân tích
 - HistoryPage với 2 chế độ xem: Charts và Table
 - Export dữ liệu ra CSV
 - Filter theo loại metric và khoảng thời gian

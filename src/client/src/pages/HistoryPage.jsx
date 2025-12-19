@@ -4,7 +4,7 @@ import { format, subDays, startOfMonth, endOfMonth } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import Navbar from '../components/Navbar';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { getMetrics, getMetricStats } from '../services/metricsService';
+import { getMetrics, getMetricStats, updateMetric, deleteMetric } from '../services/metricsService';
 
 const HistoryPage = () => {
   const [loading, setLoading] = useState(true);
@@ -15,6 +15,15 @@ const HistoryPage = () => {
   const [stepsData, setStepsData] = useState([]);
   const [stats, setStats] = useState({});
   const [metricsTable, setMetricsTable] = useState([]);
+  const [editingMetric, setEditingMetric] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editFormData, setEditFormData] = useState({
+    metricType: '',
+    value: '',
+    unit: '',
+    timestamp: '',
+    notes: '',
+  });
 
   // Mapping tiếng Việt cho metricType
   const metricTypeLabels = {
@@ -72,7 +81,7 @@ const HistoryPage = () => {
 
         const heartRateDataArray = Array.isArray(heartRateResponse.data) ? heartRateResponse.data : (heartRateResponse.data.data || []);
         const formattedHeartRateData = heartRateDataArray.map((item) => ({
-          date: format(new Date(item.timestamp), 'dd/MM'),
+          date: format(new Date(item.timestamp), 'dd/MM/yyyy'),
           value: item.value,
         })).reverse();
 
@@ -95,7 +104,7 @@ const HistoryPage = () => {
 
         const stepsDataArray = stepsResponse.data || [];
         const formattedStepsData = stepsDataArray.map((item) => ({
-          date: format(new Date(item.timestamp), 'dd/MM', { locale: vi }),
+          date: format(new Date(item.timestamp), 'dd/MM/yyyy', { locale: vi }),
           value: item.value,
         })).reverse();
 
@@ -159,6 +168,63 @@ const HistoryPage = () => {
     a.click();
   };
 
+  const handleEdit = (metric) => {
+    setEditingMetric(metric);
+    setEditFormData({
+      metricType: metric.metricType,
+      value: metric.value,
+      unit: metric.unit,
+      timestamp: format(new Date(metric.timestamp), "yyyy-MM-dd'T'HH:mm"),
+      notes: metric.notes || '',
+    });
+    setShowEditModal(true);
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('Bạn có chắc chắn muốn xóa dữ liệu này?')) {
+      return;
+    }
+
+    try {
+      await deleteMetric(id);
+      alert('Xóa dữ liệu thành công!');
+      fetchHistoryData();
+    } catch (error) {
+      console.error('Lỗi khi xóa dữ liệu:', error);
+      alert('Có lỗi xảy ra khi xóa dữ liệu');
+    }
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      await updateMetric(editingMetric._id, {
+        ...editFormData,
+        timestamp: new Date(editFormData.timestamp).toISOString(),
+      });
+      alert('Cập nhật dữ liệu thành công!');
+      setShowEditModal(false);
+      setEditingMetric(null);
+      fetchHistoryData();
+    } catch (error) {
+      console.error('Lỗi khi cập nhật dữ liệu:', error);
+      alert('Có lỗi xảy ra khi cập nhật dữ liệu');
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setShowEditModal(false);
+    setEditingMetric(null);
+    setEditFormData({
+      metricType: '',
+      value: '',
+      unit: '',
+      timestamp: '',
+      notes: '',
+    });
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background-light dark:bg-background-dark font-display">
@@ -179,7 +245,7 @@ const HistoryPage = () => {
           <div className="flex flex-wrap justify-between gap-3 p-4 mt-8">
             <div className="flex min-w-72 flex-col gap-3">
               <p className="text-black dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">
-                Lịch sử Dữ liệu Sức khỏe
+                Lịch sử dữ liệu sức khỏe
               </p>
               <p className="text-gray-600 dark:text-[#9db9ab] text-base font-normal leading-normal">
                 Xem lại và phân tích dữ liệu sức khỏe của bạn theo thời gian.
@@ -368,6 +434,9 @@ const HistoryPage = () => {
                       <th className="px-6 py-3 text-xs font-medium text-gray-700 dark:text-white uppercase tracking-wider">
                         Ghi chú
                       </th>
+                      <th className="px-6 py-3 text-xs font-medium text-gray-700 dark:text-white uppercase tracking-wider">
+                        Thao tác
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white dark:bg-transparent divide-y divide-gray-200 dark:divide-[#3b5447]">
@@ -385,10 +454,28 @@ const HistoryPage = () => {
                         <td className="px-6 py-4 text-sm text-gray-600 dark:text-[#9db9ab]">
                           {metric.notes || '-'}
                         </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => handleEdit(metric)}
+                              className="text-primary hover:text-primary/80 transition-colors"
+                              title="Chỉnh sửa"
+                            >
+                              <span className="material-symbols-outlined text-lg">edit</span>
+                            </button>
+                            <button
+                              onClick={() => handleDelete(metric._id)}
+                              className="text-red-600 dark:text-[#fa5538] hover:text-red-700 dark:hover:text-red-600 transition-colors"
+                              title="Xóa"
+                            >
+                              <span className="material-symbols-outlined text-lg">delete</span>
+                            </button>
+                          </div>
+                        </td>
                       </tr>
                     )) : (
                       <tr>
-                        <td colSpan="4" className="px-6 py-8 text-center text-gray-500 dark:text-[#9db9ab]">
+                        <td colSpan="5" className="px-6 py-8 text-center text-gray-500 dark:text-[#9db9ab]">
                           Không có dữ liệu
                         </td>
                       </tr>
@@ -400,6 +487,113 @@ const HistoryPage = () => {
           )}
         </div>
       </main>
+
+      {/* Modal chỉnh sửa dữ liệu */}
+      {showEditModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white dark:bg-[#1c3d2e] rounded-lg shadow-xl p-6 w-full max-w-md mx-4">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              Chỉnh sửa dữ liệu
+            </h2>
+            
+            <form onSubmit={handleEditSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+                  Loại dữ liệu
+                </label>
+                <select
+                  value={editFormData.metricType}
+                  onChange={(e) => setEditFormData({ ...editFormData, metricType: e.target.value })}
+                  className="w-full px-4 py-2 rounded-lg bg-white dark:bg-[#283930] text-gray-900 dark:text-white border border-gray-300 dark:border-[#3b5447] focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  required
+                >
+                  <option value="weight">Cân nặng</option>
+                  <option value="height">Chiều cao</option>
+                  <option value="bmi">BMI</option>
+                  <option value="bloodPressure">Huyết áp</option>
+                  <option value="heartRate">Nhịp tim</option>
+                  <option value="sleep">Giấc ngủ</option>
+                  <option value="sleepQuality">Chất lượng giấc ngủ</option>
+                  <option value="steps">Số bước chân</option>
+                  <option value="exercise">Tập luyện</option>
+                  <option value="calories">Calo</option>
+                  <option value="water">Nước uống</option>
+                  <option value="bloodSugar">Đường huyết</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+                  Giá trị
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  value={editFormData.value}
+                  onChange={(e) => setEditFormData({ ...editFormData, value: e.target.value })}
+                  className="w-full px-4 py-2 rounded-lg bg-white dark:bg-[#283930] text-gray-900 dark:text-white border border-gray-300 dark:border-[#3b5447] focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+                  Đơn vị
+                </label>
+                <input
+                  type="text"
+                  value={editFormData.unit}
+                  onChange={(e) => setEditFormData({ ...editFormData, unit: e.target.value })}
+                  className="w-full px-4 py-2 rounded-lg bg-white dark:bg-[#283930] text-gray-900 dark:text-white border border-gray-300 dark:border-[#3b5447] focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+                  Thời gian
+                </label>
+                <input
+                  type="datetime-local"
+                  value={editFormData.timestamp}
+                  onChange={(e) => setEditFormData({ ...editFormData, timestamp: e.target.value })}
+                  className="w-full px-4 py-2 rounded-lg bg-white dark:bg-[#283930] text-gray-900 dark:text-white border border-gray-300 dark:border-[#3b5447] focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+                  Ghi chú
+                </label>
+                <textarea
+                  value={editFormData.notes}
+                  onChange={(e) => setEditFormData({ ...editFormData, notes: e.target.value })}
+                  rows="3"
+                  className="w-full px-4 py-2 rounded-lg bg-white dark:bg-[#283930] text-gray-900 dark:text-white border border-gray-300 dark:border-[#3b5447] focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  placeholder="Nhập ghi chú (tùy chọn)"
+                />
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={handleCancelEdit}
+                  className="flex-1 px-4 py-2 rounded-lg bg-gray-200 dark:bg-[#283930] text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-[#3b5447] transition-colors"
+                >
+                  Hủy
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors"
+                >
+                  Lưu thay đổi
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

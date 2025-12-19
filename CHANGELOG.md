@@ -1,10 +1,36 @@
-# CHANGELOG - PHIHub
+# Changelog - PHIHub
 
 > **Personal Health Intelligence Hub** - Lịch sử phát triển và cập nhật
 
 ---
 
-## [1.2.0] - 30/11/2025 - Documentation & Code Cleanup 📚✨
+## [1.3.0] - 20/12/2025 - Cập nhật UI và tối ưu hóa 🎨
+
+### ✨ Tính năng mới
+
+#### Cập nhật giao diện
+- ✅ **Logo và favicon mới**
+  - Thay thế Vite icon mặc định bằng logo PHIHub
+  - SVG logo với gradient xanh lá và xanh dương
+  - Tích hợp biểu tượng y tế và đường nhịp tim
+  - Hỗ trợ đa nền tảng (web, mobile)
+
+#### Tối ưu văn bản
+- ✅ **Chuẩn hóa tiếng Việt**
+  - Sửa tất cả lỗi viết hoa không đúng quy tắc
+  - Chỉ viết hoa chữ cái đầu câu/tiêu đề
+  - Cập nhật xuyên suốt tất cả file .md và .jsx
+  
+### 🗑️ Dọn dẹp
+- ✅ Xóa file không cần thiết
+  - PROJECT_SUMMARY.md (đã lỗi thời)
+  - SECURITY_FIX.md (đã xử lý)
+  - test-api-data.js, test-db-data.js (file test cũ)
+  - import-december-data.js (script một lần)
+
+---
+
+## [1.2.0] - 30/11/2025 - Documentation & code cleanup 📚✨
 
 ### ✨ Tính năng mới
 
@@ -24,21 +50,21 @@
   - Keyboard shortcuts
 
 - ✅ **Guide for Board** (`docs/GUIDE_FOR_BOARD.md`)
-  - Tài liệu tóm tắt cho Hội đồng
+  - Tài liệu tóm tắt cho hội đồng
   - Hướng dẫn demo nhanh
   - Thông tin liên hệ đầy đủ
 
-#### UI Components
+#### UI components
 - ✅ **Footer Component** (`src/client/src/components/Footer.jsx`)
   - 4-column layout responsive
-  - Quick Links, Support, Contact sections
+  - Quick links, support, contact sections
   - Social media integration
   - Dark theme matching
   - Tích hợp vào 6 pages chính
 
 ### 🔧 Cải tiến
 
-#### Code Organization
+#### Code organization
 - ✅ Dọn dẹp 18+ files cũ/thừa
 - ✅ Tổ chức lại documentation structure
 - ✅ Consolidate duplicate guides

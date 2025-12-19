@@ -17,6 +17,11 @@ export const getMetricStats = async (metricType, days = 7) => {
   return response.data;
 };
 
+export const updateMetric = async (id, metricData) => {
+  const response = await API.put(`/metrics/${id}`, metricData);
+  return response.data;
+};
+
 export const deleteMetric = async (id) => {
   const response = await API.delete(`/metrics/${id}`);
   return response.data;

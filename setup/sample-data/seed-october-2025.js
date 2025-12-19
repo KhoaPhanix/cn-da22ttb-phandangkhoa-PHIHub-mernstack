@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config({ path: '../../src/server/.env' });
 
 // Cấu hình MongoDB từ environment variables
-const MONGODB_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/phihub';
+const MONGODB_URI = process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://localhost:27017/phihub';
 const DB_NAME = 'phihub';
 
 // Ngày bắt đầu: 25/10/2025

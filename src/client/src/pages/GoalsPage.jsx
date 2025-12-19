@@ -31,6 +31,7 @@ const GoalsPage = () => {
 
   const fetchData = async () => {
     try {
+      console.log('🔄 [Goals] Fetching data with filter:', filter);
       setLoading(true);
       setError(null);
       const [goalsRes, statsRes] = await Promise.all([
@@ -38,18 +39,23 @@ const GoalsPage = () => {
         getGoalStats(),
       ]);
       
-      // Extract data correctly from service response
-      const goalsData = Array.isArray(goalsRes.data) ? goalsRes.data : [];
-      const statsData = statsRes.data || null;
+      console.log('📦 [Goals] Full Response:', goalsRes);
+      console.log('📦 [Goals] Response.data:', goalsRes.data);
+      console.log('📦 [Goals] Response.data.data:', goalsRes.data?.data);
       
-      console.log('📊 Goals Response:', goalsRes);
-      console.log('📊 Goals Data:', goalsData);
-      console.log('📊 Stats Data:', statsData);
+      // Extract data correctly from service response
+      const goalsData = Array.isArray(goalsRes.data?.data) ? goalsRes.data.data : (Array.isArray(goalsRes.data) ? goalsRes.data : []);
+      const statsData = statsRes.data?.data || statsRes.data || null;
+      
+      console.log('📊 Goals Data (final):', goalsData);
+      console.log('📊 Stats Data (final):', statsData);
+      console.log('📊 Goals count:', goalsData.length);
       
       setGoals(goalsData);
       setStats(statsData);
     } catch (error) {
       console.error('❌ Error fetching goals:', error);
+      console.error('❌ Error response:', error.response);
       setError(error.response?.data?.message || 'Không thể tải dữ liệu mục tiêu. Vui lòng đăng nhập lại.');
       setGoals([]);
       setStats(null);
@@ -69,9 +75,13 @@ const GoalsPage = () => {
       };
 
       if (editingGoal) {
-        await updateGoal(editingGoal._id, goalData);
+        const response = await updateGoal(editingGoal._id, goalData);
+        console.log('✅ Update goal response:', response);
+        alert('Cập nhật mục tiêu thành công!');
       } else {
-        await createGoal(goalData);
+        const response = await createGoal(goalData);
+        console.log('✅ Create goal response:', response);
+        alert('Tạo mục tiêu thành công!');
       }
 
       setShowModal(false);
@@ -79,7 +89,9 @@ const GoalsPage = () => {
       resetForm();
       fetchData();
     } catch (error) {
-      console.error('Error saving goal:', error);
+      console.error('❌ Error saving goal:', error);
+      console.error('Error details:', error.response?.data);
+      alert(`Lỗi: ${error.response?.data?.message || error.message || 'Không thể lưu mục tiêu'}`);
     }
   };
 
@@ -168,7 +180,7 @@ const GoalsPage = () => {
           <div className="flex flex-wrap justify-between items-center gap-4 mb-8">
             <div>
               <h1 className="text-black dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">
-                Mục Tiêu Của Tôi
+                Mục tiêu của tôi
               </h1>
               <p className="text-gray-600 dark:text-[#9db9ab] text-base mt-2">
                 Đặt mục tiêu và theo dõi tiến độ của bạn
@@ -183,7 +195,7 @@ const GoalsPage = () => {
               className="flex items-center gap-2 px-6 py-3 bg-primary text-black rounded-lg font-semibold hover:opacity-90 transition-opacity"
             >
               <span className="material-symbols-outlined">add</span>
-              Thêm Mục Tiêu
+              Thêm mục tiêu
             </button>
           </div>
 
@@ -333,7 +345,7 @@ const GoalsPage = () => {
           <div className="bg-white dark:bg-[#111814] rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-white text-2xl font-bold">
-                {editingGoal ? 'Chỉnh Sửa Mục Tiêu' : 'Thêm Mục Tiêu Mới'}
+                {editingGoal ? 'Chỉnh sửa mục tiêu' : 'Thêm mục tiêu mới'}
               </h2>
               <button
                 onClick={() => {

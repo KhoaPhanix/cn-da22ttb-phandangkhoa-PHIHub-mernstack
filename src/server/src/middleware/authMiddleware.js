@@ -7,8 +7,12 @@ const protect = asyncHandler(async (req, res, next) => {
   let token;
 
   // Đọc token từ HttpOnly Cookie
-  if (req.cookies.token) {
+  if (req.cookies && req.cookies.token) {
     token = req.cookies.token;
+  }
+  // Alternatively, read from Authorization header
+  else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
   }
 
   // Kiểm tra token có tồn tại không
@@ -22,7 +26,9 @@ const protect = asyncHandler(async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Lấy thông tin user từ database (không bao gồm password)
-    req.user = await User.findById(decoded.userId).select('-password');
+    // Support both userId and id in JWT payload
+    const userId = decoded.userId || decoded.id;
+    req.user = await User.findById(userId).select('-password');
 
     if (!req.user) {
       res.status(401);

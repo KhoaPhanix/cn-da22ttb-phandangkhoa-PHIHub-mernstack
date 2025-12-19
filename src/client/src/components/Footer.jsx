@@ -120,7 +120,7 @@ const Footer = () => {
             {/* Social Links */}
             <div className="flex items-center gap-4">
               <a 
-                href="https://github.com/phihub" 
+                href="https://github.com/KhoaPhanix/cn-da22ttb-phandangkhoa-PHIHub-mernstack" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-[#9db9ab] hover:text-primary transition-colors"
@@ -132,7 +132,7 @@ const Footer = () => {
               </a>
               
               <a 
-                href="https://facebook.com/phihub" 
+                href="https://www.facebook.com/profile.php?id=61584775375611" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-[#9db9ab] hover:text-primary transition-colors"
@@ -144,7 +144,7 @@ const Footer = () => {
               </a>
 
               <a 
-                href="https://twitter.com/phihub" 
+                href="https://x.com/PHIHub999" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-[#9db9ab] hover:text-primary transition-colors"

@@ -68,12 +68,17 @@ exports.getNutritionLog = async (req, res) => {
 // @access  Private
 exports.createNutritionLog = async (req, res) => {
   try {
+    console.log('🍽️ [Nutrition] Received create nutrition log request');
+    console.log('🍽️ [Nutrition] User ID:', req.user._id);
+    console.log('🍽️ [Nutrition] Request body:', JSON.stringify(req.body, null, 2));
+    
     const logData = {
       ...req.body,
       userId: req.user._id,
     };
     
     const log = await Nutrition.create(logData);
+    console.log('✅ [Nutrition] Created successfully:', log._id);
     
     res.status(201).json({
       success: true,
@@ -81,6 +86,8 @@ exports.createNutritionLog = async (req, res) => {
       data: log,
     });
   } catch (error) {
+    console.error('❌ [Nutrition] Error creating log:', error.message);
+    console.error('❌ [Nutrition] Error details:', error);
     res.status(400).json({
       success: false,
       message: 'Lỗi khi tạo nhật ký dinh dưỡng',

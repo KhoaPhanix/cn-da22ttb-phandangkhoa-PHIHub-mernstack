@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { getDailyNutrition, createNutritionLog, deleteNutritionLog, getNutritionStats } from '../services/nutritionService';
 import { format } from 'date-fns';
+import { mealTemplates, searchFoods, estimateMacros } from '../data/foodDatabase';
 
 const NutritionPage = () => {
   const navigate = useNavigate();
@@ -20,6 +21,10 @@ const NutritionPage = () => {
     foodItems: [{ name: '', quantity: '', unit: 'g', calories: '', protein: '', carbs: '', fats: '' }],
     notes: '',
   });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [showTemplates, setShowTemplates] = useState(false);
+  const [activeInputIndex, setActiveInputIndex] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -27,18 +32,28 @@ const NutritionPage = () => {
 
   const fetchData = async () => {
     try {
+      console.log('🔄 [Nutrition] Fetching data for date:', selectedDate);
       setLoading(true);
       setError(null);
       const [dailyRes, statsRes] = await Promise.all([
         getDailyNutrition(selectedDate),
         getNutritionStats({ days: 7 }),
       ]);
-      const dailyResData = dailyRes.data || null;
-      const statsResData = statsRes.data || null;
+      
+      console.log('📦 [Nutrition] Daily Response:', dailyRes);
+      console.log('📦 [Nutrition] Stats Response:', statsRes);
+      
+      const dailyResData = dailyRes.data?.data || dailyRes.data || null;
+      const statsResData = statsRes.data?.data || statsRes.data || null;
+      
+      console.log('📊 [Nutrition] Daily Data:', dailyResData);
+      console.log('📊 [Nutrition] Stats Data:', statsResData);
+      
       setDailyData(dailyResData);
       setStats(statsResData);
     } catch (error) {
-      console.error('Error fetching nutrition data:', error);
+      console.error('❌ [Nutrition] Error fetching data:', error);
+      console.error('❌ [Nutrition] Error response:', error.response);
       setError(error.response?.data?.message || 'Không thể tải dữ liệu dinh dưỡng. Vui lòng đăng nhập lại.');
       setDailyData(null);
       setStats(null);
@@ -67,12 +82,17 @@ const NutritionPage = () => {
         notes: formData.notes,
       };
 
-      await createNutritionLog(nutritionData);
+      console.log('📤 Sending nutrition data:', nutritionData);
+      const response = await createNutritionLog(nutritionData);
+      console.log('✅ Nutrition response:', response);
+      alert('Lưu nhật ký dinh dưỡng thành công!');
       setShowModal(false);
       resetForm();
       fetchData();
     } catch (error) {
-      console.error('Error saving nutrition log:', error);
+      console.error('❌ Error saving nutrition log:', error);
+      console.error('Error details:', error.response?.data);
+      alert(`Lỗi: ${error.response?.data?.message || error.message || 'Không thể lưu nhật ký'}`);
     }
   };
 
@@ -104,7 +124,61 @@ const NutritionPage = () => {
   const updateFoodItem = (index, field, value) => {
     const newItems = [...formData.foodItems];
     newItems[index][field] = value;
+    
+    // Tự động search khi nhập tên món
+    if (field === 'name') {
+      setActiveInputIndex(index);
+      setSearchQuery(value);
+      if (value.length > 0) {
+        setSearchResults(searchFoods(value));
+      } else {
+        setSearchResults([]);
+      }
+    }
+    
+    // Tự động tính macros khi nhập calories
+    if (field === 'calories' && value && !newItems[index].protein && !newItems[index].carbs && !newItems[index].fats) {
+      const macros = estimateMacros(parseFloat(value));
+      newItems[index].protein = macros.protein;
+      newItems[index].carbs = macros.carbs;
+      newItems[index].fats = macros.fats;
+    }
+    
     setFormData({ ...formData, foodItems: newItems });
+  };
+  
+  const selectFood = (index, food) => {
+    const newItems = [...formData.foodItems];
+    newItems[index] = {
+      name: food.name,
+      quantity: food.defaultQuantity || 100,
+      unit: food.unit,
+      calories: Math.round((food.calories * (food.defaultQuantity || 100)) / 100),
+      protein: Math.round((food.protein * (food.defaultQuantity || 100)) / 100 * 10) / 10,
+      carbs: Math.round((food.carbs * (food.defaultQuantity || 100)) / 100 * 10) / 10,
+      fats: Math.round((food.fats * (food.defaultQuantity || 100)) / 100 * 10) / 10,
+    };
+    setFormData({ ...formData, foodItems: newItems });
+    setSearchResults([]);
+    setSearchQuery('');
+    setActiveInputIndex(null);
+  };
+  
+  const loadTemplate = (template) => {
+    setFormData({
+      mealType: template.mealType,
+      foodItems: template.foodItems.map(item => ({
+        name: item.name,
+        quantity: item.quantity,
+        unit: item.unit,
+        calories: item.calories,
+        protein: item.protein,
+        carbs: item.carbs,
+        fats: item.fats,
+      })),
+      notes: template.description,
+    });
+    setShowTemplates(false);
   };
 
   const resetForm = () => {
@@ -343,14 +417,22 @@ const NutritionPage = () => {
 
                   {/* Food Items */}
                   <div className="space-y-2 mb-4">
+                    <div className="text-gray-400 text-xs font-medium mb-2">Chi tiết món ăn:</div>
                     {meal.foodItems?.map((item, idx) => (
-                      <div key={idx} className="flex justify-between text-sm">
-                        <span className="text-black dark:text-white">
-                          {item.name} ({item.quantity}{item.unit})
-                        </span>
-                        <span className="text-gray-600 dark:text-[#9db9ab]">
-                          {item.calories} kcal
-                        </span>
+                      <div key={idx} className="flex justify-between items-start text-sm bg-[#1c2721]/30 rounded p-2">
+                        <div className="flex-1">
+                          <span className="text-black dark:text-white font-medium">
+                            {item.name}
+                          </span>
+                          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            {item.quantity}{item.unit} · {item.calories} kcal
+                            {item.macros && (
+                              <span className="ml-2">
+                                P: {item.macros.protein}g · C: {item.macros.carbs}g · F: {item.macros.fats}g
+                              </span>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -392,13 +474,15 @@ const NutritionPage = () => {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-          <div className="bg-white dark:bg-[#111814] rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 my-8">
+          <div className="bg-white dark:bg-[#111814] rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 my-8">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-white text-2xl font-bold">Thêm Bữa Ăn</h2>
               <button
                 onClick={() => {
                   setShowModal(false);
                   resetForm();
+                  setSearchResults([]);
+                  setShowTemplates(false);
                 }}
                 className="text-gray-400 hover:text-white"
               >
@@ -407,6 +491,7 @@ const NutritionPage = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Meal Type Selection */}
               <div>
                 <label className="text-white text-sm font-medium mb-2 block">Bữa ăn *</label>
                 <select
@@ -420,6 +505,42 @@ const NutritionPage = () => {
                   <option value="dinner">Bữa Tối</option>
                   <option value="snack">Ăn Vặt</option>
                 </select>
+              </div>
+
+              {/* Template Suggestions */}
+              <div className="bg-[#1c2721] border border-[#3b5447] rounded-lg p-4">
+                <button
+                  type="button"
+                  onClick={() => setShowTemplates(!showTemplates)}
+                  className="flex items-center justify-between w-full text-white mb-3"
+                >
+                  <span className="font-medium flex items-center gap-2">
+                    <span className="material-symbols-outlined">restaurant_menu</span>
+                    Chọn bữa ăn mẫu
+                  </span>
+                  <span className="material-symbols-outlined">
+                    {showTemplates ? 'expand_less' : 'expand_more'}
+                  </span>
+                </button>
+                
+                {showTemplates && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {mealTemplates
+                      .filter(t => t.mealType === formData.mealType)
+                      .map((template) => (
+                        <button
+                          key={template.id}
+                          type="button"
+                          onClick={() => loadTemplate(template)}
+                          className="text-left p-3 bg-[#111814] hover:bg-[#1c2721] border border-[#3b5447] rounded-lg transition-colors"
+                        >
+                          <div className="text-primary font-medium mb-1">{template.name}</div>
+                          <div className="text-gray-400 text-xs mb-2">{template.description}</div>
+                          <div className="text-white text-sm font-semibold">{template.totalCalories} kcal</div>
+                        </button>
+                      ))}
+                  </div>
+                )}
               </div>
 
               {/* Food Items */}
@@ -437,7 +558,7 @@ const NutritionPage = () => {
 
                 <div className="space-y-4">
                   {formData.foodItems.map((item, idx) => (
-                    <div key={idx} className="bg-[#1c2721] border border-[#3b5447] rounded-lg p-4">
+                    <div key={idx} className="bg-[#1c2721] border border-[#3b5447] rounded-lg p-4 relative">
                       <div className="flex justify-between items-start mb-3">
                         <span className="text-white text-sm font-medium">Món #{idx + 1}</span>
                         {formData.foodItems.length > 1 && (
@@ -452,16 +573,38 @@ const NutritionPage = () => {
                       </div>
 
                       <div className="grid grid-cols-2 gap-3">
-                        <div className="col-span-2">
+                        {/* Tên món với search */}
+                        <div className="col-span-2 relative">
                           <input
                             type="text"
                             required
                             value={item.name}
                             onChange={(e) => updateFoodItem(idx, 'name', e.target.value)}
+                            onFocus={() => setActiveInputIndex(idx)}
                             className="w-full px-3 py-2 rounded bg-[#111814] border border-[#3b5447] text-white text-sm focus:outline-none focus:ring-1 focus:ring-primary"
-                            placeholder="Tên món ăn"
+                            placeholder="Tên món ăn (gõ để tìm kiếm)"
                           />
+                          
+                          {/* Search Results Dropdown */}
+                          {activeInputIndex === idx && searchResults.length > 0 && (
+                            <div className="absolute z-10 w-full mt-1 bg-[#111814] border border-[#3b5447] rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                              {searchResults.map((food, foodIdx) => (
+                                <button
+                                  key={foodIdx}
+                                  type="button"
+                                  onClick={() => selectFood(idx, food)}
+                                  className="w-full text-left px-3 py-2 hover:bg-[#1c2721] text-white text-sm border-b border-[#3b5447] last:border-b-0"
+                                >
+                                  <div className="font-medium">{food.name}</div>
+                                  <div className="text-xs text-gray-400">
+                                    {food.calories} kcal / {food.unit} · P: {food.protein}g · C: {food.carbs}g · F: {food.fats}g
+                                  </div>
+                                </button>
+                              ))}
+                            </div>
+                          )}
                         </div>
+                        
                         <div>
                           <input
                             type="number"
@@ -483,9 +626,12 @@ const NutritionPage = () => {
                             <option value="ml">ml</option>
                             <option value="portion">phần</option>
                             <option value="piece">miếng</option>
+                            <option value="quả">quả</option>
+                            <option value="bát">bát</option>
+                            <option value="hộp">hộp</option>
                           </select>
                         </div>
-                        <div>
+                        <div className="col-span-2">
                           <input
                             type="number"
                             step="0.1"
@@ -493,38 +639,43 @@ const NutritionPage = () => {
                             value={item.calories}
                             onChange={(e) => updateFoodItem(idx, 'calories', e.target.value)}
                             className="w-full px-3 py-2 rounded bg-[#111814] border border-[#3b5447] text-white text-sm focus:outline-none focus:ring-1 focus:ring-primary"
-                            placeholder="Calories"
+                            placeholder="Calories (tự động tính macros nếu để trống)"
                           />
                         </div>
-                        <div>
-                          <input
-                            type="number"
-                            step="0.1"
-                            value={item.protein}
-                            onChange={(e) => updateFoodItem(idx, 'protein', e.target.value)}
-                            className="w-full px-3 py-2 rounded bg-[#111814] border border-[#3b5447] text-white text-sm focus:outline-none focus:ring-1 focus:ring-primary"
-                            placeholder="Protein (g)"
-                          />
-                        </div>
-                        <div>
-                          <input
-                            type="number"
-                            step="0.1"
-                            value={item.carbs}
-                            onChange={(e) => updateFoodItem(idx, 'carbs', e.target.value)}
-                            className="w-full px-3 py-2 rounded bg-[#111814] border border-[#3b5447] text-white text-sm focus:outline-none focus:ring-1 focus:ring-primary"
-                            placeholder="Carbs (g)"
-                          />
-                        </div>
-                        <div>
-                          <input
-                            type="number"
-                            step="0.1"
-                            value={item.fats}
-                            onChange={(e) => updateFoodItem(idx, 'fats', e.target.value)}
-                            className="w-full px-3 py-2 rounded bg-[#111814] border border-[#3b5447] text-white text-sm focus:outline-none focus:ring-1 focus:ring-primary"
-                            placeholder="Fats (g)"
-                          />
+                        
+                        {/* Macros - optional */}
+                        <div className="col-span-2">
+                          <details className="text-sm">
+                            <summary className="text-gray-400 cursor-pointer hover:text-white mb-2">
+                              Chi tiết dinh dưỡng (tùy chọn)
+                            </summary>
+                            <div className="grid grid-cols-3 gap-2 mt-2">
+                              <input
+                                type="number"
+                                step="0.1"
+                                value={item.protein}
+                                onChange={(e) => updateFoodItem(idx, 'protein', e.target.value)}
+                                className="w-full px-3 py-2 rounded bg-[#111814] border border-[#3b5447] text-white text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                                placeholder="Protein (g)"
+                              />
+                              <input
+                                type="number"
+                                step="0.1"
+                                value={item.carbs}
+                                onChange={(e) => updateFoodItem(idx, 'carbs', e.target.value)}
+                                className="w-full px-3 py-2 rounded bg-[#111814] border border-[#3b5447] text-white text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                                placeholder="Carbs (g)"
+                              />
+                              <input
+                                type="number"
+                                step="0.1"
+                                value={item.fats}
+                                onChange={(e) => updateFoodItem(idx, 'fats', e.target.value)}
+                                className="w-full px-3 py-2 rounded bg-[#111814] border border-[#3b5447] text-white text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                                placeholder="Fats (g)"
+                              />
+                            </div>
+                          </details>
                         </div>
                       </div>
                     </div>
@@ -549,6 +700,8 @@ const NutritionPage = () => {
                   onClick={() => {
                     setShowModal(false);
                     resetForm();
+                    setSearchResults([]);
+                    setShowTemplates(false);
                   }}
                   className="flex-1 px-6 py-3 bg-transparent border border-white/20 text-white rounded-lg hover:bg-white/10 transition-colors"
                 >

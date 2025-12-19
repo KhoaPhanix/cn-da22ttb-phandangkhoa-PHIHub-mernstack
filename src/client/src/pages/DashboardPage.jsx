@@ -1,11 +1,11 @@
 ﻿import { useState, useEffect } from 'react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { format, subDays } from 'date-fns';
+import { vi } from 'date-fns/locale';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import LoadingSpinner from '../components/LoadingSpinner';
 import AlertBanner from '../components/AlertBanner';
-import DebugPanel from '../components/DebugPanel';
 import Footer from '../components/Footer';
 import { getMetrics, getMetricStats } from '../services/metricsService';
 import { getRecommendations } from '../services/recommendationService';
@@ -24,9 +24,19 @@ const DashboardPage = () => {
   const [stats, setStats] = useState({});
   const [recommendations, setRecommendations] = useState([]);
   const [activeGoals, setActiveGoals] = useState([]);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  // Update clock every minute
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000); // Update every minute
+    
+    return () => clearInterval(timer);
+  }, []);
 
   // Helper function to safely format metric data
-  const formatMetricData = (dataArray, dateFormat = 'dd/MM') => {
+  const formatMetricData = (dataArray, dateFormat = 'dd/MM/yyyy') => {
     if (!Array.isArray(dataArray) || dataArray.length === 0) {
       return [];
     }
@@ -51,7 +61,7 @@ const DashboardPage = () => {
     try {
       setLoading(true);
       
-      const startDate = subDays(new Date(), 30).toISOString();
+      const startDate = subDays(new Date(), 60).toISOString();
       
       // Weight Data
       try {
@@ -59,13 +69,13 @@ const DashboardPage = () => {
         const weightResponse = await getMetrics({
           metricType: 'weight',
           startDate,
-          limit: 30,
+          limit: 60,
         });
         
         console.log('🔍 Weight Response:', weightResponse);
         const weightDataArray = Array.isArray(weightResponse.data) ? weightResponse.data : [];
         console.log('🔍 Weight Data Length:', weightDataArray.length);
-        setWeightData(formatMetricData(weightDataArray));
+        setWeightData(formatMetricData(weightDataArray, 'dd/MM'));
       } catch (error) {
         console.error('❌ Error fetching weight:', error);
         setWeightData([]);
@@ -83,7 +93,7 @@ const DashboardPage = () => {
         });
         
         const sleepDataArray = Array.isArray(sleepResponse.data) ? sleepResponse.data : [];
-        setSleepData(formatMetricData(sleepDataArray, 'EEE'));
+        setSleepData(formatMetricData(sleepDataArray, 'dd/MM'));
       } catch (error) {
         console.error('❌ Error fetching sleep:', error);
         setSleepData([]);
@@ -95,11 +105,11 @@ const DashboardPage = () => {
         const bmiResponse = await getMetrics({
           metricType: 'bmi',
           startDate,
-          limit: 30,
+          limit: 60,
         });
         
         const bmiDataArray = Array.isArray(bmiResponse.data) ? bmiResponse.data : [];
-        setBmiData(formatMetricData(bmiDataArray));
+        setBmiData(formatMetricData(bmiDataArray, 'dd/MM'));
       } catch (error) {
         console.error('❌ Error fetching BMI:', error);
         setBmiData([]);
@@ -115,7 +125,7 @@ const DashboardPage = () => {
         });
         
         const waterDataArray = Array.isArray(waterResponse.data) ? waterResponse.data : [];
-        setWaterData(formatMetricData(waterDataArray));
+        setWaterData(formatMetricData(waterDataArray, 'dd/MM'));
       } catch (error) {
         console.error('❌ Error fetching water:', error);
         setWaterData([]);
@@ -126,8 +136,8 @@ const DashboardPage = () => {
         console.log('📊 Fetching blood pressure data...');
         const bpResponse = await getMetrics({
           metricType: 'bloodPressure',
-          startDate: sleepStartDate,
-          limit: 7,
+          startDate,
+          limit: 60,
         });
         
         const bpDataArray = Array.isArray(bpResponse.data) ? bpResponse.data : [];
@@ -264,6 +274,20 @@ const DashboardPage = () => {
               <p className="text-black dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">
                 Chào {getTimeGreeting()}, {user?.name || 'bạn'}!
               </p>
+              <div className="flex items-center gap-3 text-gray-600 dark:text-[#9db9ab]">
+                <div className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-lg">calendar_today</span>
+                  <span className="text-base font-medium">
+                    {format(currentTime, 'EEEE, dd/MM/yyyy', { locale: vi })}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-lg">schedule</span>
+                  <span className="text-base font-medium">
+                    {format(currentTime, 'HH:mm')}
+                  </span>
+                </div>
+              </div>
               <p className="text-gray-600 dark:text-[#9db9ab] text-base font-normal leading-normal">
                 Nhìn chung, sức khỏe của bạn đang ổn định. Hãy tiếp tục duy trì nhé!
               </p>
@@ -287,7 +311,7 @@ const DashboardPage = () => {
             <div className="px-4 sm:px-6 md:px-8 mb-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-black dark:text-white text-xl font-bold">
-                  Mục Tiêu Của Tôi
+                  Mục tiêu của tôi
                 </h3>
                 <button
                   onClick={() => navigate('/goals')}
@@ -518,27 +542,39 @@ const DashboardPage = () => {
                   {stats.sleep?.average >= 7 ? 'Đủ giấc' : 'Cần cải thiện'}
                 </p>
               </div>
-              <div className="grid min-h-[220px] grid-flow-col gap-2 grid-rows-[1fr_auto] items-end justify-items-center px-3 pt-4">
-                {sleepData && sleepData.length > 0 ? sleepData.map((item, index) => (
-                  <div key={index} className="flex flex-col items-center w-full gap-2">
-                    <div 
-                      className={`w-full ${
-                        item.value >= 7 ? 'bg-primary' : 'bg-primary/20 dark:bg-[#283930]'
-                      } rounded-t-sm transition-all`}
-                      style={{ 
-                        height: `${Math.max((item.value / 10) * 180, 10)}px`,
-                        minHeight: '10px'
-                      }}
+              <div className="flex min-h-[180px] flex-1 flex-col gap-8 py-4">
+                <ResponsiveContainer width="100%" height={180}>
+                  <BarChart data={sleepData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#3b5447" opacity={0.3} />
+                    <XAxis 
+                      dataKey="date" 
+                      stroke="#9db9ab" 
+                      tick={{ fill: '#9db9ab', fontSize: 11 }}
+                      angle={-45}
+                      textAnchor="end"
+                      height={60}
                     />
-                    <p className="text-gray-500 dark:text-[#9db9ab] text-[13px] font-bold leading-normal tracking-[0.015em]">
-                      {item.date}
-                    </p>
-                  </div>
-                )) : (
-                  <div className="flex items-center justify-center w-full h-full col-span-7">
-                    <p className="text-gray-500 dark:text-[#9db9ab] text-sm">Chưa có dữ liệu</p>
-                  </div>
-                )}
+                    <YAxis 
+                      stroke="#9db9ab" 
+                      tick={{ fill: '#9db9ab', fontSize: 12 }}
+                      domain={[0, 10]}
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: '#1c3d2e', 
+                        border: '1px solid #3b5447',
+                        borderRadius: '8px',
+                        color: '#fff'
+                      }}
+                      formatter={(value) => [`${value} giờ`, 'Giấc ngủ']}
+                    />
+                    <Bar 
+                      dataKey="value" 
+                      fill="#13ec80"
+                      radius={[8, 8, 0, 0]}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </div>
           </div>
@@ -578,7 +614,11 @@ const DashboardPage = () => {
                     <XAxis 
                       dataKey="date" 
                       stroke="#9db9ab" 
-                      tick={{ fill: '#9db9ab', fontSize: 12 }}
+                      tick={{ fill: '#9db9ab', fontSize: 10 }}
+                      angle={-45}
+                      textAnchor="end"
+                      height={80}
+                      interval="preserveStartEnd"
                     />
                     <YAxis 
                       stroke="#9db9ab" 
@@ -625,27 +665,39 @@ const DashboardPage = () => {
                   {stats.water?.average >= 2000 ? 'Đủ nước' : 'Cần uống thêm'}
                 </p>
               </div>
-              <div className="grid min-h-[220px] grid-flow-col gap-2 grid-rows-[1fr_auto] items-end justify-items-center px-3 pt-4">
-                {waterData && waterData.length > 0 ? waterData.map((item, index) => (
-                  <div key={index} className="flex flex-col items-center w-full gap-2">
-                    <div 
-                      className={`w-full ${
-                        item.value >= 2000 ? 'bg-[#00bfff]' : 'bg-[#00bfff]/30'
-                      } rounded-t-sm transition-all`}
-                      style={{ 
-                        height: `${Math.max((item.value / 3000) * 180, 10)}px`,
-                        minHeight: '10px'
-                      }}
+              <div className="flex min-h-[180px] flex-1 flex-col gap-8 py-4">
+                <ResponsiveContainer width="100%" height={180}>
+                  <BarChart data={waterData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#3b5447" opacity={0.3} />
+                    <XAxis 
+                      dataKey="date" 
+                      stroke="#9db9ab" 
+                      tick={{ fill: '#9db9ab', fontSize: 11 }}
+                      angle={-45}
+                      textAnchor="end"
+                      height={60}
                     />
-                    <p className="text-gray-500 dark:text-[#9db9ab] text-[13px] font-bold leading-normal tracking-[0.015em]">
-                      {item.date}
-                    </p>
-                  </div>
-                )) : (
-                  <div className="flex items-center justify-center w-full h-full col-span-7">
-                    <p className="text-gray-500 dark:text-[#9db9ab] text-sm">Chưa có dữ liệu</p>
-                  </div>
-                )}
+                    <YAxis 
+                      stroke="#9db9ab" 
+                      tick={{ fill: '#9db9ab', fontSize: 12 }}
+                      domain={[0, 3000]}
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: '#1c3d2e', 
+                        border: '1px solid #3b5447',
+                        borderRadius: '8px',
+                        color: '#fff'
+                      }}
+                      formatter={(value) => [`${(value / 1000).toFixed(1)} L`, 'Nước uống']}
+                    />
+                    <Bar 
+                      dataKey="value" 
+                      fill="#00bfff"
+                      radius={[8, 8, 0, 0]}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </div>
           </div>
@@ -688,7 +740,11 @@ const DashboardPage = () => {
                     <XAxis 
                       dataKey="date" 
                       stroke="#9db9ab" 
-                      tick={{ fill: '#9db9ab', fontSize: 12 }}
+                      tick={{ fill: '#9db9ab', fontSize: 10 }}
+                      angle={-45}
+                      textAnchor="end"
+                      height={80}
+                      interval="preserveStartEnd"
                     />
                     <YAxis 
                       stroke="#9db9ab" 
@@ -728,23 +784,6 @@ const DashboardPage = () => {
           </div>
         </div>
       </main>
-
-      {/* Debug Panel - Remove in production */}
-      {process.env.NODE_ENV === 'development' && (
-        <DebugPanel 
-          data={{
-            weightData,
-            sleepData,
-            bmiData,
-            waterData,
-            bloodPressureData,
-            stats,
-            recommendations,
-            activeGoals
-          }} 
-          label="Dashboard Data" 
-        />
-      )}
     </div>
   );
 };

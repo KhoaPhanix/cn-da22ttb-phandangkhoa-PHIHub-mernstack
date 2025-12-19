@@ -121,6 +121,40 @@ const getMetricStats = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc    Cập nhật metric
+// @route   PUT /api/metrics/:id
+// @access  Private
+const updateMetric = asyncHandler(async (req, res) => {
+  const metric = await HealthMetric.findById(req.params.id);
+
+  if (!metric) {
+    res.status(404);
+    throw new Error('Metric không tìm thấy');
+  }
+
+  // Kiểm tra quyền sở hữu
+  if (metric.userId.toString() !== req.user._id.toString()) {
+    res.status(403);
+    throw new Error('Không có quyền sửa metric này');
+  }
+
+  const { metricType, value, unit, timestamp, notes } = req.body;
+
+  // Cập nhật các trường nếu được cung cấp
+  if (metricType) metric.metricType = metricType;
+  if (value !== undefined) metric.value = value;
+  if (unit) metric.unit = unit;
+  if (timestamp) metric.timestamp = timestamp;
+  if (notes !== undefined) metric.notes = notes;
+
+  const updatedMetric = await metric.save();
+
+  res.status(200).json({
+    success: true,
+    data: updatedMetric,
+  });
+});
+
 // @desc    Xóa metric
 // @route   DELETE /api/metrics/:id
 // @access  Private
@@ -150,5 +184,6 @@ module.exports = {
   getMetrics,
   createMetric,
   getMetricStats,
+  updateMetric,
   deleteMetric,
 };

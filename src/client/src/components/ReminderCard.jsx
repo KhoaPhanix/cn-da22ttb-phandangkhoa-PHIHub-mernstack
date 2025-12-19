@@ -90,7 +90,7 @@ const ReminderCard = ({ reminder, onToggle, onDelete }) => {
               <div className="flex items-center gap-1 text-gray-600 dark:text-[#9db9ab]">
                 <span className="material-symbols-outlined text-base">event</span>
                 <span>
-                  Tiếp theo: {format(new Date(reminder.nextScheduled), 'dd/MM HH:mm', { locale: vi })}
+                  Tiếp theo: {format(new Date(reminder.nextScheduled), 'dd/MM/yyyy HH:mm', { locale: vi })}
                 </span>
               </div>
             )}

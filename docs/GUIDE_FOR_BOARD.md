@@ -1,10 +1,10 @@
-# HƯỚNG DẪN SỬ DỤNG DỰ ÁN PHIHub
+# Hướng dẫn sử dụng dự án PHIHub
 
 > **Tài liệu tóm tắt cho Hội đồng và Giảng viên hướng dẫn**
 
 ---
 
-## 📌 THÔNG TIN CHUNG
+## 📌 Thông tin chung
 
 **Tên đề tài:** PHIHub - Personal Health Intelligence Hub  
 **Mô tả:** Hệ thống theo dõi và tư vấn sức khỏe cá nhân sử dụng MERN Stack  

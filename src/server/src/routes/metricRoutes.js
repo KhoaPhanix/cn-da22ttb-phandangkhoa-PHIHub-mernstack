@@ -4,12 +4,13 @@ const {
   getMetrics,
   createMetric,
   getMetricStats,
+  updateMetric,
   deleteMetric,
 } = require('../controllers/metricsController');
 const { protect } = require('../middleware/authMiddleware');
 
 router.route('/').get(protect, getMetrics).post(protect, createMetric);
 router.get('/stats', protect, getMetricStats);
-router.delete('/:id', protect, deleteMetric);
+router.route('/:id').put(protect, updateMetric).delete(protect, deleteMetric);
 
 module.exports = router;

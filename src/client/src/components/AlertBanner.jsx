@@ -80,7 +80,7 @@ const AlertBanner = () => {
       <div className="flex justify-between items-center mb-3">
         <h3 className="text-black dark:text-white text-lg font-bold flex items-center gap-2">
           <span className="material-symbols-outlined text-primary">notifications_active</span>
-          Cảnh Báo Sức Khỏe
+          Cảnh báo sức khỏe
         </h3>
         {alerts.length > 0 && (
           <button

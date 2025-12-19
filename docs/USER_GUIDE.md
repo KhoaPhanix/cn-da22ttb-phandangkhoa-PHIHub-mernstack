@@ -1,23 +1,23 @@
-# Hướng Dẫn Sử Dụng PHIHub
+# Hướng dẫn sử dụng PHIHub
 
 > **Personal Health Intelligence Hub** - Nền tảng theo dõi và tư vấn sức khỏe thông minh
 
 ---
 
-## 📑 Mục Lục
+## 📑 Mục lục
 
-1. [Giới Thiệu](#giới-thiệu)
-2. [Đăng Ký & Đăng Nhập](#đăng-ký--đăng-nhập)
-3. [Bảng Điều Khiển](#bảng-điều-khiển)
-4. [Nhập Liệu Sức Khỏe](#nhập-liệu-sức-khỏe)
-5. [Quản Lý Mục Tiêu](#quản-lý-mục-tiêu)
-6. [Theo Dõi Dinh Dưỡng](#theo-dõi-dinh-dưỡng)
-7. [Nhật Ký Tâm Trạng](#nhật-ký-tâm-trạng)
-8. [Lịch Sử Dữ Liệu](#lịch-sử-dữ-liệu)
-9. [Góc Kiến Thức](#góc-kiến-thức)
-10. [Quản Lý Hồ Sơ](#quản-lý-hồ-sơ)
-11. [Cảnh Báo & Nhắc Nhở](#cảnh-báo--nhắc-nhở)
-12. [Khuyến Nghị AI](#khuyến-nghị-ai)
+1. [Giới thiệu](#giới-thiệu)
+2. [Đăng ký & đăng nhập](#đăng-ký--đăng-nhập)
+3. [Bảng điều khiển](#bảng-điều-khiển)
+4. [Nhập liệu sức khỏe](#nhập-liệu-sức-khỏe)
+5. [Quản lý mục tiêu](#quản-lý-mục-tiêu)
+6. [Theo dõi dinh dưỡng](#theo-dõi-dinh-dưỡng)
+7. [Nhật ký tâm trạng](#nhật-ký-tâm-trạng)
+8. [Lịch sử dữ liệu](#lịch-sử-dữ-liệu)
+9. [Góc kiến thức](#góc-kiến-thức)
+10. [Quản lý hồ sơ](#quản-lý-hồ-sơ)
+11. [Cảnh báo & nhắc nhở](#cảnh-báo--nhắc-nhở)
+12. [Khuyến nghị AI](#khuyến-nghị-ai)
 13. [Tips & Tricks](#tips--tricks)
 
 ---
@@ -57,19 +57,19 @@ PHIHub là nền tảng toàn diện giúp bạn:
 3. Click **"Đăng nhập"**
 4. Hệ thống chuyển đến Bảng điều khiển
 
-### Quên Mật Khẩu
+### Quên mật khẩu
 
 > 🚧 Tính năng đang phát triển. Vui lòng liên hệ admin để reset mật khẩu.
 
 ---
 
-## 📊 Bảng Điều Khiển
+## 📊 Bảng điều khiển
 
 **Dashboard** là màn hình chính hiển thị tổng quan sức khỏe của bạn.
 
-### Các Thành Phần
+### Các thành phần
 
-#### 1. Cards Chỉ Số
+#### 1. Cards chỉ số
 Hiển thị 8 chỉ số chính:
 - **Cân nặng** (kg) - Với % thay đổi
 - **Giấc ngủ** (giờ) - Status: Tốt/Cần cải thiện
@@ -80,7 +80,7 @@ Hiển thị 8 chỉ số chính:
 - **Nhịp tim** (bpm) - Nhịp đập trung bình
 - **Số bước** - Hoạt động hàng ngày
 
-#### 2. Cảnh Báo Sức Khỏe
+#### 2. Cảnh báo sức khỏe
 - Hiển thị cảnh báo quan trọng ở đầu trang
 - Màu sắc theo mức độ:
   - 🔵 Thấp - Thông tin
@@ -89,12 +89,12 @@ Hiển thị 8 chỉ số chính:
   - 🔴 Nghiêm trọng - Khẩn cấp
 - Nút "Đánh dấu đã đọc" và "Giải quyết"
 
-#### 3. Mục Tiêu Của Tôi
+#### 3. Mục tiêu của tôi
 - Hiển thị top 3 mục tiêu đang hoạt động
 - Progress bar cho mỗi mục tiêu
 - Click vào card để xem chi tiết
 
-#### 4. Biểu Đồ
+#### 4. Biểu đồ
 - **Biểu đồ đường**: Cân nặng 30 ngày
 - **Biểu đồ cột**: Giấc ngủ 7 ngày
 
@@ -437,9 +437,9 @@ Liệt kê 3 điều biết ơn trong ngày:
 
 ---
 
-## 👤 Quản Lý Hồ Sơ
+## 👤 Quản lý hồ sơ
 
-### Tab 1: Thông Tin Cơ Bản
+### Tab 1: Thông tin cơ bản
 
 **Thông tin cá nhân:**
 - Họ tên
