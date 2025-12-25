@@ -14,3 +14,42 @@ body {
 * {
   box-sizing: border-box;
 }
+
+/* Article content styling for dark mode */
+.dark .article-content {
+  color: #ffffff !important;
+}
+
+.dark .article-content p,
+.dark .article-content li,
+.dark .article-content span,
+.dark .article-content td,
+.dark .article-content th,
+.dark .article-content div {
+  color: #ffffff !important;
+}
+
+.dark .article-content h1,
+.dark .article-content h2,
+.dark .article-content h3,
+.dark .article-content h4,
+.dark .article-content h5,
+.dark .article-content h6 {
+  color: #ffffff !important;
+}
+
+.dark .article-content strong,
+.dark .article-content b {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.dark .article-content a {
+  color: #13ec80 !important;
+}
+
+.dark .article-content ul,
+.dark .article-content ol {
+  color: #ffffff !important;
+}
+

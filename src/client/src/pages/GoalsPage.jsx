@@ -31,7 +31,6 @@ const GoalsPage = () => {
 
   const fetchData = async () => {
     try {
-      console.log('🔄 [Goals] Fetching data with filter:', filter);
       setLoading(true);
       setError(null);
       const [goalsRes, statsRes] = await Promise.all([
@@ -39,23 +38,13 @@ const GoalsPage = () => {
         getGoalStats(),
       ]);
       
-      console.log('📦 [Goals] Full Response:', goalsRes);
-      console.log('📦 [Goals] Response.data:', goalsRes.data);
-      console.log('📦 [Goals] Response.data.data:', goalsRes.data?.data);
-      
       // Extract data correctly from service response
       const goalsData = Array.isArray(goalsRes.data?.data) ? goalsRes.data.data : (Array.isArray(goalsRes.data) ? goalsRes.data : []);
       const statsData = statsRes.data?.data || statsRes.data || null;
       
-      console.log('📊 Goals Data (final):', goalsData);
-      console.log('📊 Stats Data (final):', statsData);
-      console.log('📊 Goals count:', goalsData.length);
-      
       setGoals(goalsData);
       setStats(statsData);
     } catch (error) {
-      console.error('❌ Error fetching goals:', error);
-      console.error('❌ Error response:', error.response);
       setError(error.response?.data?.message || 'Không thể tải dữ liệu mục tiêu. Vui lòng đăng nhập lại.');
       setGoals([]);
       setStats(null);
@@ -75,12 +64,10 @@ const GoalsPage = () => {
       };
 
       if (editingGoal) {
-        const response = await updateGoal(editingGoal._id, goalData);
-        console.log('✅ Update goal response:', response);
+        await updateGoal(editingGoal._id, goalData);
         alert('Cập nhật mục tiêu thành công!');
       } else {
-        const response = await createGoal(goalData);
-        console.log('✅ Create goal response:', response);
+        await createGoal(goalData);
         alert('Tạo mục tiêu thành công!');
       }
 
@@ -89,8 +76,6 @@ const GoalsPage = () => {
       resetForm();
       fetchData();
     } catch (error) {
-      console.error('❌ Error saving goal:', error);
-      console.error('Error details:', error.response?.data);
       alert(`Lỗi: ${error.response?.data?.message || error.message || 'Không thể lưu mục tiêu'}`);
     }
   };
@@ -115,7 +100,7 @@ const GoalsPage = () => {
         await deleteGoal(id);
         fetchData();
       } catch (error) {
-        console.error('Error deleting goal:', error);
+        setError(error.response?.data?.message || 'Có lỗi khi xóa mục tiêu');
       }
     }
   };
@@ -304,13 +289,23 @@ const GoalsPage = () => {
                     <div>
                       <p className="text-gray-600 dark:text-[#9db9ab] text-xs mb-1">Bắt đầu</p>
                       <p className="text-black dark:text-white text-sm">
-                        {format(new Date(goal.startDate), 'dd/MM/yyyy')}
+                        {(() => {
+                          try {
+                            const d = new Date(goal.startDate);
+                            return isNaN(d.getTime()) ? 'N/A' : format(d, 'dd/MM/yyyy');
+                          } catch (e) { return 'N/A'; }
+                        })()}
                       </p>
                     </div>
                     <div>
                       <p className="text-gray-600 dark:text-[#9db9ab] text-xs mb-1">Kết thúc</p>
                       <p className="text-black dark:text-white text-sm">
-                        {format(new Date(goal.targetDate), 'dd/MM/yyyy')}
+                        {(() => {
+                          try {
+                            const d = new Date(goal.targetDate);
+                            return isNaN(d.getTime()) ? 'N/A' : format(d, 'dd/MM/yyyy');
+                          } catch (e) { return 'N/A'; }
+                        })()}
                       </p>
                     </div>
                   </div>

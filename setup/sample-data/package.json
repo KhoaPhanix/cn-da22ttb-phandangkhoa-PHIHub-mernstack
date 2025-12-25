@@ -8,8 +8,9 @@
     "clean": "node import.js --clean"
   },
   "dependencies": {
-    "mongodb": "^6.3.0",
     "bcryptjs": "^2.4.3",
-    "dotenv": "^16.0.0"
+    "dotenv": "^16.0.0",
+    "mongodb": "^6.3.0",
+    "mongoose": "^9.0.2"
   }
 }

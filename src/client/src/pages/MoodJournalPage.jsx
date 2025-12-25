@@ -84,7 +84,6 @@ const MoodJournalPage = () => {
 
   const fetchData = async () => {
     try {
-      console.log('🔄 [Mood] Fetching data...');
       setLoading(true);
       setError(null);
       const [logsRes, statsRes] = await Promise.all([
@@ -92,23 +91,13 @@ const MoodJournalPage = () => {
         getMoodStats({ days: 30 }),
       ]);
       
-      console.log('📦 [Mood] Logs Full Response:', logsRes);
-      console.log('📦 [Mood] Logs Response.data:', logsRes.data);
-      console.log('📦 [Mood] Stats Response:', statsRes);
-      
       // Extract data correctly from service response
       const logsData = Array.isArray(logsRes.data?.data) ? logsRes.data.data : (Array.isArray(logsRes.data) ? logsRes.data : []);
       const statsData = statsRes.data?.data || statsRes.data || null;
       
-      console.log('📊 [Mood] Logs Data (final):', logsData);
-      console.log('📊 [Mood] Logs count:', logsData.length);
-      console.log('📊 [Mood] Stats Data (final):', statsData);
-      
       setLogs(logsData);
       setStats(statsData);
     } catch (error) {
-      console.error('❌ [Mood] Error fetching data:', error);
-      console.error('❌ [Mood] Error response:', error.response);
       setError(error.response?.data?.message || 'Không thể tải dữ liệu tâm trạng. Vui lòng đăng nhập lại.');
       setLogs([]);
       setStats(null);
@@ -124,16 +113,12 @@ const MoodJournalPage = () => {
         ...formData,
         gratitude: formData.gratitude.filter(g => g.trim() !== ''),
       };
-      console.log('📤 Sending mood data:', moodData);
-      const response = await createMoodLog(moodData);
-      console.log('✅ Mood response:', response);
+      await createMoodLog(moodData);
       alert('Lưu nhật ký tâm trạng thành công!');
       setShowModal(false);
       resetForm();
       fetchData();
     } catch (error) {
-      console.error('❌ Error saving mood log:', error);
-      console.error('Error details:', error.response?.data);
       alert(`Lỗi: ${error.response?.data?.message || error.message || 'Không thể lưu nhật ký'}`);
     }
   };
@@ -162,13 +147,35 @@ const MoodJournalPage = () => {
       : [...array, item];
   };
 
+  // Convert mood text to score for old data format
+  const getMoodScore = (log) => {
+    if (log.moodScore !== undefined) return log.moodScore;
+    const moodMap = { great: 10, excellent: 10, good: 8, okay: 5, bad: 3, terrible: 1 };
+    return moodMap[log.mood] || 5;
+  };
+
+  const getEnergyScore = (log) => {
+    if (log.energyScore !== undefined) return log.energyScore;
+    if (typeof log.energy === 'number') return log.energy * 2; // Convert 1-5 to 2-10
+    const energyMap = { high: 8, medium: 5, low: 3 };
+    return energyMap[log.energy] || 5;
+  };
+
   const chartData = Array.isArray(logs) && logs.length > 0
-    ? logs.map(log => ({
-        date: format(new Date(log.date), 'dd/MM/yyyy'),
-        mood: log.moodScore,
-        energy: log.energyScore,
-        stress: log.stressScore,
-      })).reverse()
+    ? logs.map(log => {
+        try {
+          const dateObj = new Date(log.date);
+          if (isNaN(dateObj.getTime())) return null;
+          return {
+            date: format(dateObj, 'dd/MM'),
+            mood: getMoodScore(log),
+            energy: getEnergyScore(log),
+            stress: log.stressScore || 5,
+          };
+        } catch (e) {
+          return null;
+        }
+      }).filter(item => item !== null).reverse()
     : [];
 
   if (loading) {
@@ -297,19 +304,27 @@ const MoodJournalPage = () => {
                 >
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex items-center gap-4">
-                      <div className="text-6xl">{moodEmojis[log.mood]}</div>
+                      <div className="text-6xl">{moodEmojis[log.mood] || '😐'}</div>
                       <div>
                         <h4 className="text-black dark:text-white text-xl font-bold">
-                          {moodLabels[log.mood] || log.mood}
+                          {moodLabels[log.mood] || log.mood || 'Bình thường'}
                         </h4>
                         <p className="text-gray-600 dark:text-[#9db9ab] text-sm">
-                          {format(new Date(log.date), 'dd/MM/yyyy HH:mm')}
+                          {(() => {
+                            try {
+                              const dateObj = new Date(log.date);
+                              if (isNaN(dateObj.getTime())) return 'N/A';
+                              return format(dateObj, 'dd/MM/yyyy HH:mm');
+                            } catch (e) {
+                              return 'N/A';
+                            }
+                          })()}
                         </p>
                       </div>
                     </div>
                     <div className="text-right">
                       <div className="text-black dark:text-white font-bold text-3xl">
-                        {log.moodScore}
+                        {getMoodScore(log)}
                       </div>
                       <div className="text-gray-500 dark:text-gray-400 text-xs">/ 10</div>
                     </div>
@@ -319,15 +334,15 @@ const MoodJournalPage = () => {
                   <div className="grid grid-cols-3 gap-4 mb-4 pb-4 border-b border-gray-200 dark:border-white/10">
                     <div>
                       <p className="text-gray-600 dark:text-[#9db9ab] text-xs mb-1">Năng lượng</p>
-                      <p className="text-blue-500 font-semibold">{log.energyScore}/10</p>
+                      <p className="text-blue-500 font-semibold">{getEnergyScore(log)}/10</p>
                     </div>
                     <div>
                       <p className="text-gray-600 dark:text-[#9db9ab] text-xs mb-1">Stress</p>
-                      <p className="text-orange-500 font-semibold">{log.stressScore}/10</p>
+                      <p className="text-orange-500 font-semibold">{log.stressScore || 5}/10</p>
                     </div>
                     <div>
                       <p className="text-gray-600 dark:text-[#9db9ab] text-xs mb-1">Lo âu</p>
-                      <p className="text-red-500 font-semibold">{log.anxiety}/10</p>
+                      <p className="text-red-500 font-semibold">{log.anxiety || 0}/10</p>
                     </div>
                   </div>
 

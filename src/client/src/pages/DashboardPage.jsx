@@ -21,6 +21,8 @@ const DashboardPage = () => {
   const [bmiData, setBmiData] = useState([]);
   const [waterData, setWaterData] = useState([]);
   const [bloodPressureData, setBloodPressureData] = useState([]);
+  const [stepsData, setStepsData] = useState([]);
+  const [heartRateData, setHeartRateData] = useState([]);
   const [stats, setStats] = useState({});
   const [recommendations, setRecommendations] = useState([]);
   const [activeGoals, setActiveGoals] = useState([]);
@@ -44,10 +46,17 @@ const DashboardPage = () => {
     return dataArray
       .map((item) => {
         if (!item || !item.timestamp) return null;
-        return {
-          date: format(new Date(item.timestamp), dateFormat),
-          value: item.value || 0,
-        };
+        try {
+          const dateObj = new Date(item.timestamp);
+          // Check if date is valid
+          if (isNaN(dateObj.getTime())) return null;
+          return {
+            date: format(dateObj, dateFormat),
+            value: item.value || 0,
+          };
+        } catch (error) {
+          return null;
+        }
       })
       .filter(item => item !== null)
       .reverse();
@@ -65,19 +74,15 @@ const DashboardPage = () => {
       
       // Weight Data
       try {
-        console.log('📊 Fetching weight data...');
         const weightResponse = await getMetrics({
           metricType: 'weight',
           startDate,
           limit: 60,
         });
         
-        console.log('🔍 Weight Response:', weightResponse);
         const weightDataArray = Array.isArray(weightResponse.data) ? weightResponse.data : [];
-        console.log('🔍 Weight Data Length:', weightDataArray.length);
         setWeightData(formatMetricData(weightDataArray, 'dd/MM'));
       } catch (error) {
-        console.error('❌ Error fetching weight:', error);
         setWeightData([]);
       }
 
@@ -85,7 +90,6 @@ const DashboardPage = () => {
 
       // Sleep Data
       try {
-        console.log('📊 Fetching sleep data...');
         const sleepResponse = await getMetrics({
           metricType: 'sleep',
           startDate: sleepStartDate,
@@ -95,13 +99,11 @@ const DashboardPage = () => {
         const sleepDataArray = Array.isArray(sleepResponse.data) ? sleepResponse.data : [];
         setSleepData(formatMetricData(sleepDataArray, 'dd/MM'));
       } catch (error) {
-        console.error('❌ Error fetching sleep:', error);
         setSleepData([]);
       }
 
       // BMI Data
       try {
-        console.log('📊 Fetching BMI data...');
         const bmiResponse = await getMetrics({
           metricType: 'bmi',
           startDate,
@@ -111,13 +113,11 @@ const DashboardPage = () => {
         const bmiDataArray = Array.isArray(bmiResponse.data) ? bmiResponse.data : [];
         setBmiData(formatMetricData(bmiDataArray, 'dd/MM'));
       } catch (error) {
-        console.error('❌ Error fetching BMI:', error);
         setBmiData([]);
       }
 
       // Water Data
       try {
-        console.log('📊 Fetching water data...');
         const waterResponse = await getMetrics({
           metricType: 'water',
           startDate: sleepStartDate,
@@ -127,13 +127,11 @@ const DashboardPage = () => {
         const waterDataArray = Array.isArray(waterResponse.data) ? waterResponse.data : [];
         setWaterData(formatMetricData(waterDataArray, 'dd/MM'));
       } catch (error) {
-        console.error('❌ Error fetching water:', error);
         setWaterData([]);
       }
 
       // Blood Pressure Data
       try {
-        console.log('📊 Fetching blood pressure data...');
         const bpResponse = await getMetrics({
           metricType: 'bloodPressure',
           startDate,
@@ -144,24 +142,56 @@ const DashboardPage = () => {
         const formattedBPData = bpDataArray
           .map((item) => {
             if (!item || !item.timestamp) return null;
-            return {
-              date: format(new Date(item.timestamp), 'dd/MM'),
-              systolic: item.value || 0,
-              diastolic: item.metadata?.diastolic || 80,
-            };
+            try {
+              const dateObj = new Date(item.timestamp);
+              if (isNaN(dateObj.getTime())) return null;
+              return {
+                date: format(dateObj, 'dd/MM'),
+                systolic: item.value || 0,
+                diastolic: item.metadata?.diastolic || 80,
+              };
+            } catch (error) {
+              return null;
+            }
           })
           .filter(item => item !== null)
           .reverse();
         
         setBloodPressureData(formattedBPData);
       } catch (error) {
-        console.error('❌ Error fetching blood pressure:', error);
         setBloodPressureData([]);
+      }
+
+      // Steps Data
+      try {
+        const stepsResponse = await getMetrics({
+          metricType: 'steps',
+          startDate: sleepStartDate,
+          limit: 7,
+        });
+        
+        const stepsDataArray = Array.isArray(stepsResponse.data) ? stepsResponse.data : [];
+        setStepsData(formatMetricData(stepsDataArray, 'dd/MM'));
+      } catch (error) {
+        setStepsData([]);
+      }
+
+      // Heart Rate Data
+      try {
+        const hrResponse = await getMetrics({
+          metricType: 'heartRate',
+          startDate: sleepStartDate,
+          limit: 7,
+        });
+        
+        const hrDataArray = Array.isArray(hrResponse.data) ? hrResponse.data : [];
+        setHeartRateData(formatMetricData(hrDataArray, 'dd/MM'));
+      } catch (error) {
+        setHeartRateData([]);
       }
 
       // Stats Data
       try {
-        console.log('📊 Fetching stats...');
         const [weightStats, sleepStats, caloriesStats, exerciseStats, bmiStats, bloodPressureStats, heartRateStats, stepsStats, waterStats] = await Promise.all([
         getMetricStats('weight', 30),
         getMetricStats('sleep', 7),
@@ -186,7 +216,6 @@ const DashboardPage = () => {
         water: waterStats.data || {},
       });
       } catch (error) {
-        console.error('❌ Error fetching stats:', error);
         setStats({
           weight: {},
           sleep: {},
@@ -202,41 +231,30 @@ const DashboardPage = () => {
 
       // Recommendations
       try {
-        console.log('📊 Fetching recommendations...');
         const recsResponse = await getRecommendations();
         setRecommendations(Array.isArray(recsResponse.data) ? recsResponse.data : []);
       } catch (error) {
-        console.error('❌ Error fetching recommendations:', error);
         setRecommendations([]);
       }
 
       // Active Goals
       try {
-        console.log('📊 Fetching active goals...');
         const goalsResponse = await getGoals({ status: 'active' });
         const goalsData = Array.isArray(goalsResponse.data) ? goalsResponse.data : [];
         setActiveGoals(goalsData.slice(0, 3)); // Show top 3 goals
       } catch (error) {
-        console.error('❌ Error fetching active goals:', error);
         setActiveGoals([]);
       }
 
-      console.log('✅ Dashboard data loaded successfully!');
-
     } catch (error) {
-      console.error('❌ Error fetching dashboard data:', error);
-      console.error('Error details:', {
-        message: error.message,
-        response: error.response?.data,
-        status: error.response?.status
-      });
-      
       // Set empty data to prevent rendering errors
       setWeightData([]);
       setSleepData([]);
       setBmiData([]);
       setWaterData([]);
       setBloodPressureData([]);
+      setStepsData([]);
+      setHeartRateData([]);
       setStats({});
       setRecommendations([]);
       setActiveGoals([]);
@@ -782,8 +800,132 @@ const DashboardPage = () => {
               </div>
             </div>
           </div>
+
+          {/* Row 4: Steps & Heart Rate Charts */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-4 sm:px-6 md:px-8 pb-8">
+            {/* Steps Chart */}
+            <div className="flex min-w-72 flex-1 flex-col gap-2 rounded-lg border bg-white dark:bg-transparent border-gray-200 dark:border-[#3b5447] p-6">
+              <p className="text-gray-700 dark:text-white text-base font-medium leading-normal">
+                Số bước chân (7 ngày qua)
+              </p>
+              <p className="text-black dark:text-white tracking-light text-[32px] font-bold leading-tight truncate">
+                {stats.steps?.average?.toFixed(0) || '--'} bước
+              </p>
+              <div className="flex gap-1">
+                <p className="text-gray-600 dark:text-[#9db9ab] text-base font-normal leading-normal">
+                  Trung bình/ngày
+                </p>
+                <p className={`text-base font-medium leading-normal ${
+                  stats.steps?.average >= 8000 ? 'text-green-500 dark:text-[#0bda46]' : 'text-orange-500 dark:text-[#ff9500]'
+                }`}>
+                  {stats.steps?.average >= 8000 ? 'Đạt mục tiêu' : 'Cần tăng thêm'}
+                </p>
+              </div>
+              <div className="flex min-h-[180px] flex-1 flex-col gap-8 py-4">
+                <ResponsiveContainer width="100%" height={180}>
+                  <BarChart data={stepsData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#3b5447" opacity={0.3} />
+                    <XAxis 
+                      dataKey="date" 
+                      stroke="#9db9ab" 
+                      tick={{ fill: '#9db9ab', fontSize: 11 }}
+                      angle={-45}
+                      textAnchor="end"
+                      height={60}
+                    />
+                    <YAxis 
+                      stroke="#9db9ab" 
+                      tick={{ fill: '#9db9ab', fontSize: 12 }}
+                      domain={[0, 15000]}
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: '#1c3d2e', 
+                        border: '1px solid #3b5447',
+                        borderRadius: '8px',
+                        color: '#fff'
+                      }}
+                      formatter={(value) => [`${value.toLocaleString()} bước`, 'Số bước']}
+                    />
+                    <Bar 
+                      dataKey="value" 
+                      fill="#a855f7"
+                      radius={[8, 8, 0, 0]}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Heart Rate Chart */}
+            <div className="flex min-w-72 flex-1 flex-col gap-2 rounded-lg border bg-white dark:bg-transparent border-gray-200 dark:border-[#3b5447] p-6">
+              <p className="text-gray-700 dark:text-white text-base font-medium leading-normal">
+                Nhịp tim (7 ngày qua)
+              </p>
+              <p className="text-black dark:text-white tracking-light text-[32px] font-bold leading-tight truncate">
+                {stats.heartRate?.average?.toFixed(0) || '--'} bpm
+              </p>
+              <div className="flex gap-1">
+                <p className="text-gray-600 dark:text-[#9db9ab] text-base font-normal leading-normal">
+                  Trung bình
+                </p>
+                <p className={`text-base font-medium leading-normal ${
+                  (stats.heartRate?.average >= 60 && stats.heartRate?.average <= 100)
+                    ? 'text-green-500 dark:text-[#0bda46]'
+                    : 'text-orange-500 dark:text-[#ff9500]'
+                }`}>
+                  {(stats.heartRate?.average >= 60 && stats.heartRate?.average <= 100) ? 'Bình thường' : 'Cần theo dõi'}
+                </p>
+              </div>
+              <div className="flex min-h-[180px] flex-1 flex-col gap-8 py-4">
+                <ResponsiveContainer width="100%" height={180}>
+                  <LineChart data={heartRateData}>
+                    <defs>
+                      <linearGradient id="colorHeartRate" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#3b5447" opacity={0.3} />
+                    <XAxis 
+                      dataKey="date" 
+                      stroke="#9db9ab" 
+                      tick={{ fill: '#9db9ab', fontSize: 11 }}
+                      angle={-45}
+                      textAnchor="end"
+                      height={60}
+                    />
+                    <YAxis 
+                      stroke="#9db9ab" 
+                      tick={{ fill: '#9db9ab', fontSize: 12 }}
+                      domain={[50, 120]}
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: '#1c3d2e', 
+                        border: '1px solid #3b5447',
+                        borderRadius: '8px',
+                        color: '#fff'
+                      }}
+                      formatter={(value) => [`${value} bpm`, 'Nhịp tim']}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="value" 
+                      stroke="#ef4444" 
+                      strokeWidth={3}
+                      fill="url(#colorHeartRate)"
+                      dot={{ fill: '#ef4444', r: 4 }}
+                      activeDot={{ r: 6 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

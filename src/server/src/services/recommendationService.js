@@ -450,7 +450,7 @@ const generateRecommendations = async (userId) => {
 
     return recommendations;
   } catch (error) {
-    console.error('Error generating recommendations:', error);
+    // Return empty array on error - silent fail
     return [];
   }
 };

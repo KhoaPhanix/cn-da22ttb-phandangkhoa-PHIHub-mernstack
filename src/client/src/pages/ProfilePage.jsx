@@ -66,7 +66,6 @@ const ProfilePage = () => {
         });
       }
     } catch (error) {
-      console.error('Error fetching profile:', error);
       setError('Không thể tải thông tin hồ sơ');
     } finally {
       setLoading(false);
@@ -101,8 +100,8 @@ const ProfilePage = () => {
       const response = await uploadAvatar(file);
       const avatarUrl = response.data?.avatar || response.avatar;
       
-      // Update preview
-      setAvatarPreview(`http://localhost:5000${avatarUrl}`);
+      // Update preview (use relative path since we have proxy/nginx)
+      setAvatarPreview(avatarUrl.startsWith('http') ? avatarUrl : avatarUrl);
       
       // Update user context
       setUser({ ...user, avatar: avatarUrl });
@@ -110,7 +109,6 @@ const ProfilePage = () => {
       setSuccess('Cập nhật ảnh đại diện thành công!');
       setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
-      console.error('Upload avatar error:', err);
       setError(err.response?.data?.message || 'Có lỗi xảy ra khi upload ảnh');
     } finally {
       setUploading(false);
@@ -135,7 +133,6 @@ const ProfilePage = () => {
       setSuccess('Cập nhật hồ sơ thành công!');
       setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
-      console.error('Update profile error:', err);
       setError(err.response?.data?.message || 'Có lỗi xảy ra khi cập nhật');
     } finally {
       setSaving(false);

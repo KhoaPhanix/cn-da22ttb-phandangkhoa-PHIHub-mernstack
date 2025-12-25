@@ -13,6 +13,10 @@ import HistoryPage from './pages/HistoryPage';
 import GoalsPage from './pages/GoalsPage';
 import NutritionPage from './pages/NutritionPage';
 import MoodJournalPage from './pages/MoodJournalPage';
+import UserGuidePage from './pages/UserGuidePage';
+import ApiDocsPage from './pages/ApiDocsPage';
+import PrivacyPage from './pages/PrivacyPage';
+import TermsPage from './pages/TermsPage';
 
 function App() {
   return (
@@ -96,6 +100,12 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* Support pages - Public */}
+          <Route path="/user-guide" element={<UserGuidePage />} />
+          <Route path="/api-docs" element={<ApiDocsPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
 
           {/* Default redirect */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />

@@ -58,29 +58,29 @@ const Footer = () => {
             <h4 className="text-white font-bold mb-4">Hỗ Trợ</h4>
             <ul className="space-y-2">
               <li>
-                <a href="/docs/user-guide" className="text-[#9db9ab] hover:text-primary transition-colors text-sm">
+                <Link to="/user-guide" className="text-[#9db9ab] hover:text-primary transition-colors text-sm">
                   Hướng dẫn sử dụng
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/docs/api" className="text-[#9db9ab] hover:text-primary transition-colors text-sm">
+                <Link to="/api-docs" className="text-[#9db9ab] hover:text-primary transition-colors text-sm">
                   API Documentation
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="mailto:support@phihub.com" className="text-[#9db9ab] hover:text-primary transition-colors text-sm">
+                <a href="mailto:khoadangphan307@gmail.com" className="text-[#9db9ab] hover:text-primary transition-colors text-sm">
                   Liên hệ hỗ trợ
                 </a>
               </li>
               <li>
-                <a href="/privacy" className="text-[#9db9ab] hover:text-primary transition-colors text-sm">
+                <Link to="/privacy" className="text-[#9db9ab] hover:text-primary transition-colors text-sm">
                   Chính sách bảo mật
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/terms" className="text-[#9db9ab] hover:text-primary transition-colors text-sm">
+                <Link to="/terms" className="text-[#9db9ab] hover:text-primary transition-colors text-sm">
                   Điều khoản sử dụng
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -91,8 +91,8 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-2">
                 <span className="material-symbols-outlined text-primary text-xl">mail</span>
-                <a href="mailto:info@phihub.com" className="text-[#9db9ab] hover:text-primary transition-colors text-sm">
-                  info@phihub.com
+                <a href="mailto:khoadangphan307@gmail.com" className="text-[#9db9ab] hover:text-primary transition-colors text-sm">
+                  khoadangphan307@gmail.com
                 </a>
               </li>
               <li className="flex items-start gap-2">

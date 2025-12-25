@@ -17,7 +17,6 @@ const AlertBanner = () => {
       setAlerts(alertsData.slice(0, 5)); // Hiển thị tối đa 5 alerts
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching alerts:', error);
       setLoading(false);
     }
   };
@@ -27,7 +26,7 @@ const AlertBanner = () => {
       await markAlertAsRead(id);
       setAlerts(alerts.filter(a => a._id !== id));
     } catch (error) {
-      console.error('Error marking alert as read:', error);
+      // Silent fail - alert already removed from view
     }
   };
 
@@ -36,7 +35,7 @@ const AlertBanner = () => {
       await markAllAlertsAsRead();
       setAlerts([]);
     } catch (error) {
-      console.error('Error marking all alerts as read:', error);
+      // Silent fail - alerts already cleared
     }
   };
 
@@ -45,7 +44,6 @@ const AlertBanner = () => {
       await resolveAlert(id);
       setAlerts(alerts.filter(a => a._id !== id));
     } catch (error) {
-      console.error('Error resolving alert:', error);
     }
   };
 

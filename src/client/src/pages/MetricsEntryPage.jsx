@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { createMetric } from '../services/metricsService';
 
 const MetricsEntryPage = () => {
@@ -22,6 +23,31 @@ const MetricsEntryPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Validation ranges for metrics
+  const validateMetric = (type, value) => {
+    const val = parseFloat(value);
+    const ranges = {
+      weight: { min: 1, max: 500, label: 'Cân nặng' },
+      height: { min: 50, max: 300, label: 'Chiều cao' },
+      bloodPressureSystolic: { min: 60, max: 250, label: 'Huyết áp tâm thu' },
+      bloodPressureDiastolic: { min: 40, max: 150, label: 'Huyết áp tâm trương' },
+      heartRate: { min: 30, max: 250, label: 'Nhịp tim' },
+      sleep: { min: 0, max: 24, label: 'Giờ ngủ' },
+      steps: { min: 0, max: 100000, label: 'Số bước' },
+      exercise: { min: 0, max: 1440, label: 'Phút tập luyện' },
+      calories: { min: 0, max: 10000, label: 'Calo' },
+      water: { min: 0, max: 10000, label: 'Nước uống' },
+    };
+    
+    const range = ranges[type];
+    if (!range) return null;
+    
+    if (isNaN(val) || val < range.min || val > range.max) {
+      return `${range.label} phải từ ${range.min} đến ${range.max}`;
+    }
+    return null;
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -29,6 +55,28 @@ const MetricsEntryPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    
+    // Validate all filled fields
+    const errors = [];
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value) {
+        const err = validateMetric(key, value);
+        if (err) errors.push(err);
+      }
+    });
+    
+    if (errors.length > 0) {
+      setError(errors.join('. '));
+      return;
+    }
+    
+    // Check if at least one field is filled
+    const hasData = Object.values(formData).some(v => v !== '');
+    if (!hasData) {
+      setError('Vui lòng nhập ít nhất một chỉ số');
+      return;
+    }
+    
     setLoading(true);
 
     try {

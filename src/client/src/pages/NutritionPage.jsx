@@ -32,7 +32,6 @@ const NutritionPage = () => {
 
   const fetchData = async () => {
     try {
-      console.log('🔄 [Nutrition] Fetching data for date:', selectedDate);
       setLoading(true);
       setError(null);
       const [dailyRes, statsRes] = await Promise.all([
@@ -40,20 +39,12 @@ const NutritionPage = () => {
         getNutritionStats({ days: 7 }),
       ]);
       
-      console.log('📦 [Nutrition] Daily Response:', dailyRes);
-      console.log('📦 [Nutrition] Stats Response:', statsRes);
-      
       const dailyResData = dailyRes.data?.data || dailyRes.data || null;
       const statsResData = statsRes.data?.data || statsRes.data || null;
-      
-      console.log('📊 [Nutrition] Daily Data:', dailyResData);
-      console.log('📊 [Nutrition] Stats Data:', statsResData);
       
       setDailyData(dailyResData);
       setStats(statsResData);
     } catch (error) {
-      console.error('❌ [Nutrition] Error fetching data:', error);
-      console.error('❌ [Nutrition] Error response:', error.response);
       setError(error.response?.data?.message || 'Không thể tải dữ liệu dinh dưỡng. Vui lòng đăng nhập lại.');
       setDailyData(null);
       setStats(null);
@@ -82,16 +73,12 @@ const NutritionPage = () => {
         notes: formData.notes,
       };
 
-      console.log('📤 Sending nutrition data:', nutritionData);
       const response = await createNutritionLog(nutritionData);
-      console.log('✅ Nutrition response:', response);
       alert('Lưu nhật ký dinh dưỡng thành công!');
       setShowModal(false);
       resetForm();
       fetchData();
     } catch (error) {
-      console.error('❌ Error saving nutrition log:', error);
-      console.error('Error details:', error.response?.data);
       alert(`Lỗi: ${error.response?.data?.message || error.message || 'Không thể lưu nhật ký'}`);
     }
   };
@@ -102,7 +89,7 @@ const NutritionPage = () => {
         await deleteNutritionLog(id);
         fetchData();
       } catch (error) {
-        console.error('Error deleting meal:', error);
+        setError(error.response?.data?.message || 'Không thể xóa bữa ăn');
       }
     }
   };
@@ -210,9 +197,9 @@ const NutritionPage = () => {
   };
 
   const macrosData = dailyData?.totalMacros ? [
-    { name: 'Protein', value: dailyData.totalMacros.protein || 0, color: '#ef4444' },
-    { name: 'Carbs', value: dailyData.totalMacros.carbs || 0, color: '#3b82f6' },
-    { name: 'Fats', value: dailyData.totalMacros.fats || 0, color: '#f59e0b' },
+    { name: 'Đạm', value: dailyData.totalMacros.protein || 0, color: '#ef4444' },
+    { name: 'Tinh bột', value: dailyData.totalMacros.carbs || 0, color: '#3b82f6' },
+    { name: 'Chất béo', value: dailyData.totalMacros.fats || 0, color: '#f59e0b' },
   ] : [];
 
   if (loading) {
@@ -285,25 +272,25 @@ const NutritionPage = () => {
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-[#9db9ab]">Protein</span>
+                  <span className="text-gray-600 dark:text-[#9db9ab]">Chất đạm (Protein)</span>
                   <span className="text-red-500 font-semibold">
                     {dailyData?.totalMacros?.protein?.toFixed(1) || 0}g
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-[#9db9ab]">Carbs</span>
+                  <span className="text-gray-600 dark:text-[#9db9ab]">Tinh bột (Carbs)</span>
                   <span className="text-blue-500 font-semibold">
                     {dailyData?.totalMacros?.carbs?.toFixed(1) || 0}g
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-[#9db9ab]">Fats</span>
+                  <span className="text-gray-600 dark:text-[#9db9ab]">Chất béo (Fat)</span>
                   <span className="text-yellow-500 font-semibold">
                     {dailyData?.totalMacros?.fats?.toFixed(1) || 0}g
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-[#9db9ab]">Fiber</span>
+                  <span className="text-gray-600 dark:text-[#9db9ab]">Chất xơ (Fiber)</span>
                   <span className="text-green-500 font-semibold">
                     {dailyData?.totalMacros?.fiber?.toFixed(1) || 0}g
                   </span>
@@ -313,7 +300,7 @@ const NutritionPage = () => {
 
             {/* Macros Chart */}
             <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg p-6">
-              <h3 className="text-black dark:text-white text-xl font-bold mb-4">Phân bố Macros</h3>
+              <h3 className="text-black dark:text-white text-xl font-bold mb-4">Phân bố chất dinh dưỡng</h3>
               {macrosData.reduce((sum, item) => sum + item.value, 0) > 0 ? (
                 <ResponsiveContainer width="100%" height={200}>
                   <PieChart>
@@ -354,19 +341,19 @@ const NutritionPage = () => {
                   </p>
                 </div>
                 <div>
-                  <p className="text-gray-600 dark:text-[#9db9ab] text-sm mb-1">TB Protein/ngày</p>
+                  <p className="text-gray-600 dark:text-[#9db9ab] text-sm mb-1">TB Đạm/ngày</p>
                   <p className="text-red-500 text-2xl font-bold">
                     {((stats?.totalProtein || 0) / 7).toFixed(0)}g
                   </p>
                 </div>
                 <div>
-                  <p className="text-gray-600 dark:text-[#9db9ab] text-sm mb-1">TB Carbs/ngày</p>
+                  <p className="text-gray-600 dark:text-[#9db9ab] text-sm mb-1">TB Tinh bột/ngày</p>
                   <p className="text-blue-500 text-2xl font-bold">
                     {((stats?.totalCarbs || 0) / 7).toFixed(0)}g
                   </p>
                 </div>
                 <div>
-                  <p className="text-gray-600 dark:text-[#9db9ab] text-sm mb-1">AB Fats/ngày</p>
+                  <p className="text-gray-600 dark:text-[#9db9ab] text-sm mb-1">TB Chất béo/ngày</p>
                   <p className="text-yellow-500 text-2xl font-bold">
                     {((stats?.totalFats || 0) / 7).toFixed(0)}g
                   </p>
@@ -656,7 +643,7 @@ const NutritionPage = () => {
                                 value={item.protein}
                                 onChange={(e) => updateFoodItem(idx, 'protein', e.target.value)}
                                 className="w-full px-3 py-2 rounded bg-[#111814] border border-[#3b5447] text-white text-sm focus:outline-none focus:ring-1 focus:ring-primary"
-                                placeholder="Protein (g)"
+                                placeholder="Đạm (g)"
                               />
                               <input
                                 type="number"
@@ -664,7 +651,7 @@ const NutritionPage = () => {
                                 value={item.carbs}
                                 onChange={(e) => updateFoodItem(idx, 'carbs', e.target.value)}
                                 className="w-full px-3 py-2 rounded bg-[#111814] border border-[#3b5447] text-white text-sm focus:outline-none focus:ring-1 focus:ring-primary"
-                                placeholder="Carbs (g)"
+                                placeholder="Tinh bột (g)"
                               />
                               <input
                                 type="number"
@@ -672,7 +659,7 @@ const NutritionPage = () => {
                                 value={item.fats}
                                 onChange={(e) => updateFoodItem(idx, 'fats', e.target.value)}
                                 className="w-full px-3 py-2 rounded bg-[#111814] border border-[#3b5447] text-white text-sm focus:outline-none focus:ring-1 focus:ring-primary"
-                                placeholder="Fats (g)"
+                                placeholder="Chất béo (g)"
                               />
                             </div>
                           </details>

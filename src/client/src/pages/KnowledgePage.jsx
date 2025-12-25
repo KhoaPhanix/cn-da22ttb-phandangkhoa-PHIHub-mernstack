@@ -32,7 +32,7 @@ const KnowledgePage = () => {
       const response = await getArticles(params);
       setArticles(response.data);
     } catch (error) {
-      console.error('Error fetching articles:', error);
+      setArticles([]);
     } finally {
       setLoading(false);
     }
@@ -119,14 +119,14 @@ const KnowledgePage = () => {
                       backgroundImage: `url(${article.imageUrl || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80'})`,
                     }}
                   />
-                  <div className="px-4 flex flex-col gap-2">
-                    <p className="text-black dark:text-white text-base font-bold leading-normal line-clamp-2">
+                  <div className="px-4 pb-4 flex flex-col gap-2">
+                    <p className="text-gray-900 dark:text-white text-base font-bold leading-normal line-clamp-2">
                       {article.title}
                     </p>
-                    <p className="text-gray-600 dark:text-white text-sm font-normal leading-normal line-clamp-3">
+                    <p className="text-gray-600 dark:text-[#c5d9cd] text-sm font-normal leading-normal line-clamp-3">
                       {article.summary || article.content?.substring(0, 150)}
                     </p>
-                    <p className="text-primary dark:text-primary text-sm font-medium leading-normal">
+                    <p className="text-primary text-sm font-semibold leading-normal">
                       #{article.category || 'Chung'}
                     </p>
                   </div>

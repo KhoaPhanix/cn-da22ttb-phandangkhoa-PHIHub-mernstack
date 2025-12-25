@@ -4,6 +4,40 @@
 
 ---
 
+## [1.4.0] - 25/12/2025 - Code cleanup và production ready 🧹✨
+
+### 🔧 Cải tiến
+
+#### Code Quality
+- ✅ **Xóa debugging statements**
+  - Xóa tất cả console.log trong production code (frontend)
+  - Xóa tất cả console.error không cần thiết
+  - Giữ lại console.log cho server startup và database connection
+  - Code sạch hơn, production-ready
+
+- ✅ **Dọn dẹp components**
+  - Xóa DebugPanel.jsx không được sử dụng
+  - Tối ưu cấu trúc components
+
+- ✅ **Cải thiện error handling**
+  - Silent fail cho các lỗi không nghiêm trọng
+  - Giữ lại error messages cho user
+  - Xóa error logging không cần thiết
+
+### 📊 Files Updated
+- **Client Pages**: MoodJournalPage, GoalsPage, NutritionPage, DashboardPage, HistoryPage, KnowledgePage, ProfilePage, ArticleDetailPage
+- **Client Components**: AlertBanner, AuthContext
+- **Server Controllers**: moodController, nutritionController, goalController
+- **Server Services**: recommendationService
+
+### ✅ Kết quả
+- ✅ Không còn lỗi compile/lint
+- ✅ Code production-ready
+- ✅ Performance được cải thiện
+- ✅ Debugging statements đã được loại bỏ
+
+---
+
 ## [1.3.0] - 20/12/2025 - Cập nhật UI và tối ưu hóa 🎨
 
 ### ✨ Tính năng mới

@@ -4,11 +4,13 @@ import { format, subDays, startOfMonth, endOfMonth } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import Navbar from '../components/Navbar';
 import LoadingSpinner from '../components/LoadingSpinner';
+import Footer from '../components/Footer';
 import { getMetrics, getMetricStats, updateMetric, deleteMetric } from '../services/metricsService';
 
 const HistoryPage = () => {
   const [loading, setLoading] = useState(true);
-  const [viewMode, setViewMode] = useState('chart');
+  const [error, setError] = useState(null);
+  const [viewMode, setViewMode] = useState('table');
   const [selectedMetric, setSelectedMetric] = useState('all');
   const [dateRange, setDateRange] = useState('month');
   const [heartRateData, setHeartRateData] = useState([]);
@@ -136,7 +138,8 @@ const HistoryPage = () => {
       }
 
     } catch (error) {
-      console.error('Error fetching history data:', error);
+      setError(error.response?.data?.message || 'Không thể tải dữ liệu lịch sử');
+      setMetricsTable([]);
     } finally {
       setLoading(false);
     }
@@ -190,7 +193,6 @@ const HistoryPage = () => {
       alert('Xóa dữ liệu thành công!');
       fetchHistoryData();
     } catch (error) {
-      console.error('Lỗi khi xóa dữ liệu:', error);
       alert('Có lỗi xảy ra khi xóa dữ liệu');
     }
   };
@@ -208,8 +210,7 @@ const HistoryPage = () => {
       setEditingMetric(null);
       fetchHistoryData();
     } catch (error) {
-      console.error('Lỗi khi cập nhật dữ liệu:', error);
-      alert('Có lỗi xảy ra khi cập nhật dữ liệu');
+      setError(error.response?.data?.message || 'Có lỗi xảy ra khi cập nhật dữ liệu');
     }
   };
 
@@ -252,6 +253,13 @@ const HistoryPage = () => {
               </p>
             </div>
           </div>
+
+          {/* Error Display */}
+          {error && (
+            <div className="mx-4 mt-4 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+              <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+            </div>
+          )}
 
           <div className="flex flex-col md:flex-row justify-between gap-4 px-4 py-3 mt-4 border-y border-gray-200 dark:border-[#3b5447]">
             <div className="flex flex-wrap gap-3 items-center">
@@ -594,6 +602,8 @@ const HistoryPage = () => {
           </div>
         </div>
       )}
+      
+      <Footer />
     </div>
   );
 };

@@ -1,4 +1,5 @@
-version: '3.9'
+# PHIHub Docker Compose Configuration
+# Run: docker compose up -d --build
 
 services:
   # MongoDB Database
@@ -14,6 +15,12 @@ services:
       MONGO_INITDB_DATABASE: phihub
     networks:
       - phihub-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   # Backend API
   server:
@@ -28,13 +35,20 @@ services:
       NODE_ENV: production
       PORT: 5000
       MONGODB_URI: ${MONGODB_URI:-mongodb://mongo:27017/phihub}
-      JWT_SECRET: ${JWT_SECRET:-change-this-secret-in-production}
+      JWT_SECRET: ${JWT_SECRET:-phihub-jwt-secret-2025-production}
       JWT_EXPIRE: 7d
       CLIENT_URL: http://localhost:8080
     depends_on:
-      - mongo
+      mongo:
+        condition: service_healthy
     networks:
       - phihub-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:5000/api/health').then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   # Frontend Client
   client:

@@ -63,10 +63,6 @@ exports.getGoal = async (req, res) => {
 // @access  Private
 exports.createGoal = async (req, res) => {
   try {
-    console.log('🔵 [Goal] Received create goal request');
-    console.log('🔵 [Goal] User ID:', req.user._id);
-    console.log('🔵 [Goal] Request body:', JSON.stringify(req.body, null, 2));
-    
     const goalData = {
       ...req.body,
       userId: req.user._id,
@@ -86,7 +82,6 @@ exports.createGoal = async (req, res) => {
     }
     
     const goal = await Goal.create(goalData);
-    console.log('✅ [Goal] Created successfully:', goal._id);
     
     res.status(201).json({
       success: true,
@@ -94,8 +89,6 @@ exports.createGoal = async (req, res) => {
       data: goal,
     });
   } catch (error) {
-    console.error('❌ [Goal] Error creating goal:', error.message);
-    console.error('❌ [Goal] Error details:', error);
     res.status(400).json({
       success: false,
       message: 'Lỗi khi tạo mục tiêu',
